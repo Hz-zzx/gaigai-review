@@ -1,0 +1,2915 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>概论复习站 · 习近平新时代中国特色社会主义思想概论</title>
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.png" />
+<link rel="shortcut icon" href="img/favicon-64.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
+<meta name="theme-color" content="#2FB6AD" />
+<style>
+  :root{
+    --lock-ico:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><rect x='5' y='11' width='14' height='9' rx='2.2'/><path d='M8.2 11V8.2a3.8 3.8 0 0 1 7.6 0V11'/></svg>");
+    --accent:#2FB6AD;
+    --accent-dark:#146A66;
+    --accent-soft:#E7F7F5;
+    --accent-mid:#239C94;
+    --on-accent:#06302D;
+    --blue:#00AEEC;
+    --bg:#F1F2F3;
+    --card:#FFFFFF;
+    --text:#18191C;
+    --text-2:#61666D;
+    --text-3:#9499A0;
+    --line:#E3E5E7;
+    --radius:8px;
+  }
+  /* ---------- 黑夜模式变量 ---------- */
+  html.dark{
+    color-scheme:dark;
+    --bg:#0F1115;
+    --card:#171A21;
+    --text:#E9ECF0;
+    --text-2:#A6AEBA;
+    --text-3:#767E8A;
+    --line:#2A2F37;
+    --accent-soft:#0F2725;
+    --accent-dark:#7FE0D6;
+    --accent-mid:#2AA79E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:-apple-system,"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei",Arial,sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.75;
+    padding-top:64px;-webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;}
+  .hidden{display:none !important;}
+
+  /* ---------- 顶栏 ---------- */
+  .nav{
+    position:fixed;top:0;left:0;right:0;height:64px;z-index:100;
+    background:
+      linear-gradient(90deg,rgba(47,182,173,.16) 0%,rgba(47,182,173,.07) 34%,rgba(47,182,173,0) 58%),
+      linear-gradient(180deg,rgba(255,255,255,.9) 0%,rgba(255,255,255,0) 100%),
+      var(--card);
+    box-shadow:0 1px 3px rgba(0,0,0,.06);
+  }
+  .nav-inner{max-width:1280px;height:100%;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:18px;}
+  .logo{display:flex;align-items:center;gap:8px;flex:none;cursor:pointer;}
+  .logo-mark{
+    width:34px;height:34px;border-radius:9px;overflow:hidden;flex:none;
+    background:linear-gradient(135deg,var(--accent),#6FD8CE);
+    color:#fff;font-size:17px;font-weight:700;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 8px rgba(47,182,173,.32),inset 0 0 0 1px rgba(24,25,28,.06);
+  }
+  .logo-mark img{width:100%;height:100%;object-fit:cover;display:block;}
+  .logo:hover .logo-mark{transform:translateY(-1px);}
+  .logo-mark{transition:transform .18s ease;}
+  .logo-text{font-size:17px;font-weight:600;letter-spacing:.3px;}
+  /* 顶栏菜单：hover 时整块铺满导航高度（方形色块） */
+  .nav-links{display:flex;gap:2px;flex:none;align-items:stretch;height:100%;}
+  .nav-links a{
+    display:flex;align-items:center;height:100%;padding:0 14px;
+    border-radius:0;font-size:17px;font-weight:400;letter-spacing:.05em;
+    font-family:"YouYuan","幼圆","SimYou","HarmonyOS Sans SC","Microsoft YaHei",sans-serif;
+    color:transparent;                       /* 中空：不填色，只留描边 */
+    -webkit-text-stroke:1.05px var(--text-2);
+    text-stroke:1.05px var(--text-2);
+    stroke-linejoin:round;stroke-linecap:round;   /* 描边转角圆润 */
+    transition:background .15s,color .15s,-webkit-text-stroke-width .15s;
+  }
+  .nav-links a:hover{
+    background:var(--accent);color:var(--on-accent);
+    -webkit-text-stroke-width:0;text-stroke-width:0;
+  }
+  .nav-links a.active{
+    color:var(--accent-dark);-webkit-text-stroke-width:0;text-stroke-width:0;
+  }
+  .nav-links a.active:hover{background:var(--accent);color:var(--on-accent);}
+  /* 不支持描边的浏览器退回实心字，避免整块变透明 */
+  @supports not (-webkit-text-stroke:1px #000){
+    .nav-links a{color:var(--text-2);}
+  }
+  .menu-btn{
+    display:none;width:36px;height:36px;flex:none;border:none;background:transparent;
+    border-radius:8px;color:var(--text-2);cursor:pointer;align-items:center;justify-content:center;padding:0;
+  }
+  .menu-btn:hover{background:var(--bg);color:var(--accent-dark);}
+
+  .search{flex:1;max-width:300px;margin-left:auto;position:relative;}
+  .search input{
+    width:100%;height:36px;border:none;border-radius:var(--radius);background:var(--bg);
+    padding:0 36px 0 14px;font-size:14px;color:var(--text);outline:none;
+    transition:box-shadow .15s,background .15s;
+  }
+  .search input::placeholder{color:var(--text-3);}
+  .search input:focus{background:var(--card);box-shadow:0 0 0 1.5px var(--accent) inset;}
+  .search-btn{
+    position:absolute;right:4px;top:4px;width:28px;height:28px;border:none;background:transparent;
+    cursor:pointer;border-radius:6px;color:var(--text-3);display:flex;align-items:center;justify-content:center;
+  }
+  .search-btn:hover{color:var(--accent-dark);background:var(--accent-soft);}
+  .progress-pill{
+    flex:none;font-size:12px;color:var(--text-2);background:var(--bg);
+    padding:5px 11px;border-radius:20px;white-space:nowrap;
+  }
+  .progress-pill b{color:var(--accent-dark);font-weight:600;}
+  .achv-btn{
+    flex:none;display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 11px;
+    border:1px solid var(--line);background:var(--card);border-radius:20px;cursor:pointer;
+    color:var(--text-2);font-size:12px;transition:all .15s;
+  }
+  .achv-btn:hover{border-color:var(--accent-dark);color:var(--accent-dark);background:var(--accent-soft);}
+  .achv-btn.full{background:var(--accent);border-color:var(--accent-dark);color:#fff;}
+  .avatar{
+    width:36px;height:36px;border-radius:50%;flex:none;padding:0;overflow:hidden;cursor:pointer;
+    font-family:inherit;background:linear-gradient(135deg,#7FD3CB,#D7F1EE);
+    color:var(--accent-dark);font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;
+    border:2px solid var(--card);box-shadow:0 1px 4px rgba(0,0,0,.08);
+  }
+
+  /* ---------- 布局 ---------- */
+  .wrap{max-width:1280px;margin:0 auto;padding:16px;}
+  .layout{display:grid;grid-template-columns:216px minmax(0,1fr);gap:16px;align-items:start;}
+
+  .banner{
+    position:relative;overflow:hidden;border-radius:var(--radius);
+    background:#0B2A2E url(img/banner.jpg) center 46%/cover no-repeat;
+    color:#fff;padding:34px 30px;margin-bottom:16px;
+    min-height:206px;display:flex;flex-direction:column;justify-content:center;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);
+    isolation:isolate;
+  }
+  /* 左侧压暗，保证标题与统计数字压在图上也清晰 */
+  .banner::before{
+    content:"";position:absolute;inset:0;z-index:0;
+    background:linear-gradient(90deg,rgba(5,22,26,.93) 0%,rgba(5,22,26,.82) 34%,rgba(5,22,26,.55) 60%,rgba(5,22,26,.34) 100%);
+  }
+  /* 极淡青绿单色化：只改色相，不动明暗，因此不影响文字对比度 */
+  .banner::after{
+    content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+    background:#2FB6AD;mix-blend-mode:color;opacity:.22;
+  }
+  .banner h1{font-size:23px;font-weight:700;position:relative;z-index:1;}
+  .banner p{font-size:13.5px;opacity:.92;margin-top:4px;position:relative;z-index:1;}
+  .banner-stats{display:flex;gap:26px;margin-top:14px;position:relative;z-index:1;flex-wrap:wrap;}
+  .banner-stats div{font-size:12px;opacity:.95;}
+  .banner-stats strong{display:block;font-size:19px;font-weight:700;line-height:1.4;}
+
+  /* ---------- 侧栏 ---------- */
+  .side{position:sticky;top:80px;max-height:calc(100vh - 96px);overflow:auto;scrollbar-width:thin;}
+  .side-card{background:var(--card);border-radius:var(--radius);padding:8px;box-shadow:0 1px 2px rgba(0,0,0,.03);}
+  .side-title{font-size:11px;color:var(--text-3);padding:10px 10px 4px;font-weight:600;letter-spacing:.5px;}
+  .side-item{
+    display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:6px;
+    font-size:12.5px;color:var(--text-2);cursor:pointer;transition:background .15s,color .15s;
+    white-space:nowrap;overflow:hidden;
+  }
+  .side-item:hover{background:var(--bg);color:var(--text);}
+  .side-item.active{background:var(--accent-soft);color:var(--accent-dark);font-weight:600;}
+  .side-item .num{
+    flex:none;width:18px;font-size:11px;color:var(--text-3);font-variant-numeric:tabular-nums;
+  }
+  .side-item.active .num{color:var(--accent-dark);}
+  .side-item .txt{overflow:hidden;text-overflow:ellipsis;}
+  .side-item .ok{flex:none;margin-left:auto;color:var(--accent-dark);font-size:11px;}
+  .side-sep{height:1px;background:var(--line);margin:6px 8px;}
+
+  /* ---------- chips ---------- */
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+  .chip{
+    padding:5px 13px;border-radius:20px;font-size:13px;cursor:pointer;background:var(--card);
+    color:var(--text-2);border:1px solid var(--line);transition:all .15s;
+  }
+  .chip:hover{border-color:var(--accent-dark);color:var(--accent-dark);}
+  .chip.active{background:var(--accent);border-color:var(--accent-dark);color:#fff;font-weight:500;}
+
+  /* ---------- 卡片 ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:14px;}
+  .card{
+    background:var(--card);border-radius:4px;overflow:hidden;cursor:pointer;
+    transition:transform .18s ease,box-shadow .18s ease;box-shadow:0 1px 2px rgba(0,0,0,.03);
+    display:flex;flex-direction:column;
+  }
+  .card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(47,182,173,.22);}
+  .cover{
+    position:relative;aspect-ratio:16/9;overflow:hidden;color:#fff;
+    display:flex;flex-direction:column;justify-content:space-between;padding:11px 13px;
+  }
+  .cover::after{content:"";position:absolute;right:-24px;top:-30px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.14);}
+  .cover .no{font-size:27px;font-weight:800;line-height:1;opacity:.95;letter-spacing:1px;position:relative;z-index:1;}
+  .cover .vol{font-size:11.5px;opacity:.92;position:relative;z-index:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:8px;}
+  /* 有配图的封面：图片铺满，编号与卷次改用浅色底遮盖保证可读 */
+  .cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:0;}
+  .cover.has-img::after{
+    content:"";left:0;top:0;right:0;bottom:0;width:auto;height:auto;border-radius:0;
+    background:linear-gradient(180deg,rgba(24,25,28,.10),rgba(24,25,28,0) 30%,rgba(24,25,28,0) 55%,rgba(24,25,28,.20));
+    z-index:1;
+  }
+  .cover.has-img .no{
+    position:absolute;left:10px;top:10px;z-index:2;font-size:12px;font-weight:700;
+    background:rgba(20,26,30,.66);box-shadow:0 0 0 1px rgba(255,255,255,.3);padding:2px 8px;border-radius:6px;letter-spacing:0;
+    backdrop-filter:blur(3px);opacity:1;
+  }
+  .cover.has-img .vol{
+    position:absolute;left:10px;right:auto;bottom:10px;z-index:2;
+    padding:2px 8px;border-radius:6px;font-size:11px;color:#fff;opacity:1;
+    background:rgba(20,26,30,.6);box-shadow:0 0 0 1px rgba(255,255,255,.24);
+    backdrop-filter:blur(3px);max-width:calc(100% - 20px);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .card:hover .cover.has-img img{transform:scale(1.04);}
+  .cover.has-img img{transition:transform .35s ease;filter:saturate(1.45) contrast(1.02);}
+  .cover .badge{
+    position:absolute;right:8px;top:8px;z-index:2;background:rgba(0,0,0,.42);color:#fff;font-size:11px;
+    padding:1px 7px;border-radius:4px;max-width:66%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  }
+  .g0 .cover{background:linear-gradient(135deg,#1E9E96,#3FBFB5);}
+  .g1 .cover{background:linear-gradient(135deg,#00AEEC,#63D2F2);}
+  .g2 .cover{background:linear-gradient(135deg,#7B68EE,#A78BFA);}
+  .g3 .cover{background:linear-gradient(135deg,#FF9F43,#FFC97A);}
+  .g4 .cover{background:linear-gradient(135deg,#20C997,#6FE3C0);}
+  .g5 .cover{background:linear-gradient(135deg,#EB5757,#FF9C8A);}
+  .g6 .cover{background:linear-gradient(135deg,#5B8FF9,#9AC0FF);}
+  .card-body{padding:10px 12px 12px;display:flex;flex-direction:column;flex:1;}
+  .card-title{
+    font-size:13.5px;font-weight:500;line-height:1.5;color:var(--text);
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:41px;
+    transition:color .15s;
+  }
+  .card:hover .card-title{color:var(--accent-dark);}
+  .card-meta{display:flex;align-items:center;gap:6px;margin-top:auto;padding-top:8px;font-size:11.5px;color:var(--text-3);}
+  .card-meta .k{flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .card-meta .n{flex:none;}
+  .card.done .n{color:var(--accent-dark);}
+  .empty{background:var(--card);border-radius:var(--radius);padding:56px 20px;text-align:center;color:var(--text-3);font-size:14px;}
+  .empty strong{display:block;color:var(--text-2);font-size:15px;margin-bottom:6px;}
+
+  /* ---------- 正文 ---------- */
+  .chapter{
+    background:var(--card);border-radius:var(--radius);padding:24px 30px 26px;max-width:880px;
+    box-shadow:0 1px 2px rgba(0,0,0,.03);animation:fade .2s ease-out;--fs:14.5px;
+  }
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .chapter:focus{outline:none;}
+  body.reading .banner{display:none;}
+  .chapter .art-src{
+    font-size:11.5px;color:var(--text-3);line-height:1.85;margin-top:24px;
+    padding-top:13px;border-top:1px dashed var(--line);
+  }
+  .art-hero{margin:2px 0 20px;border-radius:8px;overflow:hidden;aspect-ratio:21/9;background:#EDEFF2;}
+  .art-hero img{width:100%;height:100%;object-fit:cover;display:block;}
+  body.fs-s .chapter{--fs:13px;}
+  body.fs-m .chapter{--fs:14.5px;}
+  body.fs-l .chapter{--fs:16px;}
+  .crumb{font-size:12px;color:var(--text-3);margin-bottom:12px;}
+  .crumb a:hover{color:var(--accent-dark);}
+  .crumb span{margin:0 6px;}
+  .chapter h2{font-size:21px;font-weight:600;line-height:1.5;padding-left:12px;position:relative;margin-bottom:8px;}
+  .chapter h2::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:4px;border-radius:2px;background:linear-gradient(180deg,var(--accent),#6FD8CE);}
+  .art-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--line);}
+  .art-tag{font-size:11.5px;color:var(--text-3);background:var(--bg);padding:2px 9px;border-radius:11px;}
+  .art-bar .sp{flex:1;}
+  .btn-ghost{
+    display:inline-flex;align-items:center;gap:5px;padding:5px 12px;font-size:12.5px;
+    background:var(--card);color:var(--text-2);border:1px solid var(--line);border-radius:15px;cursor:pointer;transition:all .15s;
+  }
+  .btn-ghost:hover{border-color:var(--accent-dark);color:var(--accent-dark);background:var(--accent-soft);}
+  .btn-ghost.on{background:var(--accent);border-color:var(--accent-dark);color:#fff;}
+  .fontsize{display:inline-flex;border:1px solid var(--line);border-radius:15px;overflow:hidden;}
+  .fontsize button{border:none;background:var(--card);padding:5px 10px;font-size:12px;color:var(--text-2);cursor:pointer;}
+  .fontsize button+button{border-left:1px solid var(--line);}
+  .fontsize button.on{background:var(--accent);color:#fff;}
+
+  .chapter h3{font-size:15px;font-weight:600;margin:24px 0 10px;display:flex;align-items:center;gap:8px;}
+  .chapter h3::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none;}
+  .chapter h3 .cnt{font-size:11px;font-weight:400;color:var(--text-3);margin-left:2px;}
+  .chapter p{font-size:var(--fs);color:#2B2D33;margin-bottom:9px;}
+  .chapter .ref{font-size:12px;color:var(--text-3);margin-bottom:6px;}
+  .chapter ul{padding-left:19px;margin-bottom:4px;}
+  .chapter li{font-size:var(--fs);color:#2B2D33;margin-bottom:6px;}
+  .chapter li::marker{color:var(--accent-dark);}
+  .chapter .body p{text-align:justify;}
+  .chapter ul.tight li{margin-bottom:4px;}
+  /* 章节提纲：节 + 目 两级 */
+  .outline{list-style:none;padding-left:0;}
+  .outline > li{margin-bottom:11px;padding-left:0;}
+  .outline > li:last-child{margin-bottom:0;}
+  .outline .sec-li{list-style:none;}
+  .outline .sec-t{
+    display:block;font-weight:600;color:var(--text);font-size:14px;
+    position:relative;padding-left:14px;line-height:1.65;
+  }
+  .outline .sec-t::before{
+    content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:2px;
+    background:var(--accent);
+  }
+  .outline ul.sub{
+    list-style:none;padding-left:14px;margin:4px 0 0;/* 缩进对齐 */
+  }
+  .outline ul.sub li{
+    position:relative;padding-left:12px;margin:1px 0;
+    font-size:13px;color:var(--text-2);line-height:1.75;
+  }
+  .outline ul.sub li::before{
+    content:"";position:absolute;left:0;top:11px;width:4px;height:4px;border-radius:50%;
+    background:#C9CED6;
+  }
+
+  .tag{
+    display:inline-block;font-size:11.5px;line-height:18px;padding:0 8px;border-radius:4px;
+    margin-right:7px;vertical-align:2px;font-weight:500;white-space:nowrap;
+  }
+  .tag-key{background:var(--accent-soft);color:var(--accent-dark);}
+  .tag-concept{background:#E6F7FD;color:#0091C2;}
+  .tag-tip{background:#FFF7E6;color:#B87400;}
+  .tag-review{background:#F1EDFF;color:#6C4BD1;}
+  .tag-quote{background:#F1F2F3;color:#61666D;}
+  .cpt{font-weight:600;color:var(--text);}
+
+  .pager{display:flex;justify-content:space-between;gap:12px;margin-top:28px;padding-top:16px;border-top:1px solid var(--line);}
+  .pager button{
+    display:flex;flex-direction:column;gap:2px;max-width:46%;padding:8px 14px;text-align:left;
+    background:var(--card);border:1px solid var(--line);border-radius:8px;cursor:pointer;color:var(--text-2);
+    font-size:12px;transition:all .15s;
+  }
+  .pager button:hover{border-color:var(--accent-dark);color:var(--accent-dark);background:var(--accent-soft);}
+  .pager button b{font-size:13px;font-weight:500;color:inherit;}
+  .pager button.next{margin-left:auto;text-align:right;align-items:flex-end;}
+  .pager button:disabled{opacity:.4;cursor:default;}
+
+  .theme-btn{
+    flex:none;display:inline-flex;align-items:center;justify-content:center;
+    width:32px;height:32px;padding:0;border:1px solid var(--line);background:var(--card);
+    border-radius:50%;color:var(--text-2);cursor:pointer;transition:all .15s;
+  }
+  .theme-btn:hover{color:var(--accent-dark);border-color:var(--accent-dark);background:var(--accent-soft);}
+  .theme-btn .ic-sun{display:none;}
+  html.dark .theme-btn .ic-moon{display:none;}
+  html.dark .theme-btn .ic-sun{display:block;}
+
+  /* ---------- 成就 ---------- */
+  .achv-sum{display:flex;align-items:flex-end;gap:26px;flex-wrap:wrap;margin:2px 0 20px;}
+  .achv-sum > div + div{border-left:1px solid var(--line);padding-left:24px;}
+  .achv-sum .big{font-size:24px;font-weight:700;color:var(--accent-dark);line-height:1.25;}
+  .achv-sum .lbl{font-size:11.5px;color:var(--text-3);margin-top:3px;}
+  .achv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:14px;}
+  .achv-card{
+    border:1px solid var(--line);border-radius:10px;padding:20px 16px 16px;text-align:center;
+    background:var(--card);overflow:hidden;transition:transform .18s,box-shadow .18s,border-color .18s;
+  }
+  .achv-card.unlocked{border-color:#C2E9E4;background:linear-gradient(180deg,#F6FCFB,#fff);}
+  .achv-card.unlocked:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(47,182,173,.22);}
+  .achv-art{
+    position:relative;aspect-ratio:16/9;overflow:hidden;background:#EDEFF2;
+    margin:-20px -16px 14px;border-bottom:1px solid var(--line);
+  }
+  .achv-art img{
+    width:100%;height:100%;object-fit:cover;object-position:center;
+    display:block;transition:transform .3s ease;
+  }
+  .achv-card.locked .achv-art img{filter:grayscale(1) opacity(.78);}
+  .achv-card.locked .achv-art::after{
+    content:"";position:absolute;inset:0;
+    background:
+      var(--lock-ico) center/26px 26px no-repeat,
+      rgba(24,25,28,.34);
+  }
+  .achv-card.unlocked:hover .achv-art img{transform:scale(1.05);}
+  .achv-art.no-pic{background:linear-gradient(135deg,#DDE1E6,#EFF1F4);}
+  .achv-card.unlocked .achv-art.no-pic{background:linear-gradient(135deg,var(--accent),#6FD8CE);}
+  .achv-card .nm{font-size:14px;font-weight:600;color:var(--text);}
+  .achv-card.locked .nm{color:var(--text-3);}
+  .achv-card .ds{font-size:11.5px;color:var(--text-3);margin-top:4px;min-height:18px;}
+  .bar{height:5px;border-radius:3px;background:var(--bg);overflow:hidden;margin:12px 0 7px;}
+  .bar i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),#86DED6);transition:width .35s ease;}
+  .achv-card.locked .bar i{background:#DDE1E6;}
+  .achv-card .st{font-size:11px;color:var(--text-3);}
+  .achv-card.unlocked .st{color:var(--accent-dark);font-weight:600;}
+  .chapter .achv-note{font-size:12px;color:var(--text-3);margin-top:18px;}
+  .achv-h{
+    font-size:15.5px;font-weight:600;color:var(--text);margin:26px 0 12px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .achv-h:first-of-type{margin-top:4px;}
+  .achv-h::before{content:"";width:4px;height:15px;border-radius:2px;background:var(--accent);flex:none;}
+  .achv-h .cnt{font-size:11.5px;font-weight:400;color:var(--text-3);
+    background:var(--bg);padding:1px 7px;border-radius:9px;}
+  .chapter .achv-tip{font-size:12px;color:var(--text-3);margin:-2px 0 12px;line-height:1.8;}
+  .achv-tip b{color:var(--accent-dark);font-weight:600;}
+  .achv-art.time-art{
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,#F1FBFA,#DDF3F0);
+  }
+  .achv-card.locked .achv-art.time-art{background:linear-gradient(135deg,#F4F5F7,#FBFCFD);}
+
+  .toast-wrap{
+    position:fixed;left:50%;bottom:34px;transform:translateX(-50%);z-index:200;
+    display:flex;flex-direction:column;gap:10px;align-items:center;pointer-events:none;
+  }
+  .toast{
+    display:flex;align-items:center;gap:12px;background:var(--card);border-radius:12px;
+    padding:11px 20px 11px 13px;box-shadow:0 12px 34px rgba(0,0,0,.16);border:1px solid #D3EEEA;
+    animation:toastIn .32s cubic-bezier(.2,.8,.3,1.15);
+  }
+  .toast .ic{
+    width:42px;height:42px;border-radius:11px;flex:none;overflow:hidden;background:var(--accent-soft);
+  }
+  .toast .ic img{width:100%;height:100%;object-fit:cover;display:block;}
+  .toast .ic.kind-min{display:flex;align-items:center;justify-content:center;color:var(--accent-dark);}
+  .toast b{display:block;font-size:13.5px;color:var(--text);}
+  .toast span{font-size:11.5px;color:var(--text-3);}
+  .toast.out{animation:toastOut .26s ease forwards;}
+  @keyframes toastIn{from{opacity:0;transform:translateY(16px) scale(.95);}to{opacity:1;transform:none;}}
+  @keyframes toastOut{to{opacity:0;transform:translateY(10px);}}
+
+  footer{text-align:center;padding:26px 16px 34px;font-size:12px;color:var(--text-3);line-height:1.9;}
+  .to-top{
+    position:fixed;right:24px;bottom:28px;width:42px;height:42px;border-radius:50%;
+    background:var(--card);border:1px solid var(--line);color:var(--text-2);display:none;
+    align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.08);z-index:90;
+  }
+  .to-top:hover{color:var(--accent-dark);border-color:var(--accent-dark);}
+  .to-top.show{display:flex;}
+
+  /* 导航项变多后，中等屏幕收紧间距，避免挤压搜索框 */
+  @media (max-width:1180px){
+    .nav-inner{gap:10px;}
+    .nav-links a{padding:0 8px;font-size:15.5px;-webkit-text-stroke-width:.95px;text-stroke-width:.95px;}
+    .progress-pill{display:none;}      /* 让位给搜索框，进度在成就页仍可查 */
+    .search{min-width:150px;max-width:220px;}
+    .search input{font-size:12.5px;}
+  }
+  @media (max-width:900px){
+    .layout{grid-template-columns:1fr;}
+    .side{display:none;}
+    .menu-btn{display:flex;}
+    .nav-links{
+      position:absolute;top:100%;left:8px;right:8px;display:flex;flex-direction:column;gap:2px;
+      height:auto;align-items:stretch;
+      background:var(--card);border-radius:10px;padding:6px;box-shadow:0 10px 28px rgba(0,0,0,.14);
+      opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .16s ease,transform .16s ease;
+    }
+    .nav-links.open{opacity:1;transform:none;pointer-events:auto;}
+    .nav-links a{height:auto;padding:10px 12px;font-size:14px;border-radius:8px;}
+    .progress-pill{display:none;}
+  }
+  @media (max-width:600px){
+    body{padding-top:56px;}
+    .nav{height:56px;}
+    .nav-inner{gap:12px;}
+    .logo-text{display:none;}
+    .banner{padding:20px;}
+    .banner h1{font-size:19px;}
+    .grid{grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:10px;}
+    .card-title{font-size:13px;}
+    .chapter{padding:16px 15px 20px;}
+    .chapter h2{font-size:18px;}
+    .search{max-width:none;}
+    .art-bar{gap:8px;}
+    .achv-btn{display:none;}
+    .achv-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
+    .achv-card{padding:16px 10px 13px;}
+  }
+
+  /* ---------- 刷题 ---------- */
+  .quiz-top{display:flex;align-items:center;gap:12px;margin:4px 0 16px;font-size:12px;color:var(--text-3);}
+  .quiz-top b{color:var(--text);font-weight:600;}
+  .quiz-prog{flex:1;height:5px;border-radius:3px;background:var(--bg);overflow:hidden;}
+  .quiz-prog i{display:block;height:100%;border-radius:3px;
+    background:linear-gradient(90deg,var(--accent),#86DED6);transition:width .25s ease;}
+  .q-stem{font-size:15.5px;line-height:1.85;color:var(--text);font-weight:500;margin:2px 0 16px;}
+  .q-tag{
+    display:inline-block;font-size:11px;font-weight:400;vertical-align:2px;margin-right:8px;
+    color:var(--accent-dark);background:var(--accent-soft);padding:1px 8px;border-radius:4px;
+  }
+  .q-opts{display:flex;flex-direction:column;gap:9px;}
+  .opt{
+    display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;cursor:pointer;
+    background:var(--card);border:1px solid var(--line);border-radius:8px;padding:11px 14px;
+    font-size:14px;line-height:1.7;color:var(--text);font-family:inherit;transition:all .15s;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent-dark);background:var(--accent-soft);}
+  .opt:disabled{cursor:default;}
+  .opt .k{
+    flex:none;width:20px;height:20px;margin-top:2px;border-radius:5px;background:var(--bg);
+    color:var(--text-2);font-size:11.5px;display:flex;align-items:center;justify-content:center;
+  }
+  .opt.right{border-color:#2BC08A;background:rgba(43,192,138,.1);}
+  .opt.right .k{background:#2BC08A;color:#fff;}
+  .opt.wrong{border-color:#F0554E;background:rgba(240,85,78,.1);}
+  .opt.wrong .k{background:#F0554E;color:#fff;}
+  .opt.dim{opacity:.55;}
+  .q-fb{margin-top:15px;font-size:13px;font-weight:600;}
+  .q-fb.ok{color:#22A97A;}
+  .q-fb.no{color:#E0463F;}
+  .q-exp{
+    margin-top:8px;font-size:13px;line-height:1.85;color:var(--text-2);
+    background:var(--bg);border-radius:8px;padding:10px 13px;
+  }
+  .quiz-actions{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;}
+  /* ---------- 通用返回按钮 ---------- */
+  .back-btn{
+    font-family:inherit;font-size:12.5px;cursor:pointer;color:var(--text-2);
+    background:var(--card);border:1px solid var(--line);border-radius:7px;
+    padding:5px 12px;margin-bottom:12px;transition:all .15s;
+  }
+  .back-btn:hover{border-color:var(--accent);color:var(--accent-dark);background:var(--accent-soft);}
+
+  /* ---------- 题库本 ---------- */
+  .mk-tabs{display:flex;gap:8px;margin:2px 0 14px;}
+  .mk-tab{
+    font-family:inherit;font-size:13px;padding:6px 15px;border-radius:20px;cursor:pointer;
+    border:1px solid var(--line);background:var(--card);color:var(--text-2);transition:all .15s;
+  }
+  .mk-tab:hover{border-color:var(--accent);color:var(--accent-dark);}
+  .mk-tab.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-dark);font-weight:600;}
+  .mk-tab span{margin-left:5px;opacity:.62;}
+  .mk-bar{
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    padding:9px 13px;border-radius:8px;background:var(--bg);
+    font-size:12.5px;color:var(--text-2);margin-bottom:12px;
+  }
+  .mk-bar .sp{flex:1;}
+  .mk-bar b{color:var(--accent-dark);font-weight:600;}
+  .mk-all{display:inline-flex;align-items:center;gap:6px;cursor:pointer;user-select:none;}
+  .mk-all input,.mk-pick input{accent-color:var(--accent);width:14px;height:14px;cursor:pointer;}
+  .mk-list{display:flex;flex-direction:column;gap:10px;}
+  .mk-item{
+    display:flex;gap:11px;padding:13px 15px;border:1px solid var(--line);
+    border-radius:8px;background:var(--card);transition:border-color .15s;
+  }
+  .mk-item:hover{border-color:var(--accent);}
+  .mk-pick{padding-top:1px;flex:none;}
+  .mk-body{flex:1;min-width:0;}
+  .mk-q{font-size:14px;line-height:1.75;color:var(--text);}
+  .mk-opts{margin-top:7px;display:flex;flex-direction:column;gap:1px;}
+  .mk-opt{font-size:12.5px;line-height:1.75;color:var(--text-3);}
+  .mk-opt.right{color:#22A97A;font-weight:600;}
+  html.dark .mk-opt.right{color:#3DDC9A;}
+  .mk-exp{margin-top:7px;font-size:12px;line-height:1.7;color:var(--text-3);border-top:1px dashed var(--line);padding-top:7px;}
+  .mk-empty{padding:44px 0;text-align:center;color:var(--text-3);font-size:13px;}
+
+  /* ---------- 我的 ---------- */
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block;}
+  .avatar:hover{box-shadow:0 0 0 3px var(--accent-soft),0 1px 4px rgba(0,0,0,.08);}
+  .me-head{display:flex;align-items:center;gap:18px;margin:4px 0 22px;}
+  .me-big{
+    width:84px;height:84px;border-radius:50%;flex:none;overflow:hidden;cursor:pointer;
+    background:linear-gradient(135deg,#7FD3CB,#D7F1EE);color:var(--accent-dark);
+    font-size:30px;font-weight:600;display:flex;align-items:center;justify-content:center;
+    border:2px solid var(--card);box-shadow:0 2px 10px rgba(0,0,0,.10);font-family:inherit;padding:0;
+  }
+  .me-big img{width:100%;height:100%;object-fit:cover;display:block;}
+  .me-meta{min-width:0;}
+  .me-name{font-size:19px;font-weight:600;color:var(--text);}
+  .me-sub{font-size:12px;color:var(--text-3);margin-top:4px;}
+  .me-field{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 8px;}
+  .me-field label{font-size:13px;color:var(--text-2);width:52px;flex:none;}
+  .me-field input{
+    font-family:inherit;font-size:14px;color:var(--text);background:var(--card);
+    border:1px solid var(--line);border-radius:8px;padding:8px 12px;min-width:190px;
+    transition:border-color .15s;
+  }
+  .me-field input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+  .me-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:10px;margin:22px 0 6px;}
+  .me-stat{border:1px solid var(--line);border-radius:8px;padding:12px 14px;background:var(--card);}
+  .me-stat b{display:block;font-size:19px;color:var(--accent-dark);line-height:1.2;}
+  .me-stat span{font-size:11.5px;color:var(--text-3);}
+  .me-export{
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:var(--card);
+  }
+  .me-note{font-size:11.5px;color:var(--text-3);line-height:1.7;}
+  .star-btn{
+    flex:none;display:inline-flex;align-items:center;gap:3px;white-space:nowrap;
+    font-family:inherit;font-size:12px;line-height:1;padding:4px 9px;border-radius:6px;
+    border:1px solid var(--line);background:var(--card);color:var(--text-3);
+    cursor:pointer;transition:all .15s;
+  }
+  .star-btn:hover{border-color:var(--accent);color:var(--accent-dark);}
+  .star-btn.on{
+    background:var(--accent-soft);border-color:var(--accent);
+    color:var(--accent-dark);font-weight:600;
+  }
+  .btn-main{
+    font-family:inherit;font-size:14px;padding:9px 20px;border-radius:8px;cursor:pointer;
+    background:var(--accent);border:1px solid var(--accent);color:#fff;transition:all .15s;
+  }
+  .btn-main:hover{background:var(--accent-dark);border-color:var(--accent-dark);}
+  .btn-main.ghost{background:transparent;color:var(--accent-dark);}
+  .btn-link{
+    font-family:inherit;font-size:13px;cursor:pointer;transition:all .15s;
+    background:transparent;border:1px dashed var(--line);color:var(--text-2);
+    padding:8px 14px;border-radius:8px;
+  }
+  .btn-link:hover{border-style:solid;border-color:var(--accent-dark);color:var(--accent-dark);background:var(--accent-soft);}
+  .outline > li.flash{
+    background:var(--accent-soft);
+    box-shadow:inset 3px 0 0 var(--accent),0 0 0 9px var(--accent-soft);
+    border-radius:6px;transition:background .3s,box-shadow .3s;
+    animation:flashPulse .9s ease-out 1;
+  }
+  @keyframes flashPulse{
+    0%{box-shadow:inset 3px 0 0 var(--accent),0 0 0 9px rgba(47,182,173,.36);}
+    100%{box-shadow:inset 3px 0 0 var(--accent),0 0 0 9px var(--accent-soft);}
+  }
+  .btn-main.ghost:hover{background:var(--accent-soft);}
+  .quiz-result{text-align:center;padding:8px 0 2px;}
+  .quiz-result .rk{font-size:46px;font-weight:700;color:var(--accent-dark);line-height:1.1;}
+  .quiz-result .rl{font-size:13px;color:var(--text-3);margin-top:7px;}
+  .wrong-list{margin-top:6px;}
+  .wrong-item{
+    border-left:3px solid var(--accent);padding:2px 0 2px 12px;margin-bottom:16px;
+    font-size:13px;line-height:1.85;color:var(--text-2);
+  }
+  .wrong-item b{color:var(--text);font-weight:600;}
+  .wrong-item em{font-style:normal;color:#22A97A;}
+  html.dark .q-fb.ok,html.dark .wrong-item em{color:#3DDC9A;}
+  html.dark .q-fb.no{color:#FF6B63;}
+  html.dark .opt.right{border-color:#2E9E77;background:rgba(43,192,138,.14);}
+  html.dark .opt.wrong{border-color:#C24742;background:rgba(240,85,78,.14);}
+
+  /* ---------- 黑夜模式细节 ---------- */
+  html.dark .nav{
+    box-shadow:0 1px 4px rgba(0,0,0,.55);
+    background:
+      linear-gradient(90deg,rgba(47,182,173,.20) 0%,rgba(47,182,173,.08) 34%,rgba(47,182,173,0) 58%),
+      linear-gradient(180deg,rgba(255,255,255,.04) 0%,rgba(255,255,255,0) 100%),
+      var(--card);
+  }
+  html.dark .banner{background-color:#071E22;}
+  html.dark .card,html.dark .chapter,html.dark .side-card{box-shadow:0 1px 2px rgba(0,0,0,.45);}
+  html.dark .card{background:var(--card);}
+  html.dark .card:hover{box-shadow:0 12px 28px rgba(0,0,0,.6);}
+  html.dark .side-card{background:var(--card);}
+  html.dark .art-hero,html.dark .achv-art{background:#23272E;}
+  html.dark .achv-card.unlocked{
+    border-color:#1E423E;
+    background:linear-gradient(180deg,#0C1D1C,#171A21);
+  }
+  html.dark .achv-art.no-pic{background:linear-gradient(135deg,#2A2F38,#232830);}
+  html.dark .achv-card.unlocked .achv-art.no-pic{background:linear-gradient(135deg,#1A6A64,#145450);}
+  html.dark .achv-art.time-art{background:linear-gradient(135deg,#102624,#0D201E);}
+  html.dark .achv-card.locked .achv-art.time-art{background:linear-gradient(135deg,#242832,#1C2027);}
+  html.dark .achv-card.locked .bar i{background:#31363F;}
+  html.dark .achv-card.locked .achv-art::after{
+    background:var(--lock-ico) center/26px 26px no-repeat,rgba(0,0,0,.55);
+  }
+  html.dark .toast{border-color:#173330;box-shadow:0 12px 34px rgba(0,0,0,.65);}
+  html.dark .to-top{box-shadow:0 4px 14px rgba(0,0,0,.55);}
+  html.dark .tag-key{background:#12302D;color:#9CEAE1;}
+  html.dark .tag-concept{background:#10262E;color:#4FD1F5;}
+  html.dark .tag-tip{background:#2E2515;color:#E8B45C;}
+  html.dark .tag-review{background:#241F3A;color:#A995F5;}
+  html.dark .tag-quote{background:#23272E;color:#A6AEBA;}
+  html.dark .cover.has-img::after{
+    background:linear-gradient(180deg,rgba(0,0,0,.38),rgba(0,0,0,0) 30%,rgba(0,0,0,0) 52%,rgba(0,0,0,.58));
+  }
+  html.dark .progress-pill{background:#23272E;}
+  html.dark .search input::placeholder{color:#6B7380;}
+  html.dark .achv-h .cnt{background:#23272E;}
+  html.dark .fontsize{background:var(--card);}
+  html.dark .chapter p,html.dark .chapter li{color:#D2D7DE;}
+  html.dark .chapter p.achv-note,html.dark .chapter p.art-src,html.dark .chapter p.ref{color:#8A93A0;}
+  html.dark .search input{background:#23272E;}
+  html.dark .cover img{filter:brightness(.93);}
+  html.dark .art-hero img{filter:brightness(.84) contrast(1.02);}
+
+  /* ---------- 葱绿主题：填充块上的文字改用深墨色 ---------- */
+  .chip.active,.btn-ghost.on,.achv-btn.full,.fontsize button.on,.btn-main,
+  .logo-mark,.avatar{color:var(--on-accent);}
+  .btn-main:hover,.btn-main:focus-visible{background:var(--accent-mid);border-color:var(--accent-mid);}
+  .chip.active:hover{border-color:var(--accent-mid);}
+
+  /* ---------- 加载页 ---------- */
+  html.is-loading,html.is-loading body{overflow:hidden;}
+  .ld{
+    position:fixed;inset:0;z-index:9999;background:#08090A;color:#F3F6F8;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    transition:opacity .42s ease;
+  }
+  .ld.out{opacity:0;pointer-events:none;}
+  .ld-mid{text-align:center;position:relative;z-index:2;}
+  .ld-mark{width:52px;height:52px;margin:0 auto 18px;border-radius:12px;overflow:hidden;opacity:0;animation:ldUp .6s ease .05s forwards;}
+  .ld-mark img{width:100%;height:100%;object-fit:cover;display:block;}
+  .ld-title{font-size:19px;letter-spacing:.22em;font-weight:600;opacity:0;animation:ldUp .6s ease .14s forwards;text-indent:.22em;}
+  .ld-sub{margin-top:10px;font-size:11.5px;letter-spacing:.14em;color:#6E777F;opacity:0;animation:ldUp .6s ease .22s forwards;}
+  .ld-vert{
+    position:absolute;right:26px;top:50%;transform:translateY(-50%) rotate(90deg);
+    font-size:10px;letter-spacing:.42em;color:#3A4147;white-space:nowrap;
+  }
+  .ld-foot{
+    position:absolute;left:0;right:0;bottom:46px;width:min(340px,64%);margin:0 auto;
+    display:flex;align-items:center;gap:14px;opacity:0;animation:ldUp .6s ease .3s forwards;
+  }
+  .ld-track{flex:1;height:2px;border-radius:2px;background:#2F3740;overflow:hidden;}
+  .ld-track i{display:block;height:100%;width:0;border-radius:2px;background:#FFC53D;box-shadow:0 0 8px rgba(255,197,61,.55);transition:width .18s linear;}
+  .ld-num{font-size:11px;letter-spacing:.08em;color:#D8DEE4;font-variant-numeric:tabular-nums;}
+  .ld-num em{font-style:normal;color:#4E565D;margin-left:1px;}
+  .ld-wipe{
+    position:absolute;inset:0;background:#2FB6AD;z-index:3;
+    transform:scaleY(0);transform-origin:bottom;
+    transition:transform .4s cubic-bezier(.65,.02,.28,1);
+  }
+  .ld-wipe.on{transform:scaleY(1);}
+  @keyframes ldUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+  @media (max-width:600px){
+    .ld-vert{display:none;}
+    .ld-foot{bottom:56px;width:80%;}
+    .ld-title{font-size:17px;}
+  }
+
+  /* ---------- 视图切换加载层（只盖住导航以下） ---------- */
+  .vload{
+    position:fixed;left:0;right:0;top:64px;bottom:0;z-index:90;
+    display:none;overflow:hidden;
+    background:transparent;
+    opacity:1;
+    transition:background .24s ease,opacity .3s ease;
+  }
+  .vload.on{display:block;}
+  .vload.dark{background:#08090A;}
+  .vload.out{opacity:0;}
+  /* 青绿由下至上填满 */
+  .vwipe{
+    position:absolute;inset:0;z-index:0;background:var(--accent);
+    transform:scaleY(0);transform-origin:bottom;
+    transition:transform .32s cubic-bezier(.65,.02,.28,1);
+  }
+  .vwipe.up{transform:scaleY(1);}
+  .vinner{
+    position:absolute;inset:0;z-index:1;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    opacity:0;transition:opacity .26s ease;
+  }
+  .vload.dark .vinner{opacity:1;}
+  .vload .vm{width:34px;height:34px;border-radius:9px;overflow:hidden;margin-bottom:13px;}
+  .vload .vm img{width:100%;height:100%;object-fit:cover;display:block;}
+  .vload .vt{font-size:12.5px;letter-spacing:.3em;color:#E7ECF0;text-indent:.3em;}
+  .vload .vbar{width:200px;height:2px;border-radius:2px;background:#2F3740;margin-top:20px;overflow:hidden;}
+  .vload .vbar i{display:block;height:100%;width:0;border-radius:2px;background:#FFC53D;box-shadow:0 0 8px rgba(255,197,61,.55);}
+  .vload .vp{
+    margin-top:8px;font-size:10.5px;letter-spacing:.08em;color:#D8DEE4;
+    font-variant-numeric:tabular-nums;
+  }
+  .vload .vp em{font-style:normal;color:#4E565D;margin-left:1px;}
+  @media (max-width:900px){ .vload{top:56px;} }
+  @media (max-width:600px){ .vload .vbar{width:160px;} }
+</style>
+<script>
+  /* 首屏前套用主题，避免闪白 */
+  (function () {
+    try {
+      var t = localStorage.getItem('gaigai.theme.v1');
+      if (!t) {
+        t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+      }
+      if (t === 'dark') document.documentElement.classList.add('dark');
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body class="fs-m">
+
+<div class="vload" id="vload" aria-hidden="true">
+  <div class="vwipe" id="vWipe"></div>
+  <div class="vinner">
+    <div class="vm"><img src="img/logo.png" alt="" /></div>
+    <div class="vt">概 论 复 习 站</div>
+    <div class="vbar"><i id="vFill"></i></div>
+    <div class="vp"><span id="vPct">00</span><em>%</em></div>
+  </div>
+</div>
+
+<div class="ld" id="ld" role="presentation" aria-hidden="true">
+  <div class="ld-vert">GAIGAI · REVIEW</div>
+  <div class="ld-mid">
+    <div class="ld-mark"><img src="img/logo.png" alt="" /></div>
+    <div class="ld-title">概论复习站</div>
+    <div class="ld-sub">习近平新时代中国特色社会主义思想概论</div>
+  </div>
+  <div class="ld-foot">
+    <div class="ld-track"><i id="ldFill"></i></div>
+    <div class="ld-num"><span id="ldPct">00</span><em>%</em></div>
+  </div>
+  <div class="ld-wipe" id="ldWipe"></div>
+</div>
+
+<script>
+(function () {
+  var ld = document.getElementById('ld');
+  if (!ld) return;
+  var fill = document.getElementById('ldFill');
+  var pctEl = document.getElementById('ldPct');
+  var wipe = document.getElementById('ldWipe');
+
+  /* 同一标签页只看一次 */
+  try {
+    if (sessionStorage.getItem('gaigai.ld.seen') === '1') {
+      ld.parentNode.removeChild(ld);
+      return;
+    }
+  } catch (e) {}
+
+  document.documentElement.classList.add('is-loading');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var MIN = reduce ? 260 : 1300;
+  var t0 = performance.now();
+  var shown = 0, ready = document.readyState === 'complete', finished = false;
+
+  window.addEventListener('load', function () { ready = true; });
+
+  function paint(p) {
+    if (p === shown) return;
+    shown = p;
+    pctEl.textContent = (p < 10 ? '0' : '') + p;
+    fill.style.width = p + '%';
+  }
+
+  function finish() {
+    if (finished) return;
+    finished = true;
+    paint(100);
+    try { sessionStorage.setItem('gaigai.ld.seen', '1'); } catch (e) {}
+
+    /* 满格 -> 青绿色块自下而上刷屏 -> 整体淡出 */
+    requestAnimationFrame(function () {
+      wipe.classList.add('on');
+      setTimeout(function () {
+        ld.classList.add('out');
+        document.documentElement.classList.remove('is-loading');
+        setTimeout(function () { if (ld.parentNode) ld.parentNode.removeChild(ld); }, 450);
+      }, reduce ? 120 : 430);
+    });
+  }
+
+  function tick(now) {
+    var el = now - t0;
+    var p = Math.round(Math.min(1, el / MIN) * 100);
+    /* 没加载完之前最多走到 93% */
+    if (!ready && p > 93) p = 93;
+    if (p > shown) paint(p);
+    if (p >= 100) { finish(); return; }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  /* 兜底：无论如何 6 秒内收场 */
+  setTimeout(finish, 6000);
+})();
+</script>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="logo" data-go="home">
+      <div class="logo-mark"><img src="img/logo.png" alt="概论复习站" /></div>
+      <div class="logo-text">概论复习站</div>
+    </div>
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="展开导航" aria-expanded="false">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/>
+      </svg>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="#home" data-nav="home" class="active">首页</a>
+      <a href="#home" data-filter="总论">总论</a>
+      <a href="#home" data-filter="改革发展">改革发展</a>
+      <a href="#home" data-filter="政治法治文化">政治法治文化</a>
+      <a href="#home" data-filter="原著专题">原著专题</a>
+      <a href="#quiz" data-nav="quiz">刷题</a>
+      <a href="#marks" data-nav="marks">题库本</a>
+      <a href="#achv" data-nav="achv">成就</a>
+    </div>
+    <div class="search">
+      <input id="q" type="search" placeholder="搜索章节、考点、概念" autocomplete="off" />
+      <button class="search-btn" id="qBtn" type="button" aria-label="搜索">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/>
+        </svg>
+      </button>
+    </div>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="切换黑夜模式" title="切换黑夜模式">
+      <svg class="ic-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.9A8.6 8.6 0 1 1 11.1 3a6.7 6.7 0 0 0 9.9 9.9z"/>
+      </svg>
+      <svg class="ic-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <circle cx="12" cy="12" r="4.2"/>
+        <path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/>
+      </svg>
+    </button>
+    <button class="achv-btn" id="achvBtn" type="button" title="学习成就">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 21h8"/><path d="M12 17v4"/>
+        <path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/>
+        <path d="M17 5h2.5a1.5 1.5 0 0 1 0 3H17"/>
+        <path d="M7 5H4.5a1.5 1.5 0 0 0 0 3H7"/>
+      </svg>
+      <span id="achvCount">0/4</span>
+    </button>
+    <div class="progress-pill" id="progressPill">已学 <b>0</b>/23</div>
+    <button class="avatar" id="userBtn" type="button" title="学习者">学</button>
+    <input type="file" id="avFile" accept="image/*" hidden />
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="banner">
+    <h1>习近平新时代中国特色社会主义思想概论 · 复习站</h1>
+    <p>导论 · 十七章 · 提纲 / 重点 / 概念 / 易混 / 复习提示</p>
+    <div class="banner-stats">
+      <div><strong>1+17</strong>导论与十七章</div>
+      <div><strong>5</strong>原著专题</div>
+      <div><strong>5</strong>类标签</div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <aside class="side">
+      <div class="side-card" id="toc"></div>
+    </aside>
+
+    <div class="content">
+      <div id="home">
+        <div class="filters" id="filters"></div>
+        <div class="grid" id="grid"></div>
+        <div class="empty hidden" id="empty">
+          <strong>没有找到相关内容</strong>
+          换个关键词，或点击「全部」查看所有章节
+        </div>
+      </div>
+      <div id="view"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  依据《习近平新时代中国特色社会主义思想概论》（高等教育出版社、人民出版社 2023 年版）章节结构整理
+  <br />复习资料仅供参考 · 以教材原文和课堂讲授为准
+</footer>
+
+<div class="toast-wrap" id="toastWrap" aria-live="polite"></div>
+
+<button class="to-top" id="toTop" type="button" aria-label="回到顶部">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+  </svg>
+</button>
+
+<script>
+/* =========================================================
+   章节数据：想加内容，直接在数组里加对象即可
+   outline 提纲 / points 重点 / concepts 概念[名, 释义]
+   confusions 易混 / review 复习提示 / quotes 原文摘录
+   ========================================================= */
+var DATA = [
+
+{
+  id:'intro', no:'00', group:'总论', badge:'导论', vol:'概论 · 导论', img:'img/00v3.jpg',
+  title:'导论 马克思主义中国化时代化新的飞跃',
+  sub:'核心要义 · 两个结合 · 六个必须坚持',
+  outline:[
+    '创立的时代背景：中华民族伟大复兴战略全局与世界百年未有之大变局同步交织、相互激荡',
+    '回答的重大时代课题：新时代坚持和发展什么样的中国特色社会主义、怎样坚持和发展中国特色社会主义，建设什么样的社会主义现代化强国、怎样建设社会主义现代化强国，建设什么样的长期执政的马克思主义政党、怎样建设长期执政的马克思主义政党',
+    '核心要义："十个明确"；基本方略："十四个坚持"；实践成果："十三个方面成就"',
+    '"两个结合"：同中国具体实际相结合、同中华优秀传统文化相结合',
+    '"六个必须坚持"：人民至上、自信自立、守正创新、问题导向、系统观念、胸怀天下',
+    '历史地位：当代中国马克思主义、二十一世纪马克思主义，中华文化和中国精神的时代精华'
+  ],
+  points:[
+    '党的十九大把习近平新时代中国特色社会主义思想确立为党必须长期坚持的指导思想并写入党章；十三届全国人大一次会议通过宪法修正案，将其载入宪法。',
+    '"十个明确"是这一思想核心要义的集中概括，回答的是新时代坚持和发展中国特色社会主义的根本性问题。',
+    '"十四个坚持"是新时代坚持和发展中国特色社会主义的基本方略，侧重实践层面的部署要求。',
+    '"两个结合"是推进马克思主义中国化时代化的必由之路，其中"第二个结合"是又一次的思想解放。',
+    '"六个必须坚持"是这一思想的世界观、方法论和贯穿其中的立场观点方法。',
+    '"两个确立"：确立习近平同志党中央的核心、全党的核心地位，确立习近平新时代中国特色社会主义思想的指导地位。'
+  ],
+  concepts:[
+    ['马克思主义中国化时代化','把马克思主义基本原理同中国具体实际、同中华优秀传统文化相结合，形成具有中国特色、中国风格、中国气派的马克思主义。'],
+    ['两个结合','同中国具体实际相结合、同中华优秀传统文化相结合。前者解决"落地"问题，后者解决"根脉"问题。'],
+    ['六个必须坚持','人民至上、自信自立、守正创新、问题导向、系统观念、胸怀天下，是贯穿这一思想的立场观点方法。'],
+    ['两个确立','"两个确立"是新时代党和国家事业取得历史性成就、发生历史性变革的决定性因素。']
+  ],
+  confusions:[
+    '"十个明确"讲"是什么、要什么"（理论层面），"十四个坚持"讲"怎么做"（实践层面），答题时不要混为一谈。',
+    '"第二个结合"不是对"第一个结合"的替代，而是并列的"两个结合"，共同构成必由之路。'
+  ],
+  review:[
+    '记忆链条：时代背景 → 三大时代课题 → 核心要义（十个明确）→ 基本方略（十四个坚持）→ 世界观方法论（六个必须坚持）→ 历史地位。',
+    '导论最容易出简答题的是"六个必须坚持"和"两个结合"，务必能逐条默写。'
+  ]
+},
+
+{
+  id:'ch1', no:'01', group:'总论', badge:'第 1 章', img:'img/01v3.jpg', vol:'概论 · 第一章',
+  title:'第一章 新时代坚持和发展中国特色社会主义',
+  sub:'历史方位 · 社会主要矛盾 · 五位一体 · 四个全面',
+  outline:[
+    {s:'第一节 方向决定道路、道路决定命运', items:['中国特色社会主义是历史和人民的选择', '中国特色社会主义是社会主义而不是其他什么主义', '坚定道路自信、理论自信、制度自信、文化自信']},
+    {s:'第二节 中国特色社会主义进入新时代', items:['中国特色社会主义新时代是我国发展新的历史方位', '社会主要矛盾变化是关系全局的历史性变化', '新时代伟大变革及其里程碑意义']},
+    {s:'第三节 新时代坚持和发展中国特色社会主义要一以贯之', items:['全面贯彻党的基本理论、基本路线、基本方略', '统筹推进“五位一体”总体布局和协调推进“四个全面”战略布局', '推动中国特色社会主义不断开拓前进']},
+  ],
+  points:[
+    '中国特色社会主义是当代中国发展进步的根本方向，是党和人民团结奋斗的共同思想基础。',
+    '新时代是中国特色社会主义新时代，而不是别的什么新时代；新时代的重大意义体现在中华民族、科学社会主义、人类社会三个维度。',
+    '我国仍处于并将长期处于社会主义初级阶段的基本国情没有变，我国是世界最大发展中国家的国际地位没有变。',
+    '既不走封闭僵化的老路，也不走改旗易帜的邪路。',
+    '"五位一体"总体布局：经济建设、政治建设、文化建设、社会建设、生态文明建设。',
+    '"四个全面"战略布局：全面建设社会主义现代化国家、全面深化改革、全面依法治国、全面从严治党。'
+  ],
+  concepts:[
+    ['新时代','我国发展新的历史方位，是承前启后、继往开来、在新的历史条件下继续夺取中国特色社会主义伟大胜利的时代。'],
+    ['社会主要矛盾','人民日益增长的美好生活需要和不平衡不充分的发展之间的矛盾，这是关系全局的历史性变化。'],
+    ['四个自信','道路自信、理论自信、制度自信、文化自信，其中文化自信是更基础、更广泛、更深厚的自信。'],
+    ['五位一体','经济、政治、文化、社会、生态文明建设五位一体，是中国特色社会主义事业的总体布局。']
+  ],
+  confusions:[
+    '社会主要矛盾变化 ≠ 基本国情变化：初级阶段这一最大国情、最大实际没有变，发展中国家的国际地位没有变。',
+    '"新时代"不等于"跨越初级阶段"，新时代仍处于社会主义初级阶段之中。'
+  ],
+  review:[
+    '本章答题骨架：一条主线（坚持和发展中国特色社会主义）+ 两个"没有变" + 三大布局（五位一体、四个全面、四个自信）。',
+    '常见设问："新时代我国社会主要矛盾变化的依据和意义"，先答"两个没有变"，再答"变"的表现与影响。'
+  ]
+},
+
+{
+  id:'ch2', no:'02', group:'总论', badge:'第 2 章', img:'img/02v3.jpg', vol:'概论 · 第二章',
+  title:'第二章 以中国式现代化全面推进中华民族伟大复兴',
+  sub:'中国梦 · 两步走 · 五个特征 · 九个本质要求',
+  outline:[
+    {s:'第一节 中华民族近代以来最伟大的梦想', items:['实现中华民族伟大复兴的中国梦', '在中华大地上全面建成小康社会', '全面建成社会主义现代化强国']},
+    {s:'第二节 中国式现代化是强国建设、民族复兴的唯一正确道路', items:['中国式现代化是中国共产党领导人民长期探索和实践的重大成果', '中国式现代化的中国特色', '中国式现代化的本质要求', '中国式现代化创造了人类文明新形态']},
+    {s:'第三节 推进中国式现代化行稳致远', items:['推进中国式现代化需要牢牢把握的重大原则', '推进中国式现代化需要正确处理的重大关系', '推进中国式现代化必须坚持团结奋斗']},
+  ],
+  points:[
+    '中国梦是国家的梦、民族的梦，也是每一个中国人的梦；国家好、民族好，大家才会好。',
+    '中国式现代化是中国共产党领导的社会主义现代化，既有各国现代化的共同特征，更有基于自己国情的中国特色。',
+    '五个特征：人口规模巨大、全体人民共同富裕、物质文明和精神文明相协调、人与自然和谐共生、走和平发展道路。',
+    '本质要求：坚持中国共产党领导，坚持中国特色社会主义，实现高质量发展，发展全过程人民民主，丰富人民精神世界，实现全体人民共同富裕，促进人与自然和谐共生，推动构建人类命运共同体，创造人类文明新形态。',
+    '五个重大原则：坚持和加强党的全面领导、坚持中国特色社会主义道路、坚持以人民为中心的发展思想、坚持深化改革开放、坚持发扬斗争精神。'
+  ],
+  concepts:[
+    ['中国梦','实现中华民族伟大复兴，基本内涵是国家富强、民族振兴、人民幸福。'],
+    ['中国式现代化','中国共产党领导的社会主义现代化，是人口规模巨大的现代化、全体人民共同富裕的现代化、物质文明和精神文明相协调的现代化、人与自然和谐共生的现代化、走和平发展道路的现代化。'],
+    ['两步走','到 2035 年基本实现社会主义现代化；到本世纪中叶把我国建成富强民主文明和谐美丽的社会主义现代化强国。'],
+    ['人类文明新形态','中国式现代化创造的、不同于西方现代化道路的文明形态。']
+  ],
+  confusions:[
+    '中国式现代化 ≠ 西方化：可以借鉴人类文明成果，但不存在"现代化 = 西方化"的公式。',
+    '共同富裕 ≠ 同步富裕、平均主义：是全体人民共同富裕，允许一部分人先富起来，先富带后富。'
+  ],
+  review:[
+    '高频考点："5 个特征 + 9 个本质要求 + 5 个重大原则"，三组数字要能分开答，不要串组。',
+    '答题时先定性（中国共产党领导的社会主义现代化），再展开特征与要求，最后落到"两步走"时间表。'
+  ]
+},
+
+{
+  id:'ch3', no:'03', group:'总论', badge:'第 3 章', img:'img/03v3.jpg', vol:'概论 · 第三章',
+  title:'第三章 坚持党的全面领导',
+  sub:'最本质特征 · 最高政治领导力量 · 两个维护',
+  outline:[
+    {s:'第一节 中国共产党领导是中国特色社会主义最本质的特征', items:['中国最大的国情就是中国共产党的领导', '中国共产党领导是中国特色社会主义制度的最大优势', '加强党的全面领导为新时代党和国家事业发展提供了坚强保证']},
+    {s:'第二节 坚持党对一切工作的领导', items:['中国共产党是最高政治领导力量', '党的领导是全面的、系统的、整体的', '维护党中央权威和集中统一领导']},
+    {s:'第三节 健全和完善党的领导制度体系', items:['党的领导制度是我国的根本领导制度', '健全党中央对重大工作的领导体制', '健全党的全面领导制度']},
+  ],
+  points:[
+    '中国特色社会主义最本质的特征是中国共产党领导，中国特色社会主义制度的最大优势是中国共产党领导。',
+    '党是最高政治领导力量，党的领导是党和国家的根本所在、命脉所在，是全国各族人民的利益所系、命运所系。',
+    '党的领导是全面的、系统的、整体的，哪个领域、哪个方面、哪个环节缺失了弱化了，都会削弱党的力量。',
+    '"两个维护"：坚决维护习近平总书记党中央的核心、全党的核心地位，坚决维护党中央权威和集中统一领导。',
+    '党的领导是"总揽全局、协调各方"，而不是包办一切、代替一切。'
+  ],
+  concepts:[
+    ['最本质特征','中国共产党领导是中国特色社会主义最本质的特征，这是从社会主义本质层面作出的重大论断。'],
+    ['最高政治领导力量','党是最高政治领导力量，这一判断明确了党在国家政治生活中的领导核心地位。'],
+    ['两个维护','维护习近平总书记党中央的核心、全党的核心地位，维护党中央权威和集中统一领导。'],
+    ['总揽全局、协调各方','党的领导方式，强调党在同级各种组织中发挥领导核心作用，支持各方依法依章程履行职责。']
+  ],
+  confusions:[
+    '党的领导 ≠ 包办一切：是"总揽全局、协调各方"，不是代替国家机关、群团组织行使职权。',
+    '强调党的领导 ≠ 削弱法治：党领导立法、保证执法、支持司法、带头守法，二者统一于社会主义法治实践。'
+  ],
+  review:[
+    '一句话记牢："最本质的特征 + 最大优势 + 最高政治领导力量"三个定位都指向党的领导。',
+    '常见辨析题："党的领导是全面的"与"党不能包办一切"并不矛盾，答在"领导方式"和"职责边界"上。'
+  ]
+},
+
+{
+  id:'ch4', no:'04', group:'总论', badge:'第 4 章', img:'img/04v3.jpg', vol:'概论 · 第四章',
+  title:'第四章 坚持以人民为中心',
+  sub:'根本立场 · 共同富裕 · 群众路线',
+  outline:[
+    {s:'第一节 江山就是人民，人民就是江山', items:['人民是历史的创造者、是真正的英雄', '打江山、守江山，守的是人民的心', '人民立场是中国共产党的根本政治立场']},
+    {s:'第二节 坚持人民至上', items:['人民对美好生活的向往就是党的奋斗目标', '依靠人民创造历史伟业', '人民是党的工作的最高裁决者和最终评判者']},
+    {s:'第三节 全面落实以人民为中心的发展思想', items:['坚持和贯彻党的群众路线', '把为人民造福的事情真正办好办实', '推动全体人民共同富裕取得更为明显的实质性进展']},
+  ],
+  points:[
+    '人民对美好生活的向往，就是我们的奋斗目标。',
+    '坚持以人民为中心，就要坚持发展为了人民、发展依靠人民、发展成果由人民共享。',
+    '共同富裕是社会主义的本质要求，是中国式现代化的重要特征；要在高质量发展中促进共同富裕。',
+    '"江山就是人民，人民就是江山"，深刻揭示了我们党同人民群众的血肉联系。',
+    '群众路线是党的生命线和根本工作路线：一切为了群众，一切依靠群众，从群众中来，到群众中去。'
+  ],
+  concepts:[
+    ['以人民为中心','把人民放在心中最高位置，把人民对美好生活的向往作为奋斗目标，是新时代治国理政的根本立场。'],
+    ['共同富裕','全体人民共同富裕，是社会主义的本质要求，是逐步实现的过程，不是同步富裕、平均主义。'],
+    ['群众路线','一切为了群众、一切依靠群众，从群众中来、到群众中去，是党的根本工作路线。'],
+    ['国之大者','让人民生活幸福是"国之大者"，强调事关全局、事关人民根本利益的事情要心中有数。']
+  ],
+  confusions:[
+    '共同富裕 ≠ 同等富裕：承认差别、反对两极分化，是分阶段推进的过程。',
+    '"以人民为中心"≠ 只讲民生福利：还包括依靠人民推动发展、尊重人民主体地位。'
+  ],
+  review:[
+    '本章主答"为了谁、依靠谁、成果由谁共享"三个层次。',
+    '与第二章"全体人民共同富裕"是同一考点的两个角度：第二章讲特征，本章讲立场与路径。'
+  ]
+},
+
+{
+  id:'ch5', no:'05', group:'改革发展', badge:'第 5 章', img:'img/05v3.jpg', vol:'概论 · 第五章',
+  title:'第五章 全面深化改革开放',
+  sub:'关键一招 · 总目标 · 高水平开放',
+  outline:[
+    {s:'第一节 改革开放是决定当代中国命运的关键一招', items:['改革开放是我们前进的重要法宝', '新时代全面深化改革开放是一场深刻革命', '坚持全面深化改革开放的正确方向']},
+    {s:'第二节 统筹推进各领域各方面改革开放', items:['坚持全面深化改革总目标', '推进国家治理体系和治理能力现代化', '全面深化改革开放要坚持正确方法论']},
+    {s:'第三节 将改革开放进行到底', items:['改革开放永无止境', '坚定不移把全面深化改革引向深入', '坚定不移扩大高水平对外开放']},
+  ],
+  points:[
+    '改革开放只有进行时没有完成时，改革开放永无止境。',
+    '全面深化改革的总目标是完善和发展中国特色社会主义制度、推进国家治理体系和治理能力现代化，前者规定了根本方向，后者规定了实现路径。',
+    '改革既要大胆探索、摸着石头过河，也要加强顶层设计、整体谋划。',
+    '"两个毫不动摇"：毫不动摇巩固和发展公有制经济，毫不动摇鼓励、支持、引导非公有制经济发展。',
+    '推进高水平对外开放，稳步扩大规则、规制、管理、标准等制度型开放。'
+  ],
+  concepts:[
+    ['关键一招','改革开放是决定当代中国命运的关键一招，也是实现中华民族伟大复兴的关键一招。'],
+    ['改革总目标','完善和发展中国特色社会主义制度，推进国家治理体系和治理能力现代化。'],
+    ['两个毫不动摇','毫不动摇巩固和发展公有制经济，毫不动摇鼓励、支持、引导非公有制经济发展。'],
+    ['制度型开放','从商品和要素流动型开放，转向规则、规制、管理、标准等制度层面的开放。']
+  ],
+  confusions:[
+    '改革 ≠ 改旗易帜：改革是社会主义制度的自我完善和发展，不是改变社会主义方向。',
+    '市场在资源配置中起决定性作用 ≠ 政府无所作为：同时要更好发挥政府作用。'
+  ],
+  review:[
+    '"总目标"是必背表述，注意"两句话"结构：一句管方向（制度），一句管路径（治理）。',
+    '分值分布上常与第六章"高质量发展"合考，答"改革开放是发展的动力"这条逻辑线。'
+  ]
+},
+
+{
+  id:'ch6', no:'06', group:'改革发展', badge:'第 6 章', img:'img/06v3.jpg', vol:'概论 · 第六章',
+  title:'第六章 推动高质量发展',
+  sub:'新发展理念 · 新发展格局 · 基本经济制度',
+  outline:[
+    {s:'第一节 完整、准确、全面贯彻新发展理念', items:['我国进入新发展阶段', '贯彻新发展理念是关系我国发展全局的一场深刻变革', '以新发展理念引领高质量发展']},
+    {s:'第二节 坚持和完善社会主义基本经济制度', items:['坚持和完善社会主义基本经济制度是实现高质量发展的保障', '坚持“两个毫不动摇”', '坚持按劳分配为主体、多种分配方式并存', '构建高水平社会主义市场经济体制']},
+    {s:'第三节 加快构建新发展格局', items:['把握未来发展主动权的战略部署', '以国内大循环为主体、国内国际双循环相互促进', '大力推动构建新发展格局']},
+    {s:'第四节 建设现代化经济体系', items:['建设现代化产业体系', '全面推进乡村振兴', '促进区域协调发展']},
+  ],
+  points:[
+    '高质量发展是全面建设社会主义现代化国家的首要任务。',
+    '新发展理念是管全局、管根本、管长远的导向，是引领高质量发展的"指挥棒"。',
+    '构建新发展格局的关键在于经济循环的畅通无阻，不是封闭的国内循环。',
+    '社会主义基本经济制度：公有制为主体、多种所有制经济共同发展，按劳分配为主体、多种分配方式并存，社会主义市场经济体制。',
+    '建设现代化经济体系是跨越关口的迫切要求和我国发展的战略目标。'
+  ],
+  concepts:[
+    ['高质量发展','从"有没有"转向"好不好"，是体现新发展理念的发展，是创新成为第一动力、协调成为内生特点、绿色成为普遍形态、开放成为必由之路、共享成为根本目的的发展。'],
+    ['新发展理念','创新、协调、绿色、开放、共享，五大理念相互贯通、相互促进，是具有内在联系的集合体。'],
+    ['新发展格局','以国内大循环为主体、国内国际双循环相互促进，决不是封闭的国内循环。'],
+    ['供给侧结构性改革','以供给侧为主线，用改革的办法推进结构调整，减少无效和低端供给，扩大有效和中高端供给。']
+  ],
+  confusions:[
+    '新发展格局 ≠ 封闭的内循环：以国内大循环为主体，同时推动国内国际双循环相互促进。',
+    '高质量发展 ≠ 不要速度：是质量第一、效益优先，同时保持合理增长速度。'
+  ],
+  review:[
+    '本章是全书分值最重的一章之一，答题主线："阶段转变 → 理念引领 → 格局构建 → 体系支撑 → 制度保障"。',
+    '五大新发展理念要能各配一句解释，考试常要求"任选其一说明如何落实"。'
+  ]
+},
+
+{
+  id:'ch7', no:'07', group:'改革发展', badge:'第 7 章', img:'img/07v3.jpg', vol:'概论 · 第七章',
+  title:'第七章 社会主义现代化建设的教育、科技、人才战略',
+  sub:'基础性战略性支撑 · 自立自强 · 立德树人',
+  outline:[
+    {s:'第一节 全面建设社会主义现代化国家的基础性、战略性支撑', items:['坚持教育发展、科技创新、人才培养一体推进', '深入实施科教兴国战略、人才强国战略、创新驱动发展战略', '坚持教育优先发展、科技自立自强、人才引领驱动']},
+    {s:'第二节 加快建设教育强国', items:['教育是民族振兴、社会进步的基石', '落实立德树人根本任务', '办好人民满意的教育']},
+    {s:'第三节 加快建设科技强国', items:['科技强则国家强', '打赢关键核心技术攻坚战', '增强自主创新能力']},
+    {s:'第四节 加快建设人才强国', items:['培养人才是国家和民族长远发展大计', '培养造就大批德才兼备的高素质人才', '把各方面优秀人才聚集到党和国家事业中来']},
+  ],
+  points:[
+    '教育、科技、人才是全面建设社会主义现代化国家的基础性、战略性支撑，三者需要一体推进。',
+    '培养什么人、怎样培养人、为谁培养人是教育的根本问题，立德树人是教育的根本任务。',
+    '科技是第一生产力、人才是第一资源、创新是第一动力。',
+    '坚持"四个面向"：面向世界科技前沿、面向经济主战场、面向国家重大需求、面向人民生命健康。',
+    '把关键核心技术掌握在自己手中，坚决打赢关键核心技术攻坚战。'
+  ],
+  concepts:[
+    ['三个第一','科技是第一生产力、人才是第一资源、创新是第一动力。'],
+    ['四个面向','面向世界科技前沿、面向经济主战场、面向国家重大需求、面向人民生命健康。'],
+    ['高水平科技自立自强','把科技命脉牢牢掌握在自己手中，是应对外部打压封锁的根本之策。'],
+    ['立德树人','教育的根本任务，回答"培养什么人、怎样培养人、为谁培养人"这一根本问题。']
+  ],
+  confusions:[
+    '"自主创新"≠ 闭关自守：自立自强同时坚持开放合作，不排斥国际科技交流。',
+    '教育、科技、人才 ≠ 三个独立板块：要"一体推进"，统筹部署、协同发力。'
+  ],
+  review:[
+    '三个"第一"和"四个面向"是本章最易得分点，务必准确默写。',
+    '答"为什么一体推进"时，从教育培养人才、人才支撑科技、科技创新反哺教育这条链条展开。'
+  ]
+},
+
+{
+  id:'ch8', no:'08', group:'政治法治文化', badge:'第 8 章', img:'img/08v3.jpg', vol:'概论 · 第八章',
+  title:'第八章 发展全过程人民民主',
+  sub:'最广泛最真实最管用 · 人民代表大会制度 · 协商民主',
+  outline:[
+    {s:'第一节 坚定中国特色社会主义政治制度自信', items:['人民民主是社会主义的生命', '中国特色社会主义政治制度行得通、有生命力、有效率', '坚定不移走中国特色社会主义政治发展道路']},
+    {s:'第二节 全过程人民民主是社会主义民主政治的本质属性', items:['全过程人民民主是社会主义民主政治的伟大创造', '全过程人民民主是全链条、全方位、全覆盖的民主', '全过程人民民主是最广泛、最真实、最管用的民主']},
+    {s:'第三节 健全人民当家作主的制度体系', items:['加强人民当家作主制度保障', '全面发展协商民主', '积极发展基层民主']},
+    {s:'第四节 巩固和发展新时代爱国统一战线', items:['统一战线是凝聚人心、汇聚力量的强大法宝', '铸牢中华民族共同体意识', '加强和促进海内外中华儿女大团结']},
+  ],
+  points:[
+    '全过程人民民主实现了过程民主和成果民主、程序民主和实质民主、直接民主和间接民主、人民民主和国家意志相统一。',
+    '人民代表大会制度是坚持党的领导、人民当家作主、依法治国有机统一的根本政治制度安排。',
+    '协商民主是我国社会主义民主政治的特有形式和独特优势。',
+    '基层群众自治制度是我国基本政治制度之一，是全过程人民民主的重要体现。',
+    '统一战线是凝聚人心、汇聚力量的强大法宝。'
+  ],
+  concepts:[
+    ['全过程人民民主','把民主选举、民主协商、民主决策、民主管理、民主监督贯通起来，是全链条、全方位、全覆盖的民主。'],
+    ['根本政治制度','人民代表大会制度，是我国的根本政治制度。'],
+    ['协商民主','有事好商量、众人的事情由众人商量，是我国社会主义民主政治的特有形式和独特优势。'],
+    ['基本政治制度','中国共产党领导的多党合作和政治协商制度、民族区域自治制度、基层群众自治制度。']
+  ],
+  confusions:[
+    '全过程人民民主 ≠ 只有选举民主：选举之外还包括协商、决策、管理、监督各环节。',
+    '政协 ≠ 国家权力机关：政协是统一战线组织和专门协商机构，不行使国家权力。'
+  ],
+  review:[
+    '记忆口诀："一个根本（人大制度）+ 三个基本（多党合作与政协、民族区域自治、基层群众自治）"。',
+    '"四个相统一"是全过程人民民主的高频表述，注意逐条对应。'
+  ]
+},
+
+{
+  id:'ch9', no:'09', group:'政治法治文化', badge:'第 9 章', img:'img/09v3.jpg', vol:'概论 · 第九章',
+  title:'第九章 全面依法治国',
+  sub:'法治体系 · 依宪治国 · 十一个坚持',
+  outline:[
+    {s:'第一节 坚持中国特色社会主义法治道路', items:['全面依法治国是国家治理的一场深刻革命', '全面依法治国的唯一正确道路', '统筹处理全面依法治国的重大关系']},
+    {s:'第二节 建设中国特色社会主义法治体系', items:['全面推进依法治国的总抓手', '坚持依宪治国、依宪执政', '更好推进中国特色社会主义法治体系建设']},
+    {s:'第三节 加快建设法治中国', items:['法治中国建设的总体目标', '法治中国建设的工作布局', '建设更高水平的法治中国']},
+  ],
+  points:[
+    '全面依法治国是中国特色社会主义的本质要求和重要保障。',
+    '总目标包含两句话：建设中国特色社会主义法治体系（抓手），建设社会主义法治国家（目标）。',
+    '宪法是国家的根本法，坚持依法治国首先要坚持依宪治国，坚持依法执政首先要坚持依宪执政。',
+    '法治体系五个子体系要能完整列举，不要漏"完善的党内法规体系"。',
+    '坚持依法治国、依法执政、依法行政共同推进，法治国家、法治政府、法治社会一体建设。'
+  ],
+  concepts:[
+    ['全面依法治国总目标','建设中国特色社会主义法治体系，建设社会主义法治国家。'],
+    ['法治体系','由法律规范体系、法治实施体系、法治监督体系、法治保障体系、党内法规体系构成。'],
+    ['依宪治国','坚持依法治国首先要坚持依宪治国，坚持依法执政首先要坚持依宪执政。'],
+    ['法治工作基本格局','科学立法、严格执法、公正司法、全民守法。']
+  ],
+  confusions:[
+    '依法治国 ≠ 以法治民：重点是依法治权、依法治官，把权力关进制度的笼子。',
+    '"党大还是法大"是伪命题：党的领导与依法治国是统一的，党领导立法、保证执法、支持司法、带头守法。'
+  ],
+  review:[
+    '必背：总目标"两句话"+ 法治体系"五个子体系"+ 基本格局"十六字"。',
+    '与第八章的关系：人民当家作主是本质，依法治国是保障，二者统一于中国特色社会主义政治发展道路。'
+  ]
+},
+
+{
+  id:'ch10', no:'10', group:'政治法治文化', badge:'第 10 章', img:'img/10v3.jpg', vol:'概论 · 第十章',
+  title:'第十章 建设社会主义文化强国',
+  sub:'文化自信 · 核心价值观 · 两创',
+  outline:[
+    {s:'第一节 文化是民族生存和发展的重要力量', items:['文化繁荣兴盛是实现中华民族伟大复兴的必然要求', '坚定中国特色社会主义文化自信', '坚持中国特色社会主义文化发展道路']},
+    {s:'第二节 建设具有强大凝聚力和引领力的社会主义意识形态', items:['坚持马克思主义在意识形态领域指导地位的根本制度', '大力加强马克思主义理论建设', '积极塑造主流舆论新格局']},
+    {s:'第三节 以社会主义核心价值观引领文化建设', items:['广泛践行社会主义核心价值观', '弘扬以伟大建党精神为源头的中国共产党人精神谱系', '提高全社会文明程度']},
+    {s:'第四节 铸就社会主义文化新辉煌', items:['传承发展中华优秀传统文化', '繁荣发展文化事业和文化产业', '不断提升国家文化软实力和中华文化影响力']},
+  ],
+  points:[
+    '文化自信是更基础、更广泛、更深厚的自信，是一个国家、一个民族发展中最基本、最深沉、最持久的力量。',
+    '社会主义核心价值观：富强、民主、文明、和谐（国家层面）；自由、平等、公正、法治（社会层面）；爱国、敬业、诚信、友善（公民层面）。',
+    '意识形态工作是为国家立心、为民族立魂的工作，必须坚持马克思主义在意识形态领域的指导地位。',
+    '"两创"：推动中华优秀传统文化创造性转化、创新性发展。',
+    '伟大建党精神：坚持真理、坚守理想，践行初心、担当使命，不怕牺牲、英勇斗争，对党忠诚、不负人民。'
+  ],
+  concepts:[
+    ['文化自信','更基础、更广泛、更深厚的自信，源于中华优秀传统文化、革命文化和社会主义先进文化。'],
+    ['社会主义核心价值观','24 字、三个层面，是当代中国精神的集中体现。'],
+    ['两创','创造性转化、创新性发展，是对待中华优秀传统文化的科学态度。'],
+    ['伟大建党精神','32 字，是中国共产党的精神之源。']
+  ],
+  confusions:[
+    '文化自信 ≠ 文化自负、文化封闭：自信同时意味着开放包容、交流互鉴。',
+    '"两创"不等于简单复古：要有鉴别地加以对待、有扬弃地予以继承。'
+  ],
+  review:[
+    '24 字核心价值观要按三个层面分块默写，考试常考"任一层面的内涵"。',
+    '伟大建党精神 32 字易漏"对党忠诚、不负人民"，注意前后两句结构对称。'
+  ]
+},
+
+{
+  id:'ch11', no:'11', group:'社会民生生态', badge:'第 11 章', img:'img/11v3.jpg', vol:'概论 · 第十一章',
+  title:'第十一章 以保障和改善民生为重点加强社会建设',
+  sub:'民生是幸福之基 · 就业优先 · 社会治理',
+  outline:[
+    {s:'第一节 让人民生活幸福是“国之大者”', items:['民生是人民幸福之基', '人民获得感幸福感安全感更加充实、更有保障、更可持续', '坚持在发展中增进民生福祉']},
+    {s:'第二节 不断提高人民生活品质', items:['完善分配制度', '实施就业优先战略', '健全社会保障体系', '推进健康中国建设']},
+    {s:'第三节 在共建共治共享中推进社会治理现代化', items:['加强和创新社会治理', '完善社会治理体系', '加强城乡社区治理']},
+  ],
+  points:[
+    '增进民生福祉是发展的根本目的，让老百姓过上好日子是我们一切工作的出发点和落脚点。',
+    '就业是最大的民生工程、民心工程、根基工程。',
+    '社会保障体系是人民生活的安全网和社会运行的稳定器。',
+    '社会治理格局：共建共治共享；治理体制：党委领导、政府负责、民主协商、社会协同、公众参与、法治保障、科技支撑。',
+    '坚持尽力而为、量力而行，既不裹足不前，也不脱离实际、寅吃卯粮。'
+  ],
+  concepts:[
+    ['民生','人民幸福之基、社会和谐之本，包括教育、就业、收入、社保、医疗、住房、养老、托幼等方面。'],
+    ['就业优先战略','就业是最大的民生，把促进就业放在经济社会发展优先位置。'],
+    ['共建共治共享','社会治理格局，强调人人有责、人人尽责、人人享有。'],
+    ['尽力而为、量力而行','民生建设的节奏原则，兼顾需要与可能、当前与长远。']
+  ],
+  confusions:[
+    '"尽力而为"与"量力而行"不可只答一头：前者讲担当，后者讲可持续，二者统一。',
+    '民生建设 ≠ 单纯发钱发福利：还包括制度建设和机会公平。'
+  ],
+  review:[
+    '记住两组词：治理格局"共建共治共享"，治理体制"七个主体 + 一个支撑"。',
+    '答题常与第十二章合并为"社会建设与生态文明"，注意分清民生与生态两条线。'
+  ]
+},
+
+{
+  id:'ch12', no:'12', group:'社会民生生态', badge:'第 12 章', img:'img/12v3.jpg', vol:'概论 · 第十二章',
+  title:'第十二章 建设社会主义生态文明',
+  sub:'两山理念 · 双碳目标 · 系统治理',
+  outline:[
+    {s:'第一节 坚持人与自然和谐共生', items:['生态兴则文明兴', '绿水青山就是金山银山', '把生态文明建设摆在全局工作的突出位置']},
+    {s:'第二节 建设美丽中国', items:['加快形成绿色生产方式和生活方式', '坚持山水林田湖草沙一体化保护和系统治理', '用最严格制度最严密法治保护生态环境']},
+    {s:'第三节 共谋全球生态文明建设之路', items:['保护人类共同家园', '共建清洁美丽世界', '积极推动全球可持续发展']},
+  ],
+  points:[
+    '生态兴则文明兴，生态衰则文明衰。',
+    '"绿水青山就是金山银山"深刻揭示了生态环境保护与经济发展的辩证统一关系。',
+    '生态文明建设是关系中华民族永续发展的根本大计。',
+    '"双碳"目标：力争 2030 年前实现碳达峰、2060 年前实现碳中和。',
+    '坚持系统观念，统筹山水林田湖草沙一体化保护和系统治理。'
+  ],
+  concepts:[
+    ['两山理念','绿水青山就是金山银山，2005 年提出于浙江安吉余村，是生态文明建设的核心理念。'],
+    ['双碳目标','2030 年前碳达峰、2060 年前碳中和，是我国对国际社会的庄严承诺。'],
+    ['人与自然和谐共生','中国式现代化的重要特征，强调尊重自然、顺应自然、保护自然。'],
+    ['系统治理','山水林田湖草沙是一个生命共同体，必须一体化保护和系统治理。']
+  ],
+  confusions:[
+    '"双碳"≠ 降碳优先于发展：要立足以煤为主的基本国情，先立后破、稳中求进。',
+    '生态保护 ≠ 不发展：是通过绿色发展实现保护与发展的统一。'
+  ],
+  review:[
+    '三个关键词必背：两山理念、双碳目标、系统治理。',
+    '与第六章交叉考"绿色发展"，答"理念（两山）— 路径（绿色生产生活方式）— 目标（双碳）"。'
+  ]
+},
+
+{
+  id:'ch13', no:'13', group:'安全统一外交', badge:'第 13 章', img:'img/13v3.jpg', vol:'概论 · 第十三章',
+  title:'第十三章 维护和塑造国家安全',
+  sub:'总体国家安全观 · 统筹发展和安全',
+  outline:[
+    {s:'第一节 坚持总体国家安全观', items:['国家安全是民族复兴的根基', '总体国家安全观是新时代国家安全工作的基本遵循', '新时代国家安全得到全面加强']},
+    {s:'第二节 构建统筹各领域安全的新安全格局', items:['统筹发展和安全', '把维护政治安全放在首要位置', '维护重点领域国家安全']},
+    {s:'第三节 开创新时代国家安全工作新局面', items:['推进国家安全体系和能力现代化', '建设更高水平的平安中国', '提高防范化解重大风险能力']},
+  ],
+  points:[
+    '总体国家安全观是新时代国家安全工作的根本遵循和行动指南。',
+    '"五大要素"构成总体国家安全观的核心内容，要能按"宗旨—根本—基础—保障—依托"顺序表述。',
+    '既重视发展问题又重视安全问题，发展是安全的基础，安全是发展的条件。',
+    '坚持党对国家安全工作的绝对领导，完善集中统一、高效权威的国家安全领导体制。',
+    '把维护政治安全放在首位，政治安全是最高的国家安全。'
+  ],
+  concepts:[
+    ['总体国家安全观','统筹内部安全与外部安全、国土安全与国民安全、传统安全与非传统安全、发展问题与安全问题、自身安全与共同安全。'],
+    ['五大要素','以人民安全为宗旨，以政治安全为根本，以经济安全为基础，以军事、科技、文化、社会安全为保障，以促进国际安全为依托。'],
+    ['统筹发展和安全','发展是安全的基础，安全是发展的条件，二者是一体之两翼、驱动之双轮。'],
+    ['新安全格局','以新安全格局保障新发展格局。']
+  ],
+  confusions:[
+    '国家安全 ≠ 只讲政治安全：是总体安全，涵盖政治、经济、军事、科技、文化、社会、生态、网络等多个领域。',
+    '"五对关系"容易与"五大要素"混淆：前者讲统筹方法，后者讲构成要素。'
+  ],
+  review:[
+    '五大要素是必背长句，建议按"宗旨—根本—基础—保障—依托"五个关键词记忆。',
+    '与第十四章联合记忆："安全靠军队保底，统一靠实力与人心"。'
+  ]
+},
+
+{
+  id:'ch14', no:'14', group:'安全统一外交', badge:'第 14 章', img:'img/14v3.jpg', vol:'概论 · 第十四章',
+  title:'第十四章 建设巩固国防和强大人民军队',
+  sub:'强军目标 · 军委主席负责制 · 练兵备战',
+  outline:[
+    {s:'第一节 强国必须强军、军强才能国安', items:['国防和军队建设是捍卫国家主权、安全、发展利益的坚强后盾', '新时代人民军队使命任务']},
+    {s:'第二节 实现党在新时代的强军目标', items:['建设强大军队是接续奋斗的伟大事业', '强军目标的科学内涵', '全面推进国防和军队现代化的战略安排']},
+    {s:'第三节 加快推进国防和军队现代化', items:['坚持党对人民军队的绝对领导', '坚持政治建军、改革强军、科技强军、人才强军、依法治军', '全面加强练兵备战', '巩固提高一体化国家战略体系和能力']},
+  ],
+  points:[
+    '听党指挥是强军之魂，能打仗、打胜仗是强军之要，作风优良是强军之基。',
+    '党对人民军队的绝对领导是人民军队的建军之本、强军之魂。',
+    '"三步走"：2027 年实现建军一百年奋斗目标，2035 年基本实现国防和军队现代化，本世纪中叶把人民军队全面建成世界一流军队。',
+    '坚持政治建军、改革强军、科技强军、人才强军、依法治军，是强军的基本方略。',
+    '军队是要准备打仗的，必须把战斗力作为唯一的根本的标准。'
+  ],
+  concepts:[
+    ['强军目标','建设一支听党指挥、能打胜仗、作风优良的人民军队，把人民军队建设成为世界一流军队。'],
+    ['军委主席负责制','是坚持党对人民军队绝对领导的根本制度和根本实现形式。'],
+    ['五个强军','政治建军、改革强军、科技强军、人才强军、依法治军。'],
+    ['建军一百年奋斗目标','2027 年实现，是国防和军队现代化新"三步走"的第一步。']
+  ],
+  confusions:[
+    '强军目标 ≠ 单纯装备现代化：是"听党指挥、能打胜仗、作风优良"的全面要求。',
+    '国防建设 ≠ 与经济建设对立：坚持军民融合、富国与强军相统一。'
+  ],
+  review:[
+    '必背："强军目标一句话 + 三步走三个时间点 + 五个强军"。',
+    '答题模板：先定魂（党的领导、军委主席负责制），再定标（强军目标），最后定路（三步走与五个强军）。'
+  ]
+},
+
+{
+  id:'ch15', no:'15', group:'安全统一外交', badge:'第 15 章', img:'img/15v3.jpg', vol:'概论 · 第十五章',
+  title:'第十五章 坚持"一国两制"和推进祖国完全统一',
+  sub:'一国两制 · 爱国者治港 · 九二共识',
+  outline:[
+    {s:'第一节 全面准确理解和贯彻“一国两制”方针', items:['“一国两制”是中国特色社会主义的伟大创举', '准确把握“一国两制”的科学内涵', '坚持和完善“一国两制”制度体系']},
+    {s:'第二节 保持香港、澳门长期繁荣稳定', items:['香港、澳门保持长期稳定发展良好态势', '推动香港进入由乱到治走向由治及兴的新阶段', '支持香港、澳门融入国家发展大局']},
+    {s:'第三节 推进祖国完全统一', items:['实现祖国完全统一是中华民族伟大复兴的必然要求', '坚持贯彻新时代党解决台湾问题的总体方略', '牢牢把握两岸关系主导权和主动权']},
+  ],
+  points:[
+    '"一国两制"是解决历史遗留的香港、澳门问题的最佳方案，也是香港、澳门回归后保持长期繁荣稳定的最佳制度安排。',
+    '"一国"是根，根深才能叶茂；"一国"是本，本固才能枝荣。"一国"是实行"两制"的前提和基础。',
+    '香港国安法的制定实施和完善选举制度，推动香港局势实现由乱到治的重大转折。',
+    '一个中国原则是两岸关系的政治基础，"九二共识"体现了一个中国原则。',
+    '坚持"和平统一、一国两制"基本方针，同时不承诺放弃使用武力，保留采取一切必要措施的选项。'
+  ],
+  concepts:[
+    ['一国两制','在一个中国的前提下，国家主体坚持社会主义制度，香港、澳门保持原有的资本主义制度和生活方式长期不变。'],
+    ['爱国者治港','香港特别行政区的政权必须掌握在爱国者手中，这是"一国两制"的内在要求。'],
+    ['九二共识','1992 年两岸双方达成的各自以口头方式表述"海峡两岸均坚持一个中国原则"的共识。'],
+    ['和平统一、一国两制','解决台湾问题的基本方针，最符合包括台湾同胞在内的中华民族整体利益。']
+  ],
+  confusions:[
+    '"一国"与"两制"不是并列关系：先有"一国"，才有"两制"，"两制"从属于"一国"。',
+    '"一国两制"≠ 中央什么都不管：中央对特别行政区拥有全面管治权。'
+  ],
+  review:[
+    '核心表述："一国是根本，两制从属和派生于一国"，这是本章最常考的一句话。',
+    '港澳线与台湾线要分开答：港澳讲"由乱到治、由治及兴"，台湾讲"一个中国原则和九二共识"。'
+  ]
+},
+
+{
+  id:'ch16', no:'16', group:'安全统一外交', badge:'第 16 章', img:'img/16v3.jpg', vol:'概论 · 第十六章',
+  title:'第十六章 中国特色大国外交和推动构建人类命运共同体',
+  sub:'百年变局 · 三大倡议 · 一带一路',
+  outline:[
+    {s:'第一节 新时代中国外交在大变局中开创新局', items:['当今世界正经历百年未有之大变局', '中国必须有自己特色的大国外交', '我国国际影响力、感召力、塑造力显著提升']},
+    {s:'第二节 全面推进中国特色大国外交', items:['坚持走和平发展道路', '推动构建新型国际关系', '坚决维护国家主权、安全、发展利益', '坚持外交为民']},
+    {s:'第三节 推动构建人类命运共同体', items:['构建人类命运共同体是世界各国人民前途所在', '推动构建人类命运共同体的价值基础和重要依托', '积极参与全球治理体系改革和建设', '高质量共建“一带一路”']},
+  ],
+  points:[
+    '人类命运共同体理念倡导建设持久和平、普遍安全、共同繁荣、开放包容、清洁美丽的世界。',
+    '新型国际关系：相互尊重、公平正义、合作共赢。',
+    '全人类共同价值：和平、发展、公平、正义、民主、自由。',
+    '三大全球倡议分别聚焦发展、安全、文明，是构建人类命运共同体的重要支撑。',
+    '共建"一带一路"是构建人类命运共同体的重要实践平台。'
+  ],
+  concepts:[
+    ['人类命运共同体','各国相互依存、休戚与共，建设"五个世界"：持久和平、普遍安全、共同繁荣、开放包容、清洁美丽。'],
+    ['新型国际关系','相互尊重、公平正义、合作共赢，核心是合作共赢。'],
+    ['全人类共同价值','和平、发展、公平、正义、民主、自由。'],
+    ['三大全球倡议','全球发展倡议、全球安全倡议、全球文明倡议。']
+  ],
+  confusions:[
+    '人类命运共同体 ≠ 世界政府、≠ 输出中国模式：主张各国自主选择发展道路。',
+    '"全人类共同价值"≠"普世价值"：前者尊重差异、承认多样性，后者是特定国家的价值输出。'
+  ],
+  review:[
+    '必背两组词："五个世界"（持久和平、普遍安全、共同繁荣、开放包容、清洁美丽）与"新型国际关系"12 字。',
+    '答题顺序：时代背景（百年变局）→ 理念（命运共同体）→ 路径（三大倡议 + 一带一路）。'
+  ]
+},
+
+{
+  id:'ch17', no:'17', group:'党的建设', badge:'第 17 章', img:'img/17v3.jpg', vol:'概论 · 第十七章',
+  title:'第十七章 全面从严治党',
+  sub:'自我革命 · 政治建设 · 三不腐',
+  outline:[
+    {s:'第一节 全面从严治党是新时代党的建设的鲜明主题', items:['打铁必须自身硬', '坚定不移全面从严治党', '全面从严治党取得历史性开创性成就']},
+    {s:'第二节 以政治建设为统领深入推进党的建设', items:['把党的政治建设摆在首位', '思想建设是党的基础性建设', '贯彻新时代党的组织路线', '以严的基调强化正风肃纪', '把制度建设贯穿到党的各项建设之中']},
+    {s:'第三节 坚定不移推进反腐败斗争', items:['腐败是党长期执政面临的最大威胁', '坚持标本兼治开展反腐败斗争', '反腐败必须永远吹冲锋号']},
+    {s:'第四节 建设长期执政的马克思主义政党', items:['党的自我革命是跳出历史周期率的第二个答案', '时刻保持解决大党独有难题的清醒和坚定', '以伟大自我革命引领伟大社会革命']},
+  ],
+  points:[
+    '勇于自我革命是中国共产党区别于其他政党的显著标志。',
+    '党的政治建设是党的根本性建设，决定党的建设方向和效果。',
+    '新时代党的建设总要求以"坚持和加强党的全面领导"为统领，以"全面从严治党"为贯穿始终的要求。',
+    '反腐败斗争取得压倒性胜利并全面巩固，一体推进不敢腐、不能腐、不想腐。',
+    '全面从严治党，核心是加强党的领导，基础在全面，关键在严，要害在治。'
+  ],
+  concepts:[
+    ['自我革命','党主动刀刃向内、刮骨疗毒，是跳出治乱兴衰历史周期率的第二个答案（第一个答案是"让人民来监督政府"）。'],
+    ['政治建设','党的根本性建设，首要任务是保证全党服从中央、坚持党中央权威和集中统一领导。'],
+    ['三不腐','不敢腐、不能腐、不想腐一体推进，是反腐败斗争的基本方针。'],
+    ['全面从严治党','核心是加强党的领导，基础在全面，关键在严，要害在治。']
+  ],
+  confusions:[
+    '自我革命 ≠ 否定自身：是坚持真理、修正错误，保持党的先进性和纯洁性。',
+    '"全面"与"从严"不可只答一个：全面讲覆盖范围（领域、对象、责任），从严讲标准和要求。'
+  ],
+  review:[
+    '一句话记牢："两个答案"——让人民监督政府、自我革命。',
+    '本章常与第三章"党的领导"联考：领导讲"为什么必须"，党建讲"怎样保证"。'
+  ]
+},
+
+/* ---------------- 原著与报告专题（原有内容） ---------------- */
+{
+  id:'t1', no:'S1', group:'原著专题', badge:'著作选读', vol:'《习近平著作选读》第一卷',
+  title:'专题一 习近平新时代中国特色社会主义思想（第一卷核心篇目）',
+  sub:'中国梦 · 改革开放 · 国家安全',
+  outline:[
+    '第一卷收录 2012 年 11 月至 2017 年 10 月期间重要著作共 71 篇',
+    '以党的二十大报告为开卷篇，其他著作按时间顺序编排',
+    '核心主题：坚持和发展中国特色社会主义',
+    '中国梦的提出与阐释、改革开放方法论、总体国家安全观'
+  ],
+  points:[
+    '中国特色社会主义最本质的特征是中国共产党领导，中国特色社会主义制度的最大优势是中国共产党领导。',
+    '坚持党的全面领导是坚持和发展中国特色社会主义的必由之路。',
+    '党政军民学，东西南北中，党是领导一切的，是最高的政治领导力量。',
+    '党的领导是全面的、系统的、整体的，必须全面、系统、整体加以落实。'
+  ],
+  concepts:[
+    ['中国梦','实现中华民族伟大复兴，是每一个中华儿女的共同期盼。国家好、民族好，大家才会好。'],
+    ['总体国家安全观','以人民安全为宗旨，以政治安全为根本，以经济安全为基础，统筹发展和安全。'],
+    ['毛泽东思想活的灵魂','实事求是、群众路线、独立自主。']
+  ],
+  confusions:[
+    '"中国特色社会主义是社会主义，不是别的什么主义"——科学社会主义基本原则不能丢。',
+    '坚持党的领导≠包办一切，而是"总揽全局、协调各方"，形象地说是"众星捧月"。'
+  ],
+  review:[
+    '第一卷时间线：2012 年 11 月（十八大后）→ 2017 年 10 月（十九大前），共 71 篇。',
+    '重点篇目按主题归类：中国梦、改革开放、国家安全、强军目标、经济制度。'
+  ],
+  quotes:[
+    ['"人民对美好生活的向往，就是我们的奋斗目标。"','《人民对美好生活的向往，就是我们的奋斗目标》（2012年11月15日）'],
+    ['"实现中华民族伟大复兴，就是中华民族近代以来最伟大的梦想。这个梦想，凝聚了几代中国人的夙愿，体现了中华民族和中国人民的整体利益，是每一个中华儿女的共同期盼。"','《实现中华民族伟大复兴是中华民族近代以来最伟大的梦想》（2012年11月29日）'],
+    ['"改革开放是决定当代中国命运的关键一招，也是决定实现\u2018两个一百年\u2019奋斗目标、实现中华民族伟大复兴的关键一招。"','《改革开放永无止境》（2012年12月）'],
+    ['"中国特色社会主义，是科学社会主义理论逻辑和中国社会发展历史逻辑的辩证统一，是根植于中国大地、反映中国人民意愿、适应中国和时代发展进步要求的科学社会主义。"','《关于坚持和发展中国特色社会主义的几个问题》（2013年1月5日）'],
+    ['"必须坚持总体国家安全观，以人民安全为宗旨，以政治安全为根本，以经济安全为基础，以军事、文化、社会安全为保障，以促进国际安全为依托，走出一条中国特色国家安全道路。"','《坚持总体国家安全观》（2014年4月15日）']
+  ]
+},
+
+{
+  id:'t2', no:'S2', group:'原著专题', badge:'著作选读', vol:'《习近平著作选读》第二卷',
+  title:'专题二 新时代新征程中国共产党的使命任务（第二卷核心篇目）',
+  sub:'主要矛盾 · 高质量发展 · 大国外交',
+  outline:[
+    '第二卷收录 2017 年 10 月至 2022 年 10 月期间重要著作共 75 篇',
+    '以党的十九大报告为首篇',
+    '中国特色社会主义进入新时代的重大政治论断、社会主要矛盾转化',
+    '高质量发展与新发展理念、生态文明建设原则、中国特色大国外交'
+  ],
+  points:[
+    '中国特色社会主义进入了新时代，我国社会主要矛盾已经转化为人民日益增长的美好生活需要和不平衡不充分的发展之间的矛盾。',
+    '新时代我国经济发展的特征，是经济已由高速增长阶段转向高质量发展阶段。',
+    '生态文明建设必须坚持人与自然和谐共生、绿水青山就是金山银山等原则。',
+    '对外工作要推动构建人类命运共同体，坚定维护国家主权、安全、发展利益。'
+  ],
+  concepts:[
+    ['新发展理念','创新、协调、绿色、开放、共享。'],
+    ['高质量发展','从高速增长转向高质量发展，是新时代经济发展的基本特征。'],
+    ['人类命运共同体','各国相互依存、共同发展的全球治理理念。']
+  ],
+  confusions:[
+    '社会主要矛盾转化≠基本国情改变。我国仍处于并将长期处于社会主义初级阶段的基本国情没有变。',
+    '"高质量发展"不是不发展，而是更强调发展的质量和效益。'
+  ],
+  review:[
+    '第二卷时间线：2017 年 10 月（十九大）→ 2022 年 10 月（二十大前），共 75 篇。',
+    '重点掌握：新时代社会主要矛盾、高质量发展、生态文明六原则、大国外交主线。'
+  ],
+  quotes:[
+    ['"新时代我国经济发展的特征，就是我国经济已由高速增长阶段转向高质量发展阶段。"','《推动我国经济高质量发展》（2017年12月18日）'],
+    ['"生态环境是关系党的使命宗旨的重大政治问题，也是关系民生的重大社会问题。"','《加强生态文明建设必须坚持的原则》（2018年5月18日）'],
+    ['"环境就是民生，青山就是美丽，蓝天也是幸福。"','《加强生态文明建设必须坚持的原则》（2018年5月18日）'],
+    ['"我国对外工作要坚持以新时代中国特色社会主义外交思想为指导，统筹国内国际两个大局，牢牢把握服务民族复兴、促进人类进步这条主线，推动构建人类命运共同体。"','《努力开创中国特色大国外交新局面》（2018年6月22日）']
+  ]
+},
+
+{
+  id:'t3', no:'S3', group:'原著专题', badge:'二十大报告', vol:'党的二十大报告',
+  title:'专题三 党的二十大报告框架与要点',
+  sub:'十五个部分 · 中国式现代化 · 五个重大原则',
+  outline:[
+    '报告共十五个部分，第一部分为过去五年的工作和新时代十年的伟大变革',
+    '第二部分：开辟马克思主义中国化时代化新境界',
+    '第三部分：新时代新征程中国共产党的使命任务（重点）',
+    '第四至第十五部分：经济、科教、民主、法治、文化、民生、生态、安全、国防、统一、外交、党建各领域部署'
+  ],
+  points:[
+    '大会主题：高举中国特色社会主义伟大旗帜，全面贯彻新时代中国特色社会主义思想，弘扬伟大建党精神，自信自强、守正创新，踔厉奋发、勇毅前行，为全面建设社会主义现代化国家、全面推进中华民族伟大复兴而团结奋斗。',
+    '中国共产党的中心任务：团结带领全国各族人民全面建成社会主义现代化强国、实现第二个百年奋斗目标，以中国式现代化全面推进中华民族伟大复兴。',
+    '高质量发展是全面建设社会主义现代化国家的首要任务。',
+    '教育、科技、人才是全面建设社会主义现代化国家的基础性、战略性支撑。'
+  ],
+  concepts:[
+    ['中国式现代化的五个特征','人口规模巨大、全体人民共同富裕、物质文明和精神文明相协调、人与自然和谐共生、走和平发展道路。'],
+    ['五个重大原则','坚持和加强党的全面领导、坚持中国特色社会主义道路、坚持以人民为中心的发展思想、坚持深化改革开放、坚持发扬斗争精神。'],
+    ['九个本质要求','坚持中国共产党领导、坚持中国特色社会主义、实现高质量发展、发展全过程人民民主、丰富人民精神世界、实现全体人民共同富裕、促进人与自然和谐共生、推动构建人类命运共同体、创造人类文明新形态。']
+  ],
+  confusions:[
+    '"五个特征"描述中国式现代化是什么样，"五个重大原则"讲前进道路上必须把握什么，"九个本质要求"讲根本规定性，三者不可混答。'
+  ],
+  review:[
+    '二十大报告共 15 个部分，重点掌握第三部分（使命任务、中国式现代化）和第五部分（科教兴国）。',
+    '"5 个特征 + 5 个重大原则 + 9 个本质要求"是高频考点。'
+  ],
+  quotes:[
+    ['"从现在起，中国共产党的中心任务就是团结带领全国各族人民全面建成社会主义现代化强国、实现第二个百年奋斗目标，以中国式现代化全面推进中华民族伟大复兴。"','党的二十大报告 第三部分'],
+    ['"中国式现代化，是中国共产党领导的社会主义现代化，既有各国现代化的共同特征，更有基于自己国情的中国特色。"','党的二十大报告 第三部分'],
+    ['"前进道路上，必须牢牢把握以下重大原则：坚持和加强党的全面领导，坚持中国特色社会主义道路，坚持以人民为中心的发展思想，坚持深化改革开放，坚持发扬斗争精神。"','党的二十大报告 第三部分']
+  ]
+},
+
+{
+  id:'t4', no:'S4', group:'原著专题', badge:'共同体概论', vol:'《中华民族共同体概论》第一至二讲',
+  title:'专题四 中华民族共同体基础理论',
+  sub:'多元一体 · 共同体意识',
+  outline:[
+    '中华民族共同体的基本内涵',
+    '中华民族多元一体格局',
+    '中华民族共同体意识的形成逻辑',
+    '各民族交往交流交融的历史主线'
+  ],
+  points:[
+    '中华民族是由 56 个民族组成的命运共同体，各民族在长期历史发展中形成了你中有我、我中有你的格局。',
+    '多元一体：多元是要素和动力，一体是主线和方向。',
+    '铸牢中华民族共同体意识是新时代党的民族工作的主线。'
+  ],
+  concepts:[
+    ['中华民族共同体','中国各民族在长期历史发展中形成的命运与共、休戚相关的共同体。'],
+    ['多元一体格局','费孝通提出，中华民族是"多元"基础上的"一体"，"一体"包含"多元"。']
+  ],
+  confusions:[
+    '"多元"与"一体"不是对立关系：多元是要素和动力，一体是主线和方向。'
+  ],
+  review:[
+    '重点掌握"多元一体"的内涵，以及铸牢中华民族共同体意识的时代意义。'
+  ]
+},
+
+{
+  id:'t5', no:'S5', group:'原著专题', badge:'共同体概论', vol:'《中华民族共同体概论》第三至十六讲',
+  title:'专题五 中华民族形成与发展历程',
+  sub:'历史脉络 · 交往交流交融',
+  outline:[
+    '第三至第十六讲按历史阶段梳理中华民族的形成与发展',
+    '各民族交往交流交融的历史主线'
+  ],
+  points:[
+    '本章正文尚未补充，可在此处按教材第三至第十六讲的顺序逐讲添加要点。'
+  ],
+  concepts:[],
+  confusions:[],
+  review:[
+    '建议按"先秦—秦汉—魏晋南北朝—隋唐—辽宋夏金—元明清—近代—当代"的时间轴整理各阶段的民族交往线索。'
+  ]
+}
+
+];
+
+var QUIZ = [
+  { c:'导论', s:-1, q:'习近平新时代中国特色社会主义思想被确立为党必须长期坚持的指导思想并写入党章，是在党的哪次全国代表大会？', o:['党的十八大', '党的十九大', '党的二十大', '党的十九届六中全会'], a:1, e:'党的十九大把习近平新时代中国特色社会主义思想确立为党必须长期坚持的指导思想，并写入党章。' },
+  { c:'导论', s:-1, q:'“两个结合”是指把马克思主义基本原理同中国具体实际相结合、同（　）相结合。', o:['中华优秀传统文化', '世界先进文明', '市场经济规律', '西方治理经验'], a:0, e:'“两个结合”即同中国具体实际相结合、同中华优秀传统文化相结合，其中“第二个结合”是又一次思想解放。' },
+  { c:'导论', s:-1, q:'下列不属于“六个必须坚持”的是（　）。', o:['人民至上', '自信自立', '效率优先', '系统观念'], a:2, e:'“六个必须坚持”是人民至上、自信自立、守正创新、问题导向、系统观念、胸怀天下。' },
+  { c:'第一章', s:1, q:'“中国特色社会主义进入新时代”这一重大政治论断，是在党的哪次全国代表大会上作出的？', o:['党的十七大', '党的十八大', '党的十九大', '党的二十大'], a:2, e:'党的十九大作出中国特色社会主义进入新时代的重大政治论断，这是我国发展新的历史方位。' },
+  { c:'第一章', s:1, q:'新时代我国社会主要矛盾是（　）。', o:['人民日益增长的物质文化需要同落后的社会生产之间的矛盾', '人民日益增长的美好生活需要和不平衡不充分的发展之间的矛盾', '经济发展与生态保护之间的矛盾', '城乡差距与区域差距之间的矛盾'], a:1, e:'党的十九大指出，社会主要矛盾已转化为人民日益增长的美好生活需要和不平衡不充分的发展之间的矛盾。' },
+  { c:'第一章', s:2, q:'“五位一体”总体布局不包括（　）。', o:['经济建设', '政治建设', '生态文明建设', '国防建设'], a:3, e:'“五位一体”是经济建设、政治建设、文化建设、社会建设、生态文明建设，国防和军队建设不属于其组成部分。' },
+  { c:'第一章', s:1, q:'关于新时代我国基本国情，表述正确的是（　）。', o:['我国仍处于并将长期处于社会主义初级阶段的基本国情没有变', '我国已跨越社会主义初级阶段', '我国已成为发达国家', '我国社会主要矛盾已不再是发展问题'], a:0, e:'社会主要矛盾变化没有改变我国仍处于并将长期处于社会主义初级阶段的基本国情，也没有改变我国是世界最大发展中国家的国际地位。' },
+  { c:'第一章', s:2, q:'全面贯彻党的基本理论、基本路线、基本方略，属于新时代坚持和发展中国特色社会主义的哪一要求？', o:['另起炉灶重新探索', '照搬他国模式', '一以贯之坚持和发展中国特色社会主义', '只抓经济建设'], a:2, e:'新时代坚持和发展中国特色社会主义要一以贯之，全面贯彻党的基本理论、基本路线、基本方略。' },
+  { c:'第二章', s:1, q:'关于中国式现代化的中国特色，下列表述不准确的是（　）。', o:['以西方现代化模式为范本', '人口规模巨大的现代化', '全体人民共同富裕的现代化', '物质文明和精神文明相协调的现代化'], a:0, e:'中国式现代化是中国共产党领导的社会主义现代化，有五个方面的中国特色，绝不是照搬西方模式。' },
+  { c:'第二章', s:0, q:'“两步走”战略安排是：到2035年基本实现社会主义现代化，到本世纪中叶把我国建成（　）的社会主义现代化强国。', o:['富强民主文明和谐', '富强民主文明和谐美丽', '全面小康', '中等发达国家'], a:1, e:'第二个百年奋斗目标分两步走，最终建成富强民主文明和谐美丽的社会主义现代化强国。' },
+  { c:'第二章', s:2, q:'推进中国式现代化必须牢牢把握的重大原则不包括（　）。', o:['坚持和加强党的全面领导', '坚持中国特色社会主义道路', '坚持以人民为中心的发展思想', '坚持以资本为中心'], a:3, e:'五项重大原则是坚持和加强党的全面领导、坚持中国特色社会主义道路、坚持以人民为中心的发展思想、坚持深化改革开放、坚持发扬斗争精神。' },
+  { c:'第三章', s:0, q:'中国特色社会主义最本质的特征是（　）。', o:['公有制为主体', '共同富裕', '中国共产党领导', '人民当家作主'], a:2, e:'中国共产党领导是中国特色社会主义最本质的特征，也是中国特色社会主义制度的最大优势。' },
+  { c:'第三章', s:1, q:'关于党的领导，表述正确的是（　）。', o:['党的领导仅限于政治领域', '党的领导是全面的、系统的、整体的', '党的领导仅限于思想领域', '党的领导是局部的、阶段性的'], a:1, e:'党政军民学，东西南北中，党是领导一切的；哪个领域、哪个环节缺失了弱化党的领导，就要出问题。' },
+  { c:'第三章', s:1, q:'“两个维护”是指（　）。', o:['坚决维护习近平总书记党中央的核心、全党的核心地位，坚决维护党中央权威和集中统一领导', '维护世界和平、维护发展大局', '维护国家主权、维护领土完整', '维护社会公平、维护人民利益'], a:0, e:'“两个维护”是党的最高政治原则和根本政治规矩。' },
+  { c:'第四章', s:0, q:'中国共产党的根本政治立场是（　）。', o:['阶级立场', '民族立场', '国家立场', '人民立场'], a:3, e:'人民立场是中国共产党的根本政治立场，是马克思主义政党区别于其他政党的显著标志。' },
+  { c:'第四章', s:0, q:'“江山就是人民，人民就是江山”深刻体现了（　）。', o:['以人民为中心的发展思想', '效率优先的发展导向', '先富带动后富的政策', '城乡二元结构'], a:0, e:'打江山、守江山，守的是人民的心，体现了人民至上的价值取向。' },
+  { c:'第四章', s:2, q:'关于共同富裕，理解正确的是（　）。', o:['共同富裕是同步富裕、同时富裕', '共同富裕等同于平均主义', '共同富裕是社会主义的本质要求，是逐步实现的历史过程', '共同富裕可以一蹴而就'], a:2, e:'共同富裕不是同步富裕、不是平均主义，而是全体人民在高质量发展中逐步实现的动态过程。' },
+  { c:'第五章', s:0, q:'改革开放是决定当代中国命运的（　）。', o:['权宜之计', '关键一招', '阶段任务', '次要环节'], a:1, e:'改革开放是党和人民大踏步赶上时代的重要法宝，是决定当代中国命运的关键一招。' },
+  { c:'第五章', s:1, q:'全面深化改革的总目标是（　）。', o:['完善和发展中国特色社会主义制度、推进国家治理体系和治理能力现代化', '建立社会主义市场经济体制', '实现共同富裕', '建设法治政府'], a:0, e:'十八届三中全会提出全面深化改革总目标，前者是制度方向，后者是治理能力，两句话构成完整表述。' },
+  { c:'第五章', s:0, q:'全面深化改革开放必须坚持的正确方向是（　）。', o:['走封闭僵化的老路', '走改旗易帜的邪路', '照搬西方制度模式', '坚持和发展中国特色社会主义'], a:3, e:'既不走封闭僵化的老路，也不走改旗易帜的邪路，方向决定道路、道路决定命运。' },
+  { c:'第六章', s:0, q:'新发展理念是（　）。', o:['高速、均衡、低碳、开放、共享', '创新、协调、绿色、开放、共享', '创新、协调、高效、开放、公平', '质量、效益、绿色、改革、共享'], a:1, e:'新发展理念是管全局、管根本、管长远的导向，是引领高质量发展的“指挥棒”。' },
+  { c:'第六章', s:2, q:'构建新发展格局，是以（　）为主体。', o:['国内大循环', '国际大循环', '出口导向', '投资拉动'], a:0, e:'以国内大循环为主体、国内国际双循环相互促进，绝不是封闭的国内循环。' },
+  { c:'第六章', s:0, q:'我国经济已由高速增长阶段转向（　）发展阶段。', o:['高速度', '规模型', '高质量', '粗放型'], a:2, e:'高质量发展是全面建设社会主义现代化国家的首要任务。' },
+  { c:'第六章', s:1, q:'下列不属于社会主义基本经济制度的是（　）。', o:['公有制为主体、多种所有制经济共同发展', '按劳分配为主体、多种分配方式并存', '社会主义市场经济体制', '按需分配制度'], a:3, e:'社会主义基本经济制度由所有制、分配制度、市场经济体制三个方面构成，按需分配是共产主义高级阶段的设想。' },
+  { c:'第六章', s:1, q:'“两个毫不动摇”是指（　）。', o:['毫不动摇坚持计划经济，毫不动摇限制市场调节', '毫不动摇巩固和发展公有制经济，毫不动摇鼓励、支持、引导非公有制经济发展', '毫不动摇扩大出口，毫不动摇限制进口', '毫不动摇发展重工业，毫不动摇发展轻工业'], a:1, e:'“两个毫不动摇”是坚持和完善社会主义基本经济制度的重要内容。' },
+  { c:'第七章', s:0, q:'教育、科技、人才是全面建设社会主义现代化国家的（　）支撑。', o:['基础性、战略性', '辅助性、补充性', '阶段性、区域性', '临时性、应急性'], a:0, e:'党的二十大报告指出，教育、科技、人才是全面建设社会主义现代化国家的基础性、战略性支撑。' },
+  { c:'第七章', s:2, q:'“四个面向”不包括（　）。', o:['面向世界科技前沿', '面向经济主战场', '面向国际资本市场', '面向国家重大需求'], a:2, e:'“四个面向”还包括面向人民生命健康，是科技创新的主攻方向。' },
+  { c:'第七章', s:1, q:'教育的根本任务是（　）。', o:['传授知识', '提高升学率', '培养技能', '立德树人'], a:3, e:'培养什么人、怎样培养人、为谁培养人是教育的根本问题，立德树人是教育的根本任务。' },
+  { c:'第八章', s:1, q:'全过程人民民主是社会主义民主政治的（　）。', o:['补充形式', '本质属性', '过渡形态', '具体做法'], a:1, e:'全过程人民民主是社会主义民主政治的本质属性，是最广泛、最真实、最管用的民主。' },
+  { c:'第八章', s:2, q:'我国的根本政治制度是（　）。', o:['人民代表大会制度', '中国共产党领导的多党合作和政治协商制度', '民族区域自治制度', '基层群众自治制度'], a:0, e:'人民代表大会制度是我国的根本政治制度，其余三项是基本政治制度。' },
+  { c:'第八章', s:1, q:'全过程人民民主的特点可以概括为（　）。', o:['分阶段、分区域、分群体', '重选举、轻协商', '全链条、全方位、全覆盖', '只在基层实行'], a:2, e:'全过程人民民主实现了过程民主和成果民主、程序民主和实质民主、直接民主和间接民主、人民民主和国家意志相统一。' },
+  { c:'第九章', s:0, q:'全面依法治国的总目标是（　）。', o:['增加立法数量', '提高执法效率', '扩大司法机关权力', '建设中国特色社会主义法治体系、建设社会主义法治国家'], a:3, e:'总目标包含两句话：建设中国特色社会主义法治体系是总抓手，建设社会主义法治国家是目标。' },
+  { c:'第九章', s:1, q:'坚持依法治国首先要坚持（　）。', o:['依宪治国', '以德治国', '以政策治国', '以文件治国'], a:0, e:'宪法是国家的根本法；坚持依法治国首先要坚持依宪治国，坚持依法执政首先要坚持依宪执政。' },
+  { c:'第九章', s:1, q:'中国特色社会主义法治体系不包括（　）。', o:['完备的法律规范体系', '灵活的政策调整体系', '高效的法治实施体系', '严密的法治监督体系'], a:1, e:'法治体系由法律规范体系、法治实施体系、法治监督体系、法治保障体系和党内法规体系构成。' },
+  { c:'第十章', s:2, q:'社会主义核心价值观在国家层面的价值目标是（　）。', o:['自由、平等、公正、法治', '爱国、敬业、诚信、友善', '富强、民主、文明、和谐', '和平、发展、公平、正义'], a:2, e:'三个层面分别是国家层面的价值目标、社会层面的价值取向、公民个人层面的价值准则。' },
+  { c:'第十章', s:0, q:'“第二个结合”是指把马克思主义基本原理同（　）相结合。', o:['西方现代文明', '中华优秀传统文化', '市场经济', '科技创新'], a:1, e:'“第二个结合”是又一次思想解放，让我们能够在更广阔的文化空间中充分运用中华优秀传统文化的宝贵资源。' },
+  { c:'第十章', s:2, q:'中国共产党人精神谱系的源头是（　）。', o:['长征精神', '延安精神', '改革开放精神', '伟大建党精神'], a:3, e:'以伟大建党精神为源头的中国共产党人精神谱系，是党和人民宝贵的精神财富。' },
+  { c:'第十一章', s:0, q:'“国之大者”指的是（　）。', o:['让人民生活幸福', '经济增长速度', '城镇化率', '财政收入规模'], a:0, e:'让人民生活幸福是“国之大者”，民生是人民幸福之基、社会和谐之本。' },
+  { c:'第十一章', s:1, q:'实施就业优先战略、健全社会保障体系属于（　）范畴。', o:['经济建设', '文化建设', '社会建设', '生态文明建设'], a:2, e:'就业、社保、教育、医疗、住房等属于以保障和改善民生为重点的社会建设。' },
+  { c:'第十一章', s:2, q:'我国社会治理格局是（　）。', o:['政府单向管理', '共建共治共享', '市场完全主导', '居民自治为主'], a:1, e:'在共建共治共享中推进社会治理现代化，完善社会治理体系，加强城乡社区治理。' },
+  { c:'第十二章', s:0, q:'“绿水青山就是金山银山”体现的是（　）。', o:['人与自然和谐共生', '先污染后治理', '增长优先于保护', '自然资源无限论'], a:0, e:'这一理念揭示了保护生态环境就是保护生产力、改善生态环境就是发展生产力。' },
+  { c:'第十二章', s:1, q:'生态文明建设要坚持山水林田湖草沙（　）。', o:['分头治理', '先开发后修复', '局部整治', '一体化保护和系统治理'], a:3, e:'这是系统观念在生态文明建设中的体现，强调生命共同体的整体性。' },
+  { c:'第十二章', s:1, q:'我国提出的“双碳”目标是（　）。', o:['2025年前碳达峰、2050年前碳中和', '2035年前碳达峰、2060年前碳中和', '2030年前碳达峰、2060年前碳中和', '2030年前碳中和、2060年前碳达峰'], a:2, e:'二氧化碳排放力争于2030年前达到峰值、努力争取2060年前实现碳中和。' },
+  { c:'第十三章', s:0, q:'总体国家安全观以（　）为宗旨。', o:['政治安全', '人民安全', '经济安全', '军事安全'], a:1, e:'总体国家安全观以人民安全为宗旨、以政治安全为根本、以经济安全为基础。' },
+  { c:'第十三章', s:1, q:'总体国家安全观以（　）为根本。', o:['政治安全', '人民安全', '经济安全', '科技安全'], a:0, e:'政治安全是最根本的安全，把维护政治安全放在首要位置。' },
+  { c:'第十三章', s:0, q:'国家安全是民族复兴的（　）。', o:['附庸', '结果', '根基', '手段'], a:2, e:'国家安全是民族复兴的根基，社会稳定是国家强盛的前提。' },
+  { c:'第十四章', s:1, q:'党在新时代的强军目标是建设一支（　）的人民军队。', o:['听党指挥、能打胜仗、作风优良', '规模庞大、装备先进、训练有素', '政治合格、军事过硬、保障有力', '忠诚可靠、纪律严明、英勇善战'], a:0, e:'强军目标就是建设一支听党指挥、能打胜仗、作风优良的人民军队，把人民军队建设成为世界一流军队。' },
+  { c:'第十四章', s:2, q:'必须坚持党对人民军队的（　）。', o:['业务指导', '宏观协调', '监督问责', '绝对领导'], a:3, e:'坚持党对人民军队的绝对领导是建军之本、强军之魂，军委实行主席负责制。' },
+  { c:'第十五章', s:0, q:'关于“一国两制”，下列说法正确的是（　）。', o:['“两制”高于“一国”', '“一国”是实行“两制”的前提和基础', '“一国”与“两制”并列无关', '“一国”可以商量'], a:1, e:'“一国”是根，根深才能叶茂；“一国”是本，本固才能枝荣。' },
+  { c:'第十五章', s:2, q:'两岸关系的政治基础是（　）。', o:['坚持一个中国原则和“九二共识”', '扩大经贸往来', '加强民间交流', '借助国际调解'], a:0, e:'坚持一个中国原则和“九二共识”，是推动两岸关系和平发展的政治基础。' },
+  { c:'第十六章', s:2, q:'全人类共同价值是（　）。', o:['自由、平等、博爱', '效率、公平、竞争、合作', '和平、发展、公平、正义、民主、自由', '独立、自主、自强'], a:2, e:'全人类共同价值凝聚了各国人民对美好生活的共同追求，是构建人类命运共同体的价值基础。' },
+  { c:'第十六章', s:1, q:'中国特色大国外交要推动构建（　）。', o:['单极世界秩序', '军事同盟体系', '封闭区域集团', '新型国际关系'], a:3, e:'推动构建相互尊重、公平正义、合作共赢的新型国际关系。' },
+];
+
+/* =========================================================
+   渲染与交互
+   ========================================================= */
+(function () {
+  'use strict';
+
+  var GROUPS = ['总论', '改革发展', '政治法治文化', '社会民生生态', '安全统一外交', '党的建设', '原著专题'];
+  var byId = {};
+  DATA.forEach(function (c) { byId[c.id] = c; });
+
+  var TOTAL = DATA.length;
+  var KEY = 'gaigai.done.v1';
+  var FKEY = 'gaigai.fs.v1';
+  var done = {};
+  try { done = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { done = {}; }
+
+  function saveDone() { try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {} }
+
+  /* ---------- 成就体系 ---------- */
+  var ACH_KEY = 'gaigai.achv.v1';
+  var BKEY = 'gaigai.best.v1';
+  var TKEY = 'gaigai.readtime.v1';   // 累计阅读秒数
+  var ACH = [
+    /* 章节成就：完成篇数 */
+    { id: 'a1',  kind: 'ch', need: 1,     name: '启程',     desc: '完成第 1 篇章节复习',       img: 'img/achv-1.jpg' },
+    { id: 'a5',  kind: 'ch', need: 5,     name: '渐入佳境', desc: '完成 5 篇章节复习',         img: 'img/achv-2.jpg' },
+    { id: 'a10', kind: 'ch', need: 10,    name: '半程发力', desc: '完成 10 篇章节复习',        img: 'img/achv-3.jpg' },
+    { id: 'all', kind: 'ch', need: TOTAL, name: '全线贯通', desc: '完成全部 ' + TOTAL + ' 篇',  img: 'img/achv-4.jpg' },
+    /* 时长成就：累计阅读分钟 */
+    { id: 't5',   kind: 'min', need: 5,   name: '热手', desc: '累计阅读满 5 分钟',   img: 'img/achv-5.jpg' },
+    { id: 't30',  kind: 'min', need: 30,  name: '专注', desc: '累计阅读满 30 分钟',  img: 'img/achv-6.jpg' },
+    { id: 't60',  kind: 'min', need: 60,  name: '沉浸', desc: '累计阅读满 1 小时',   img: 'img/achv-7.jpg' },
+    { id: 't120', kind: 'min', need: 120, name: '长跑', desc: '累计阅读满 2 小时',   img: 'img/achv-8.jpg' }
+  ];
+  var announced = [];
+  try { announced = JSON.parse(localStorage.getItem(ACH_KEY) || '[]') || []; } catch (e) { announced = []; }
+  var best = 0;
+  try { best = parseInt(localStorage.getItem(BKEY) || '0', 10) || 0; } catch (e) { best = 0; }
+  var readSec = 0;
+  try { readSec = parseInt(localStorage.getItem(TKEY) || '0', 10) || 0; } catch (e) { readSec = 0; }
+  var sessionSec = 0;
+
+  function saveAnnounced() { try { localStorage.setItem(ACH_KEY, JSON.stringify(announced)); } catch (e) {} }
+  function saveRead() { try { localStorage.setItem(TKEY, String(readSec)); } catch (e) {} }
+  function bumpBest() {
+    var n = doneCount();
+    if (n > best) { best = n; try { localStorage.setItem(BKEY, String(best)); } catch (e) {} }
+  }
+  function totalMin() { return Math.floor(readSec / 60); }
+  function curVal(a) { return a.kind === 'min' ? totalMin() : best; }
+  function fmtMin(m) {
+    if (m < 60) return m + ' 分钟';
+    var h = Math.floor(m / 60), r = m % 60;
+    return r ? (h + ' 小时 ' + r + ' 分钟') : (h + ' 小时');
+  }
+  function needText(a) { return a.kind === 'min' ? fmtMin(a.need) : a.need + ' 篇'; }
+  function achvState(a) {
+    var v = curVal(a);
+    return {
+      unlocked: v >= a.need,
+      pct: Math.min(100, Math.round(v / a.need * 100)),
+      left: Math.max(0, a.need - v)
+    };
+  }
+  function unlockedAchv() { return ACH.filter(function (a) { return curVal(a) >= a.need; }); }
+
+  /* 搜索索引 */
+  DATA.forEach(function (c) {
+    var parts = [c.title, c.sub, c.group, c.vol];
+    (c.outline || []).forEach(function (x) {
+      if (typeof x === 'string') { parts.push(x); return; }
+      parts.push(x.s || '');
+      (x.items || []).forEach(function (y) { parts.push(y); });
+    });
+    parts = parts.concat(c.points || [], c.confusions || [], c.review || []);
+    (c.concepts || []).forEach(function (x) { parts.push(x[0] + ' ' + x[1]); });
+    (c.quotes || []).forEach(function (x) { parts.push(x[0] + ' ' + x[1]); });
+    c._text = parts.join(' ').toLowerCase();
+  });
+
+  var home = document.getElementById('home');
+  var view = document.getElementById('view');
+  var grid = document.getElementById('grid');
+  var filters = document.getElementById('filters');
+  var toc = document.getElementById('toc');
+  var empty = document.getElementById('empty');
+  var q = document.getElementById('q');
+  var pill = document.getElementById('progressPill');
+  var toTop = document.getElementById('toTop');
+  var menuBtn = document.getElementById('menuBtn');
+  var navBox = document.getElementById('navLinks');
+  var state = { group: 'all', kw: '' };
+  var readingNow = false;   // 当前是否停在章节正文页（用于阅读计时）
+
+  function shortName(c) {
+    return c.title
+      .replace(/^第[一二三四五六七八九十百]+章\s*/, '')
+      .replace(/^专题[一二三四五六七八九十]+\s*/, '')
+      .replace(/^导论\s*/, '导论 ');
+  }
+  function groupIndex(g) { var i = GROUPS.indexOf(g); return i < 0 ? 0 : i; }
+  function doneCount() { return DATA.filter(function (c) { return done[c.id]; }).length; }
+
+  /* ---------- 侧栏目录 ---------- */
+  function buildToc() {
+    var html = '<div class="side-title">目录 · 共 ' + TOTAL + ' 篇</div>' +
+      '<div class="side-item active" data-go="home"><span class="num">≡</span><span class="txt">全部章节</span></div>';
+    GROUPS.forEach(function (g) {
+      var list = DATA.filter(function (c) { return c.group === g; });
+      if (!list.length) return;
+      html += '<div class="side-sep"></div><div class="side-title">' + g + '</div>';
+      list.forEach(function (c) {
+        html += '<div class="side-item" data-go="' + c.id + '">' +
+          '<span class="num">' + c.no + '</span>' +
+          '<span class="txt">' + shortName(c) + '</span>' +
+          (done[c.id] ? '<span class="ok">✓</span>' : '') +
+          '</div>';
+      });
+    });
+    toc.innerHTML = html;
+  }
+
+  /* ---------- 分区筛选 ---------- */
+  function buildFilters() {
+    var html = '<button class="chip active" type="button" data-group="all">全部</button>';
+    GROUPS.forEach(function (g) {
+      var n = DATA.filter(function (c) { return c.group === g; }).length;
+      if (!n) return;
+      html += '<button class="chip" type="button" data-group="' + g + '">' + g + ' <span style="opacity:.65">' + n + '</span></button>';
+    });
+    filters.innerHTML = html;
+  }
+
+  /* ---------- 卡片 ---------- */
+  /* 正文 18 篇按编号自动对应 img/<编号>.jpg；也可以在条目里写 img:'...' 覆盖 */
+  function picOf(c) {
+    if (c.img) return c.img;
+    if (c.group === '原著专题') return '';
+    return 'img/' + c.no + '.jpg';
+  }
+
+function buildCards() {
+    var html = DATA.map(function (c) {
+      var isDone = !!done[c.id];
+      var pic = picOf(c);
+      return '<article class="card g' + groupIndex(c.group) + (isDone ? ' done' : '') + '" data-target="' + c.id + '">' +
+        '<div class="cover' + (pic ? ' has-img' : '') + '">' +
+          (pic ? '<img src="' + pic + '" alt="' + c.title + '" loading="lazy" decoding="async" ' +
+                 'onerror="this.parentNode.classList.remove(\'has-img\');this.remove();">' : '') +
+          '<div class="no">' + c.no + '</div>' +
+          '<div class="vol">' + c.vol + '</div>' +
+          (pic ? '' : '<div class="badge">' + c.badge + '</div>') +
+        '</div>' +
+        '<div class="card-body">' +
+          '<div class="card-title">' + c.title + '</div>' +
+          '<div class="card-meta"><span class="k">' + c.sub + '</span>' +
+            '<span class="n">' + (isDone ? '✓ 已学' : '待复习') + '</span></div>' +
+        '</div>' +
+      '</article>';
+    }).join('');
+    grid.innerHTML = html;
+  }
+
+  function applyFilter() {
+    var cards = grid.querySelectorAll('.card');
+    var shown = 0;
+    Array.prototype.forEach.call(cards, function (card) {
+      var c = byId[card.dataset.target];
+      var okGroup = state.group === 'all' || c.group === state.group;
+      var okKw = !state.kw || c._text.indexOf(state.kw) > -1;
+      var show = okGroup && okKw;
+      card.classList.toggle('hidden', !show);
+      if (show) shown++;
+    });
+    empty.classList.toggle('hidden', shown > 0);
+  }
+
+  function updatePill() {
+    pill.innerHTML = '已学 <b>' + doneCount() + '</b>/' + TOTAL;
+  }
+
+  /* ---------- 成就：按钮、提示、成就墙 ---------- */
+  function updateAchvBtn() {
+    var btn = document.getElementById('achvBtn');
+    if (!btn) return;
+    var u = unlockedAchv().length;
+    document.getElementById('achvCount').textContent = u + '/' + ACH.length;
+    btn.classList.toggle('full', u === ACH.length);
+  }
+
+  function clockIcon(size) {
+    return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 64 64" fill="none" aria-hidden="true">' +
+      '<circle cx="32" cy="32" r="24" stroke="currentColor" stroke-width="4.5" opacity=".3"/>' +
+      '<path d="M32 18v15l9 5.5" stroke="currentColor" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '</svg>';
+  }
+
+  /* 时长成就的环形进度徽章（无配图时使用） */
+  function clockArt(a) {
+    var st = achvState(a);
+    var C = 2 * Math.PI * 26;
+    var off = (C * (1 - st.pct / 100)).toFixed(1);
+    var dark = document.documentElement.classList.contains('dark');
+    var col = st.unlocked ? '#2FB6AD' : (dark ? '#5C6470' : '#C2C9D2');
+    var track = st.unlocked ? (dark ? '#17332F' : '#D7F1EE') : (dark ? '#2E333B' : '#DFF0EC');
+    return '<div class="achv-art time-art">' +
+      '<svg width="60" height="60" viewBox="0 0 64 64" fill="none" aria-hidden="true">' +
+        '<circle cx="32" cy="32" r="26" stroke="' + track + '" stroke-width="5"/>' +
+        '<circle cx="32" cy="32" r="26" stroke="' + col + '" stroke-width="5" stroke-linecap="round" ' +
+          'stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="' + off + '" transform="rotate(-90 32 32)"/>' +
+        '<path d="M32 21v11.5l7.5 4.5" stroke="' + col + '" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '</svg></div>';
+  }
+
+  function toast(a) {
+    var wrap = document.getElementById('toastWrap');
+    var el = document.createElement('div');
+    el.className = 'toast';
+    var ic = a.img
+      ? '<div class="ic"><img src="' + achvSrc(a) + '" alt="" /></div>'
+      : '<div class="ic kind-min">' + clockIcon(26) + '</div>';
+    el.innerHTML = ic +
+      '<div><b>解锁成就 · ' + a.name + '</b><span>' + a.desc + '</span></div>';
+    wrap.appendChild(el);
+    setTimeout(function () {
+      el.classList.add('out');
+      setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 300);
+    }, 3800);
+  }
+
+  function checkAchievements() {
+    bumpBest();
+    ACH.forEach(function (a) {
+      if (curVal(a) >= a.need && announced.indexOf(a.id) < 0) {
+        announced.push(a.id);
+        saveAnnounced();
+        toast(a);
+      }
+    });
+    updateAchvBtn();
+  }
+
+  /* 已达成但未提示过的记录（避免旧进度在打开页面时补弹提示） */
+  function backfillAchv() {
+    var changed = false;
+    ACH.forEach(function (a) {
+      if (curVal(a) >= a.need && announced.indexOf(a.id) < 0) { announced.push(a.id); changed = true; }
+    });
+    if (changed) saveAnnounced();
+  }
+
+  var ACHV = '20261029c';   // 成就配图版本号：换图后改这里可破浏览器缓存
+  function achvSrc(a) { return a.img ? a.img + '?v=' + ACHV : ''; }
+
+  function achvCardHtml(a) {
+    var st = achvState(a);
+    var art = a.img
+      ? '<div class="achv-art"><img src="' + achvSrc(a) + '" alt="" loading="lazy" decoding="async" ' +
+        'onerror="this.parentNode.classList.add(\'no-pic\');this.remove();"></div>'
+      : clockArt(a);
+    return '<div class="achv-card ' + (st.unlocked ? 'unlocked' : 'locked') + '">' + art +
+      '<div class="nm">' + a.name + '</div>' +
+      '<div class="ds">' + a.desc + '</div>' +
+      '<div class="bar"><i style="width:' + st.pct + '%"></i></div>' +
+      '<div class="st">' + (st.unlocked ? '已达成'
+        : '还差 ' + (a.kind === 'min' ? fmtMin(st.left) : st.left + ' 篇')) + '</div>' +
+      '</div>';
+  }
+
+  function renderAchv() {
+    var n = doneCount();
+    var u = unlockedAchv().length;
+    var chA = ACH.filter(function (a) { return a.kind === 'ch'; });
+    var minA = ACH.filter(function (a) { return a.kind === 'min'; });
+    var uCh = chA.filter(function (a) { return curVal(a) >= a.need; }).length;
+    var uMin = minA.filter(function (a) { return curVal(a) >= a.need; }).length;
+
+    var h = BACK + '<div class="crumb"><a href="#home">首页</a><span>/</span>学习成就</div>';
+    h += '<h2>学习成就</h2>';
+    h += '<div class="achv-sum">' +
+      '<div><div class="big">' + u + '/' + ACH.length + '</div><div class="lbl">已解锁成就</div></div>' +
+      '<div><div class="big">' + n + '/' + TOTAL + '</div><div class="lbl">当前已学篇目</div></div>' +
+      '<div><div class="big">' + fmtMin(totalMin()) + '</div><div class="lbl">累计阅读</div></div>' +
+      '</div>';
+
+    h += '<h3 class="achv-h">章节成就<span class="cnt">' + uCh + '/' + chA.length + '</span></h3>';
+    h += '<div class="achv-grid">' + chA.map(achvCardHtml).join('') + '</div>';
+
+    h += '<h3 class="achv-h">时长成就<span class="cnt">' + uMin + '/' + minA.length + '</span></h3>';
+    h += '<p class="achv-tip">当前累计 <b>' + fmtMin(totalMin()) + '</b>　·　本次会话 ' +
+      fmtMin(Math.floor(sessionSec / 60)) + '　·　只在章节页、页面可见且有操作时计时</p>';
+    h += '<div class="achv-grid">' + minA.map(achvCardHtml).join('') + '</div>';
+
+    h += '<p class="achv-note">在章节页点「标记已学」累计篇数，停留阅读累计时长，达成新成就会立即弹出提示。' +
+      '成就一旦达成不会因为取消标记而收回；进度保存在本机浏览器中。</p>';
+    return '<article class="chapter" id="art" tabindex="-1">' + h + '</article>';
+  }
+
+  /* ---------- 正文 ---------- */
+  function sec(title, cnt, body) {
+    if (!body) return '';
+    return '<h3>' + title + (cnt ? '<span class="cnt">' + cnt + '</span>' : '') + '</h3>' + body;
+  }
+
+  function outlineStat(c) {
+    var sec = 0, item = 0;
+    (c.outline || []).forEach(function (x) {
+      if (typeof x === 'string') { item++; return; }
+      sec++;
+      item += (x.items || []).length;
+    });
+    return { sec: sec, item: item };
+  }
+
+  function renderArticle(c) {
+    var i = DATA.indexOf(c);
+    var prev = DATA[i - 1];
+    var next = DATA[i + 1];
+    var h = '';
+
+    h += '<div class="crumb"><a href="#home">首页</a><span>/</span>' + c.group + '<span>/</span>' + c.title + '</div>';
+    if (picOf(c)) {
+      h += '<div class="art-hero"><img src="' + picOf(c) + '" alt="' + c.title + '" ' +
+        'loading="lazy" decoding="async" ' +
+        'onerror="this.parentNode.style.display=\'none\';"></div>';
+    }
+    h += '<h2>' + c.title + '</h2>';
+    h += '<div class="art-bar">' +
+      '<span class="art-tag">' + c.vol + '</span>' +
+       '<span class="art-tag">' + (function () {
+         var st = outlineStat(c);
+         return st.sec ? st.sec + ' 节 · ' + st.item + ' 目' : st.item + ' 条提纲';
+       })() + ' · ' + (c.points ? c.points.length : 0) + ' 条重点</span>' +
+      '<span class="sp"></span>' +
+      '<div class="fontsize" id="fontsize">' +
+        '<button type="button" data-fs="fs-s">小</button>' +
+        '<button type="button" data-fs="fs-m">中</button>' +
+        '<button type="button" data-fs="fs-l">大</button>' +
+      '</div>' +
+      '<button class="btn-ghost' + (done[c.id] ? ' on' : '') + '" id="markBtn" type="button">' +
+        (done[c.id] ? '✓ 已学' : '标记已学') + '</button>' +
+    '</div>';
+
+    if (c.outline && c.outline.length) {
+      var secCnt = 0, itemCnt = 0;
+      var ol = c.outline.map(function (x, si) {
+        if (typeof x === 'string') { itemCnt++; return '<li>' + x + '</li>'; }
+        secCnt++;
+        var sub = (x.items || []).map(function (y) { itemCnt++; return '<li>' + y + '</li>'; }).join('');
+        return '<li class="sec-li" data-sec="' + si + '"><b class="sec-t">' + x.s + '</b>' +
+          (sub ? '<ul class="sub">' + sub + '</ul>' : '') + '</li>';
+      }).join('');
+      h += sec('本章提纲', secCnt ? secCnt + ' 节 · ' + itemCnt + ' 目' : itemCnt + ' 条',
+        '<ul class="tight outline">' + ol + '</ul>');
+    }
+
+    if (c.points && c.points.length) {
+      h += sec('重点内容', c.points.length + ' 条', '<div class="body">' + c.points.map(function (x) {
+        return '<p><span class="tag tag-key">重点</span>' + x + '</p>';
+      }).join('') + '</div>');
+    }
+
+    if (c.concepts && c.concepts.length) {
+      h += sec('核心概念', c.concepts.length + ' 个', '<div class="body">' + c.concepts.map(function (x) {
+        return '<p><span class="tag tag-concept">概念</span><span class="cpt">' + x[0] + '：</span>' + x[1] + '</p>';
+      }).join('') + '</div>');
+    }
+
+    if (c.confusions && c.confusions.length) {
+      h += sec('易混辨析', c.confusions.length + ' 条', '<div class="body">' + c.confusions.map(function (x) {
+        return '<p><span class="tag tag-tip">易混</span>' + x + '</p>';
+      }).join('') + '</div>');
+    }
+
+    if (c.quotes && c.quotes.length) {
+      h += sec('原文摘录', c.quotes.length + ' 条', '<div class="body">' + c.quotes.map(function (x) {
+        return '<p><span class="tag tag-quote">原文</span>' + x[0] +
+          '<span style="color:var(--text-3);font-size:12px;">——' + x[1] + '</span></p>';
+      }).join('') + '</div>');
+    }
+
+    if (c.review && c.review.length) {
+      h += sec('复习提示', '', '<div class="body">' + c.review.map(function (x) {
+        return '<p><span class="tag tag-review">复习</span>' + x + '</p>';
+      }).join('') + '</div>');
+    }
+
+    h += '<p class="art-src">提纲按《习近平新时代中国特色社会主义思想概论》（2023 年版）的章节结构整理，并参照高校公开课程教学大纲核对；要点为复习归纳，具体表述以教材原文和课堂讲授为准。</p>';
+
+    h += '<div class="pager">';
+    h += prev
+      ? '<button type="button" class="prev" data-go="' + prev.id + '"><span>上一篇</span><b>' + shortName(prev) + '</b></button>'
+      : '<button type="button" disabled><span>上一篇</span><b>已经是第一篇</b></button>';
+    h += next
+      ? '<button type="button" class="next" data-go="' + next.id + '"><span>下一篇</span><b>' + shortName(next) + '</b></button>'
+      : '<button type="button" class="next" disabled><span>下一篇</span><b>已经是最后一篇</b></button>';
+    h += '</div>';
+
+    return h;
+  }
+
+  function bindArticle(c) {
+    var markBtn = document.getElementById('markBtn');
+    if (markBtn) {
+      markBtn.addEventListener('click', function () {
+        if (done[c.id]) { delete done[c.id]; markBtn.classList.remove('on'); markBtn.textContent = '标记已学'; }
+        else { done[c.id] = 1; markBtn.classList.add('on'); markBtn.textContent = '✓ 已学'; }
+        saveDone();
+        updatePill();
+        checkAchievements();
+        buildToc();
+        buildCards();
+        applyFilter();
+        markTocActive(c.id);
+        var card = grid.querySelector('.card[data-target="' + c.id + '"]');
+        if (card) card.classList.toggle('done', !!done[c.id]);
+      });
+    }
+
+    var fs = document.getElementById('fontsize');
+    if (fs) {
+      Array.prototype.forEach.call(fs.querySelectorAll('button'), function (b) {
+        b.classList.toggle('on', document.body.classList.contains(b.dataset.fs));
+        b.addEventListener('click', function () {
+          ['fs-s', 'fs-m', 'fs-l'].forEach(function (k) { document.body.classList.remove(k); });
+          document.body.classList.add(b.dataset.fs);
+          try { localStorage.setItem(FKEY, b.dataset.fs); } catch (e) {}
+          Array.prototype.forEach.call(fs.querySelectorAll('button'), function (x) {
+            x.classList.toggle('on', x === b);
+          });
+        });
+      });
+    }
+  }
+
+  function markTocActive(id) {
+    Array.prototype.forEach.call(toc.querySelectorAll('.side-item'), function (el) {
+      el.classList.toggle('active', el.dataset.go === id);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.nav-links a'), function (a) {
+      a.classList.toggle('active', !!a.dataset.nav && a.dataset.nav === id);
+    });
+  }
+
+  /* ---------- 路由 ---------- */
+  function currentId() { return location.hash.replace(/^#/, ''); }
+
+  /* ---------- 刷题 ---------- */
+  var QZ_KEY = 'gaigai.quizbest.v1';
+  var SKEY = 'gaigai.stars.v1';
+  var WKEY = 'gaigai.wrong.v1';
+  var wrongs = [];
+  try { wrongs = JSON.parse(localStorage.getItem(WKEY) || '[]') || []; } catch (e) { wrongs = []; }
+  function saveWrong() { try { localStorage.setItem(WKEY, JSON.stringify(wrongs)); } catch (e) {} }
+  function addWrong(i) { if (wrongs.indexOf(i) < 0) { wrongs.push(i); saveWrong(); } }
+  function dropWrong(i) { var k = wrongs.indexOf(i); if (k >= 0) { wrongs.splice(k, 1); saveWrong(); } }
+  function saveStars() { try { localStorage.setItem(SKEY, JSON.stringify(stars)); } catch (e) {} }
+  var stars = [];
+  try { stars = JSON.parse(localStorage.getItem(SKEY) || '[]') || []; } catch (e) { stars = []; }
+
+  function isStarred(i) { return stars.indexOf(i) >= 0; }
+  function toggleStar(i) {
+    var k = stars.indexOf(i);
+    if (k >= 0) stars.splice(k, 1); else stars.push(i);
+    saveStars();
+  }
+  function starBtnHtml(i) {
+    var on = isStarred(i);
+    return '<button class="star-btn' + (on ? ' on' : '') + '" type="button" data-star="' + i + '" ' +
+      'title="' + (on ? '取消收藏' : '收藏本题') + '" aria-pressed="' + on + '">' +
+      (on ? '★ 已收藏' : '☆ 收藏') + '</button>';
+  }
+  var LETTERS = ['A', 'B', 'C', 'D'];
+  var CN_NUM = ['一', '二', '三', '四', '五'];
+  var CH_ID = {
+    '导论': 'intro', '第一章': 'ch1', '第二章': 'ch2', '第三章': 'ch3', '第四章': 'ch4',
+    '第五章': 'ch5', '第六章': 'ch6', '第七章': 'ch7', '第八章': 'ch8', '第九章': 'ch9',
+    '第十章': 'ch10', '第十一章': 'ch11', '第十二章': 'ch12', '第十三章': 'ch13',
+    '第十四章': 'ch14', '第十五章': 'ch15', '第十六章': 'ch16', '第十七章': 'ch17'
+  };
+
+  function srcBtnHtml(q, ghost) {
+    var cid = CH_ID[q.c];
+    if (!cid) return '';
+    var label = (q.s >= 0) ? '第' + CN_NUM[q.s] + '节' : '本章提纲';
+    return '<button class="btn-link" type="button" data-goto="' + cid + '" data-sec="' + q.s + '">' +
+      '查看原文 · ' + q.c + ' ' + label + ' ›</button>';
+  }
+
+  function gotoSection(secIdx) {
+    if (!(secIdx >= 0)) return;
+    var el = view.querySelector('.outline > li[data-sec="' + secIdx + '"]');
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el.classList.add('flash');
+    setTimeout(function () { el.classList.remove('flash'); }, 2400);
+  }
+  var qz = { order: [], idx: 0, ans: [], finished: false };
+
+  function shuffleIdx(n) {
+    var a = [], i, j, t;
+    for (i = 0; i < n; i++) a.push(i);
+    for (i = n - 1; i > 0; i--) { j = Math.floor(Math.random() * (i + 1)); t = a[i]; a[i] = a[j]; a[j] = t; }
+    return a;
+  }
+  function startQuiz(list) {
+    qz.order = (list && list.length) ? list.slice() : shuffleIdx(QUIZ.length);
+    qz.idx = 0; qz.ans = []; qz.finished = false;
+  }
+  function quizRight() {
+    var n = 0;
+    qz.ans.forEach(function (p, i) {
+      if (p != null && p === QUIZ[qz.order[i]].a) n++;
+    });
+    return n;
+  }
+  function quizHtml() {
+    if (!qz.order.length) startQuiz();
+    if (qz.finished) return quizResultHtml();
+
+    var total = qz.order.length, qi = qz.order[qz.idx], q = QUIZ[qi];
+    var picked = qz.ans[qz.idx], answered = picked != null;
+    var right = answered && picked === q.a;
+
+    var h = BACK + '<div class="crumb"><a href="#home">首页</a><span>/</span>刷题练习</div>';
+    h += '<h2>刷题练习</h2>';
+    h += '<div class="quiz-top">' +
+      '<span>第 <b>' + (qz.idx + 1) + '</b> / ' + total + ' 题</span>' +
+      '<div class="quiz-prog"><i style="width:' + Math.round(qz.idx / total * 100) + '%"></i></div>' +
+      '<span>答对 <b>' + quizRight() + '</b></span>' +
+      starBtnHtml(qi) +
+      '</div>';
+    h += '<div class="q-stem"><span class="q-tag">' + q.c + '</span>' + q.q + '</div>';
+    h += '<div class="q-opts">';
+    q.o.forEach(function (text, i) {
+      var cls = 'opt';
+      if (answered) {
+        if (i === q.a) cls += ' right';
+        else if (i === picked) cls += ' wrong';
+        else cls += ' dim';
+      }
+      h += '<button class="' + cls + '" type="button" data-opt="' + i + '"' +
+        (answered ? ' disabled' : '') + '>' +
+        '<span class="k">' + LETTERS[i] + '</span><span>' + text + '</span></button>';
+    });
+    h += '</div>';
+    if (answered) {
+      h += '<div class="q-fb ' + (right ? 'ok' : 'no') + '">' +
+        (right ? '✓ 回答正确' : '✗ 回答错误，正确答案是 ' + LETTERS[q.a]) + '</div>';
+      h += '<div class="q-exp">解析：' + q.e + '</div>';
+      h += '<div class="quiz-actions">' +
+        '<button class="btn-main" type="button" data-quiz="next">' +
+        (qz.idx + 1 >= total ? '看结果 →' : '下一题 →') + '</button>' +
+        (right ? '' : srcBtnHtml(q)) +
+        '</div>';
+    }
+    return '<article class="chapter" id="art" tabindex="-1">' + h + '</article>';
+  }
+
+  /* ---------- 本地用户（昵称 / 头像） ---------- */
+  var UKEY = 'gaigai.user.v1';
+  var user = { name: '学习者', avatar: '' };
+  try {
+    var u = JSON.parse(localStorage.getItem(UKEY) || '{}') || {};
+    if (u.name) user.name = u.name;
+    if (u.avatar) user.avatar = u.avatar;
+  } catch (e) {}
+  function saveUser() { try { localStorage.setItem(UKEY, JSON.stringify(user)); } catch (e) {} }
+  function userInitial() { return (user.name || '学习者').trim().charAt(0) || '学'; }
+  function avatarInner() {
+    return user.avatar ? '<img src="' + user.avatar + '" alt="" />' : userInitial();
+  }
+  function paintAvatar() {
+    if (!userBtn) return;
+    userBtn.innerHTML = avatarInner();
+    userBtn.title = user.name || '学习者';
+  }
+
+  function exportRecords() {
+    var dump = { app: '概论复习站', version: 1, exportedAt: new Date().toISOString(), data: {} };
+    for (var i = 0; i < localStorage.length; i++) {
+      var k = localStorage.key(i);
+      if (!k || k.indexOf('gaigai.') !== 0) continue;
+      var v = localStorage.getItem(k);
+      try { dump.data[k] = JSON.parse(v); } catch (e) { dump.data[k] = v; }
+    }
+    var blob = new Blob([JSON.stringify(dump, null, 2)], { type: 'application/json' });
+    var d = new Date();
+    var stamp = '' + d.getFullYear() + ('0' + (d.getMonth() + 1)).slice(-2) + ('0' + d.getDate()).slice(-2);
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = '概论复习站-记录-' + stamp + '.json';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1200);
+  }
+
+  function renderMe() {
+    var best = 0;
+    try { best = parseInt(localStorage.getItem(QZ_KEY) || '0', 10) || 0; } catch (e) { best = 0; }
+    var h = BACK + '<div class="crumb"><a href="#home">首页</a><span>/</span>我的</div>';
+    h += '<h2>我的</h2>';
+    h += '<div class="me-head">' +
+      '<button class="me-big" type="button" data-me-act="pick" title="点击更换头像">' + avatarInner() + '</button>' +
+      '<div class="me-meta"><div class="me-name">' + user.name + '</div>' +
+      '<div class="me-sub">本地账号 · 所有记录只保存在这台设备的浏览器里</div></div>' +
+      '</div>';
+    h += '<div class="me-field"><label>昵称</label>' +
+      '<input id="meNameInput" maxlength="12" value="' + user.name.replace(/"/g, '&quot;') + '" />' +
+      '<button class="btn-main" type="button" data-me-act="saveName">保存</button>' +
+      '<button class="btn-main ghost" type="button" data-me-act="pick">更换头像</button>' +
+      '</div>';
+    h += '<div class="me-stats">' +
+      '<div class="me-stat"><b>' + doneCount() + '/' + TOTAL + '</b><span>已学篇目</span></div>' +
+      '<div class="me-stat"><b>' + unlockedAchv().length + '/' + ACH.length + '</b><span>已解锁成就</span></div>' +
+      '<div class="me-stat"><b>' + stars.length + '</b><span>收藏题目</span></div>' +
+      '<div class="me-stat"><b>' + wrongs.length + '</b><span>错题数量</span></div>' +
+      '<div class="me-stat"><b>' + fmtMin(totalMin()) + '</b><span>累计阅读</span></div>' +
+      '<div class="me-stat"><b>' + best + '%</b><span>刷题最佳</span></div>' +
+      '</div>';
+    h += '<h3 class="achv-h" style="margin-top:26px;">数据</h3>';
+    h += '<div class="me-export">' +
+      '<button class="btn-main" type="button" data-me-act="export">导出我的记录</button>' +
+      '<span class="me-note">生成一个 .json 文件，包含进度、成就、收藏、错题、阅读时长、主题、刷题成绩与头像昵称。</span>' +
+      '</div>';
+    return '<article class="chapter" id="art" tabindex="-1">' + h + '</article>';
+  }
+  var mkTab = 'star', mkSel = {};
+  var BACK = '<button class="back-btn" type="button" data-go="home">← 返回首页</button>';
+  function mkList() { return mkTab === 'star' ? stars : wrongs; }
+  function mkSelCount() { return Object.keys(mkSel).length; }
+
+  function renderMarks() {
+    var list = mkList().slice().sort(function (a, b) { return a - b; });
+    var selN = mkSelCount();
+    var h = BACK + '<div class="crumb"><a href="#home">首页</a><span>/</span>题库本</div>';
+    h += '<h2>题库本</h2>';
+    h += '<div class="mk-tabs">' +
+      '<button class="mk-tab' + (mkTab === 'star' ? ' on' : '') + '" type="button" data-mk="star">收藏<span>' + stars.length + '</span></button>' +
+      '<button class="mk-tab' + (mkTab === 'wrong' ? ' on' : '') + '" type="button" data-mk="wrong">错题<span>' + wrongs.length + '</span></button>' +
+      '</div>';
+
+    if (!list.length) {
+      h += '<div class="mk-empty">' + (mkTab === 'star'
+        ? '还没有收藏的题目。刷题时点右上角「☆ 收藏」即可加入。'
+        : '错题集是空的。答错的题会自动收进来，之后答对就移出。') + '</div>';
+      return '<article class="chapter" id="art" tabindex="-1">' + h + '</article>';
+    }
+
+    h += '<div class="mk-bar">' +
+      '<label class="mk-all"><input type="checkbox" id="mkAll"' + (selN === list.length ? ' checked' : '') + '> 全选</label>' +
+      '<span>已选 <b>' + selN + '</b> / ' + list.length + '</span>' +
+      '<span class="sp"></span>' +
+      '<button class="btn-main ghost" type="button" data-mk-act="remove"' + (selN ? '' : ' disabled') + '>' +
+        (mkTab === 'star' ? '取消收藏' : '移出错题集') + '</button>' +
+      '<button class="btn-main" type="button" data-mk-act="practice">练这 ' + (selN || list.length) + ' 题</button>' +
+      '</div>';
+
+    h += '<div class="mk-list">';
+    list.forEach(function (i) {
+      var q = QUIZ[i];
+      h += '<div class="mk-item">' +
+        '<label class="mk-pick"><input type="checkbox" data-pick="' + i + '"' + (mkSel[i] ? ' checked' : '') + '></label>' +
+        '<div class="mk-body">' +
+          '<div class="mk-q"><span class="q-tag">' + q.c + '</span>' + q.q + '</div>' +
+          '<div class="mk-opts">' + q.o.map(function (t, k) {
+            return '<div class="mk-opt' + (k === q.a ? ' right' : '') + '">' +
+              LETTERS[k] + '. ' + t + (k === q.a ? '  ✓' : '') + '</div>';
+          }).join('') + '</div>' +
+          '<div class="mk-exp">解析：' + q.e + '</div>' +
+        '</div>' +
+      '</div>';
+    });
+    h += '</div>';
+    return '<article class="chapter" id="art" tabindex="-1">' + h + '</article>';
+  }
+
+  function quizResultHtml() {
+    var total = qz.order.length;
+    var right = quizRight();
+    var pct = Math.round(right / total * 100);
+    var wrongs = [];
+    qz.order.forEach(function (qi, i) {
+      if (qz.ans[i] !== QUIZ[qi].a) wrongs.push({ qi: qi, p: qz.ans[i] });
+    });
+
+    var best = 0;
+    try { best = parseInt(localStorage.getItem(QZ_KEY) || '0', 10) || 0; } catch (e) { best = 0; }
+    if (pct > best) { best = pct; try { localStorage.setItem(QZ_KEY, String(pct)); } catch (e) {} }
+
+    var h = BACK + '<div class="crumb"><a href="#home">首页</a><span>/</span>刷题练习</div>';
+    h += '<h2>本轮结果</h2>';
+    h += '<div class="quiz-result"><div class="rk">' + right + '/' + total + '</div>' +
+      '<div class="rl">正确率 ' + pct + '%　·　历史最佳 ' + best + '%</div></div>';
+    h += '<div class="quiz-actions" style="justify-content:center;margin-top:16px;">' +
+      '<button class="btn-main" type="button" data-quiz="restart">再来一轮</button>' +
+      (wrongs.length
+        ? '<button class="btn-main ghost" type="button" data-quiz="wrong">只练 ' + wrongs.length + ' 道错题</button>'
+        : '') +
+      (stars.length
+        ? '<button class="btn-main ghost" type="button" data-quiz="starred">只练 ' + stars.length + ' 道收藏</button>'
+        : '') +
+      '</div>';
+
+    if (wrongs.length) {
+      h += '<h3 class="achv-h" style="margin-top:26px;">错题回顾<span class="cnt">' + wrongs.length + '</span></h3>';
+      wrongs.forEach(function (w) {
+        var q = QUIZ[w.qi];
+        h += '<div class="wrong-item"><b>' + q.q + '</b>' +
+          '<br>你的选择：' + (w.p == null ? '未作答' : LETTERS[w.p] + '. ' + q.o[w.p]) +
+          '<br>正确答案：<em>' + LETTERS[q.a] + '. ' + q.o[q.a] + '</em>' +
+          '<br>解析：' + q.e +
+          '<div style="margin-top:8px;">' + srcBtnHtml(q) + '</div></div>';
+      });
+    }
+    return '<article class="chapter" id="art" tabindex="-1">' + h + '</article>';
+  }
+
+  /* 刷题区的点击：选项与按钮委派 */
+  document.addEventListener('click', function (e) {
+    if (!view || view.classList.contains('hidden')) return;
+    var opt = e.target.closest('[data-opt]');
+    if (opt && !opt.disabled) {
+      if (qz.ans[qz.idx] == null) {
+        var picked = parseInt(opt.getAttribute('data-opt'), 10);
+        var qIdx = qz.order[qz.idx];
+        qz.ans[qz.idx] = picked;
+        /* 答错进错题集，答对则移出 */
+        if (picked === QUIZ[qIdx].a) dropWrong(qIdx); else addWrong(qIdx);
+        view.innerHTML = quizHtml();
+      }
+      return;
+    }
+    var meAct = e.target.closest('[data-me-act]');
+    if (meAct) {
+      var act = meAct.getAttribute('data-me-act');
+      if (act === 'pick') { var f = document.getElementById('avFile'); if (f) f.click(); return; }
+      if (act === 'saveName') {
+        var inp = document.getElementById('meNameInput');
+        var nm = (inp && inp.value || '').trim().slice(0, 12);
+        user.name = nm || '学习者';
+        saveUser(); paintAvatar();
+        view.innerHTML = renderMe();
+        return;
+      }
+      if (act === 'export') { exportRecords(); return; }
+    }
+
+    var tab = e.target.closest('[data-mk]');
+    if (tab) {
+      mkTab = tab.getAttribute('data-mk');
+      mkSel = {};
+      view.innerHTML = renderMarks();
+      return;
+    }
+
+    var mka = e.target.closest('[data-mk-act]');
+    if (mka) {
+      var sel = Object.keys(mkSel).map(Number);
+      if (mka.getAttribute('data-mk-act') === 'practice') {
+        var run = sel.length ? sel : mkList().slice();
+        if (!run.length) return;
+        mkSel = {};
+        startQuiz(run);
+        navigate('quiz');
+        return;
+      }
+      if (!sel.length) return;
+      if (mkTab === 'star') {
+        stars = stars.filter(function (i) { return sel.indexOf(i) < 0; });
+        saveStars();
+      } else {
+        wrongs = wrongs.filter(function (i) { return sel.indexOf(i) < 0; });
+        saveWrong();
+      }
+      mkSel = {};
+      view.innerHTML = renderMarks();
+      return;
+    }
+
+    var st = e.target.closest('[data-star]');
+    if (st) {
+      toggleStar(parseInt(st.getAttribute('data-star'), 10));
+      view.innerHTML = quizHtml();
+      return;
+    }
+
+    var go = e.target.closest('[data-goto]');
+    if (go) {
+      var cid = go.getAttribute('data-goto');
+      var secIdx = parseInt(go.getAttribute('data-sec'), 10);
+      navigate(cid);
+      setTimeout(function () { gotoSection(isNaN(secIdx) ? -1 : secIdx); }, 30);
+      return;
+    }
+
+    var act = e.target.closest('[data-quiz]');
+    if (!act) return;
+    var k = act.getAttribute('data-quiz');
+    if (k === 'next') {
+      if (qz.idx + 1 >= qz.order.length) qz.finished = true;
+      else qz.idx++;
+      view.innerHTML = quizHtml();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (k === 'restart') {
+      startQuiz();
+      view.innerHTML = quizHtml();
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    } else if (k === 'starred') {
+      startQuiz(stars.slice());
+      view.innerHTML = quizHtml();
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    } else if (k === 'wrong') {
+      var list = [];
+      qz.order.forEach(function (qi, i) { if (qz.ans[i] !== QUIZ[qi].a) list.push(qi); });
+      startQuiz(list);
+      view.innerHTML = quizHtml();
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+  });
+
+  var lastView = null, viewBooted = false;
+  var vloadEl = document.getElementById('vload');
+  var vFillEl = document.getElementById('vFill');
+  var vPctEl = document.getElementById('vPct');
+  var vWipeEl = document.getElementById('vWipe');
+  var vTimer = 0, vTimer2 = 0, vTick = 0, vOnDone = null;
+
+  function finishViewLoader(instant) {
+    if (!vloadEl || !vloadEl.classList.contains('on')) {
+      if (vOnDone) { var f0 = vOnDone; vOnDone = null; f0(); }
+      return;
+    }
+    /* 先把新页面渲染到遮罩后面，再开始淡出 */
+    if (vOnDone) { var fn = vOnDone; vOnDone = null; fn(); }
+    if (vTimer) { clearTimeout(vTimer); vTimer = 0; }
+    if (vTimer2) { clearTimeout(vTimer2); vTimer2 = 0; }
+    if (vTick) { clearInterval(vTick); vTick = 0; }
+    vFillEl.style.width = '100%';
+    vPctEl.textContent = '100';
+    vloadEl.classList.add('out');
+    var wait = instant ? 0 : 300;
+    vTimer = setTimeout(function () {
+      vloadEl.classList.remove('on', 'out', 'dark');
+      vWipeEl.classList.remove('up');
+      vFillEl.style.width = '0%';
+      vPctEl.textContent = '00';
+      vTimer = 0;
+    }, wait);
+  }
+
+  function playViewLoader(onDone) {
+    if (!vloadEl) { if (onDone) onDone(); return; }
+    /* 上一轮还没渲染就先补上，避免连点时丢页面 */
+    if (vOnDone) { var prev = vOnDone; vOnDone = null; prev(); }
+    vOnDone = onDone || null;
+    if (vTimer) { clearTimeout(vTimer); vTimer = 0; }
+    if (vTimer2) { clearTimeout(vTimer2); vTimer2 = 0; }
+    if (vTick) { clearInterval(vTick); vTick = 0; }
+
+    vloadEl.classList.remove('out', 'dark');
+    vWipeEl.classList.remove('up');
+    vloadEl.classList.add('on');
+    vFillEl.style.width = '0%';
+    vPctEl.textContent = '00';
+
+    /* 1) 青绿由下至上填满：强制重排后再加类，确保过渡真的跑起来 */
+    void vWipeEl.offsetWidth;
+    vWipeEl.classList.add('up');
+
+    /* 2) 240ms 后压上深色面板并开始计数（用定时器，不依赖 rAF） */
+    vTimer2 = setTimeout(function () {
+      vTimer2 = 0;
+      if (!vloadEl.classList.contains('on')) return;
+      vloadEl.classList.add('dark');
+      var t0 = Date.now(), DUR = 420;
+      vTick = setInterval(function () {
+        var p = Math.min(1, (Date.now() - t0) / DUR);
+        var v = Math.round(p * 100);
+        vFillEl.style.width = v + '%';
+        vPctEl.textContent = (v < 10 ? '0' : '') + v;
+        if (p >= 1) { clearInterval(vTick); vTick = 0; finishViewLoader(); }
+      }, 24);
+    }, 320);
+
+    /* 3) 兜底：后台标签页会被节流，也保证 1.6s 内收场 */
+    vTimer = setTimeout(function () { vTimer = 0; finishViewLoader(); }, 2600);
+  }
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden && vloadEl && vloadEl.classList.contains('on')) finishViewLoader(true);
+  });
+
+  function show(id) {
+    var changed = viewBooted && id !== lastView;
+    lastView = id;
+    if (changed) {
+      /* 加载动画放完再换内容：渲染放在遮罩完全覆盖之后 */
+      /* 结束时按「当前 hash」渲染，保证连点时最后一次点击生效 */
+      playViewLoader(function () { safeRender(currentId()); });
+    } else {
+      safeRender(id);
+    }
+  }
+
+  function safeRender(id) {
+    try {
+      renderView(id);
+    } catch (err) {
+      /* 单个页面渲染失败不再留下空白视图 */
+      if (window.console && console.error) console.error('render failed:', id, err);
+      try { renderView('home'); } catch (e) {}
+    }
+  }
+
+  function renderView(id) {
+    var c = byId[id];
+    var isAchv = id === 'achv';
+    closeMenu();
+    readingNow = !!c;
+    document.body.classList.toggle('reading', !!c || isAchv || id === 'quiz');
+
+    if (id === 'me') {
+      home.classList.add('hidden');
+      view.classList.remove('hidden');
+      view.innerHTML = renderMe();
+      document.body.classList.add('reading');
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      return;
+    }
+
+    if (id === 'marks') {
+      home.classList.add('hidden');
+      view.classList.remove('hidden');
+      view.innerHTML = renderMarks();
+      markTocActive('marks');
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      return;
+    }
+
+    if (id === 'quiz') {
+      if (!qz.order.length) startQuiz();
+      home.classList.add('hidden');
+      view.classList.remove('hidden');
+      view.innerHTML = quizHtml();
+      markTocActive('quiz');
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      return;
+    }
+
+    if (isAchv) {
+      home.classList.add('hidden');
+      view.classList.remove('hidden');
+      view.innerHTML = renderAchv();
+      markTocActive('achv');
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      return;
+    }
+
+    if (c) {
+      home.classList.add('hidden');
+      view.classList.remove('hidden');
+      view.innerHTML = '<article class="chapter" id="art" tabindex="-1">' + renderArticle(c) + '</article>';
+      bindArticle(c);
+      markTocActive(id);
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      try { document.getElementById('art').focus({ preventScroll: true }); } catch (e) {}
+    } else {
+      view.classList.add('hidden');
+      view.innerHTML = '';
+      home.classList.remove('hidden');
+      markTocActive('home');
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+  }
+
+  function navigate(id) {
+    var next = (id && id !== 'home' && (byId[id] || id === 'achv' || id === 'quiz' || id === 'marks' || id === 'me')) ? id : '';
+    if (currentId() === next) show(next);
+    else location.hash = next;
+  }
+
+  /* ---------- 移动端菜单 ---------- */
+  function closeMenu() {
+    navBox.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  }
+  menuBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var open = navBox.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.addEventListener('click', function (e) {
+    if (!navBox.classList.contains('open')) return;
+    if (e.target.closest('#navLinks') || e.target.closest('#menuBtn')) return;
+    closeMenu();
+  });
+
+  /* ---------- 全局点击 ---------- */
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    if (!t || !t.closest) return;
+
+    var card = t.closest('.card');
+    if (card) { navigate(card.dataset.target); return; }
+
+    var go = t.closest('[data-go]');
+    if (go) { e.preventDefault(); navigate(go.dataset.go); return; }
+
+    var chip = t.closest('.chip');
+    if (chip) {
+      Array.prototype.forEach.call(filters.querySelectorAll('.chip'), function (c) {
+        c.classList.toggle('active', c === chip);
+      });
+      state.group = chip.dataset.group;
+      if (currentId() !== '') navigate('home');
+      applyFilter();
+      return;
+    }
+
+    var navFilter = t.closest('[data-filter]');
+    if (navFilter) {
+      e.preventDefault();
+      state.group = navFilter.dataset.filter;
+      Array.prototype.forEach.call(filters.querySelectorAll('.chip'), function (c) {
+        c.classList.toggle('active', c.dataset.group === state.group);
+      });
+      navigate('home');
+      applyFilter();
+    }
+  });
+
+  /* ---------- 搜索 ---------- */
+  function runSearch() {
+    state.kw = q.value.trim().toLowerCase();
+    if (currentId() !== '') navigate('home');
+    applyFilter();
+  }
+  q.addEventListener('input', runSearch);
+  q.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); runSearch(); }
+  });
+  document.getElementById('qBtn').addEventListener('click', runSearch);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (q.value) { q.value = ''; runSearch(); q.blur(); }
+    else navigate('home');
+  });
+
+  /* ---------- 回到顶部 ---------- */
+  window.addEventListener('scroll', function () {
+    toTop.classList.toggle('show', window.scrollY > 360);
+  }, { passive: true });
+  toTop.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  var userBtn = document.getElementById('userBtn');
+  paintAvatar();
+  if (userBtn) userBtn.addEventListener('click', function () { navigate('me'); });
+
+  var avFile = document.getElementById('avFile');
+  if (avFile) avFile.addEventListener('change', function (e) {
+    var file = e.target.files && e.target.files[0];
+    if (!file || !/^image\//.test(file.type)) return;
+    var fr = new FileReader();
+    fr.onload = function () {
+      var img = new Image();
+      img.onload = function () {
+        var S = 160, cv = document.createElement('canvas');
+        cv.width = cv.height = S;
+        var ctx = cv.getContext('2d');
+        var side = Math.min(img.width, img.height);
+        ctx.drawImage(img, (img.width - side) / 2, (img.height - side) / 2, side, side, 0, 0, S, S);
+        user.avatar = cv.toDataURL('image/jpeg', .88);
+        saveUser(); paintAvatar();
+        if (currentId() === 'me') view.innerHTML = renderMe();
+      };
+      img.src = fr.result;
+    };
+    fr.readAsDataURL(file);
+    e.target.value = '';
+  });
+
+  var achvBtn = document.getElementById('achvBtn');
+  if (achvBtn) achvBtn.addEventListener('click', function () { navigate('achv'); });
+
+  /* ---------- 黑夜模式切换 ---------- */
+  var THEME_KEY = 'gaigai.theme.v1';
+  function isDark() { return document.documentElement.classList.contains('dark'); }
+  function syncThemeMeta() {
+    var m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.setAttribute('content', isDark() ? '#0F1115' : '#2FB6AD');
+  }
+  syncThemeMeta();
+  var themeBtn = document.getElementById('themeBtn');
+  if (themeBtn) themeBtn.addEventListener('click', function () {
+    var dark = !isDark();
+    document.documentElement.classList.toggle('dark', dark);
+    try { localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light'); } catch (e) {}
+    syncThemeMeta();
+    if (currentId() === 'achv') show('achv');   // 时钟环配色随主题重绘
+  });
+
+  /* ---------- 阅读时长统计（5 秒一跳，90 秒无操作或页面隐藏则暂停） ---------- */
+  var lastAct = Date.now();
+  ['mousemove', 'keydown', 'scroll', 'touchstart', 'wheel', 'click'].forEach(function (ev) {
+    document.addEventListener(ev, function () { lastAct = Date.now(); }, { passive: true });
+  });
+  setInterval(function () {
+    if (document.hidden || !readingNow) return;
+    if (Date.now() - lastAct > 90000) return;
+    readSec += 5;
+    sessionSec += 5;
+    saveRead();
+    checkAchievements();
+  }, 5000);
+
+  window.addEventListener('hashchange', function () { show(currentId()); });
+
+  /* ---------- 初始化 ---------- */
+  try {
+    var savedFs = localStorage.getItem(FKEY);
+    if (savedFs) {
+      ['fs-s', 'fs-m', 'fs-l'].forEach(function (k) { document.body.classList.remove(k); });
+      document.body.classList.add(savedFs);
+    }
+  } catch (e) {}
+
+  bumpBest();
+  backfillAchv();
+  updateAchvBtn();
+
+  buildToc();
+  buildFilters();
+  buildCards();
+  updatePill();
+  applyFilter();
+  show(currentId());
+  viewBooted = true;   /* 首屏交给整页加载动画，之后切换才用局部动画 */
+})();
+</script>
+
+</body>
+</html>
