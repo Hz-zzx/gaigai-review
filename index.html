@@ -523,6 +523,8 @@
   }
   .toast .ic img{width:100%;height:100%;object-fit:cover;display:block;}
   .toast .ic.kind-min{display:flex;align-items:center;justify-content:center;color:var(--accent-dark);}
+  .toast .ic.mark{display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:700;color:var(--accent-dark);background:var(--accent-soft);}
+  .toast.plain{padding-right:20px;}
   .toast b{display:block;font-size:13.5px;color:var(--text);}
   .toast span{font-size:11.5px;color:var(--text-3);}
   .toast.out{animation:toastOut .26s ease forwards;}
@@ -2376,6 +2378,21 @@ function buildCards() {
     }, 3800);
   }
 
+  /* 通用文字提示（成就之外的场景，比如导入记录） */
+  function toastMsg(text, tone) {
+    var wrap = document.getElementById('toastWrap');
+    if (!wrap) return;
+    var el = document.createElement('div');
+    el.className = 'toast plain';
+    el.innerHTML = '<div class="ic mark">' + (tone === 'bad' ? '!' : '✓') + '</div>' +
+      '<div><b>' + text + '</b></div>';
+    wrap.appendChild(el);
+    setTimeout(function () {
+      el.classList.add('out');
+      setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 300);
+    }, 2600);
+  }
+
   function checkAchievements() {
     bumpBest();
     ACH.forEach(function (a) {
@@ -2743,6 +2760,47 @@ function buildCards() {
     setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1200);
   }
 
+  /* 导入：读入导出的 .json，覆盖本机记录（主题与字号保持当前设置） */
+  var IMPORT_SKIP = { 'gaigai.theme.v1': 1, 'gaigai.fs.v1': 1 };
+  function importRecords(file) {
+    if (!file) return;
+    var fr = new FileReader();
+    fr.onload = function () {
+      var dump = null;
+      try { dump = JSON.parse(String(fr.result || '')); } catch (e) { dump = null; }
+      if (!dump || typeof dump !== 'object' || !dump.data || typeof dump.data !== 'object') {
+        toastMsg('这个文件不是概论研习社的记录', 'bad');
+        return;
+      }
+      var src = dump.data, keys = [], k;
+      for (k in src) {
+        if (Object.prototype.hasOwnProperty.call(src, k) && k.indexOf('gaigai.') === 0) keys.push(k);
+      }
+      if (!keys.length) { toastMsg('文件里没有可导入的记录', 'bad'); return; }
+      var d0 = src['gaigai.done.v1'], w0 = src['gaigai.wrong.v1'], s0 = src['gaigai.stars.v1'];
+      var nd = d0 && typeof d0 === 'object' ? Object.keys(d0).length : 0;
+      var nw = Object.prototype.toString.call(w0) === '[object Array]' ? w0.length : 0;
+      var ns = Object.prototype.toString.call(s0) === '[object Array]' ? s0.length : 0;
+      var when = dump.exportedAt ? String(dump.exportedAt).slice(0, 10) : '日期未知';
+      var msg = '导入 ' + when + ' 的记录？' + String.fromCharCode(10, 10) +
+        '文件里：已学 ' + nd + ' 篇 · 错题 ' + nw + ' 道 · 收藏 ' + ns + ' 题' + String.fromCharCode(10, 10) +
+        '这会覆盖本机当前的进度、成就、收藏、错题、阅读时长和刷题成绩；界面主题与字号保持不变。';
+      if (!window.confirm(msg)) return;
+      for (k = 0; k < keys.length; k++) {
+        var kk = keys[k], v = src[kk];
+        if (IMPORT_SKIP[kk]) continue;
+        try { localStorage.setItem(kk, typeof v === 'string' ? v : JSON.stringify(v)); } catch (e) {}
+      }
+      toastMsg('已导入 ' + nd + ' 篇进度、' + nw + ' 道错题');
+      setTimeout(function () { location.reload(); }, 620);
+    };
+    fr.onerror = function () { toastMsg('文件读取失败', 'bad'); };
+    fr.readAsText(file);
+  }
+  document.addEventListener('change', function (e) {
+    if (e.target && e.target.id === 'meImportInput') importRecords(e.target.files && e.target.files[0]);
+  });
+
   function renderMe() {
     var best = 0;
     try { best = parseInt(localStorage.getItem(QZ_KEY) || '0', 10) || 0; } catch (e) { best = 0; }
@@ -2769,7 +2827,9 @@ function buildCards() {
     h += '<h3 class="achv-h" style="margin-top:26px;">数据</h3>';
     h += '<div class="me-export">' +
       '<button class="btn-main" type="button" data-me-act="export">导出我的记录</button>' +
-      '<span class="me-note">生成一个 .json 文件，包含进度、成就、收藏、错题、阅读时长、主题、刷题成绩与头像昵称。</span>' +
+      '<button class="btn-main ghost" type="button" data-me-act="import">导入记录</button>' +
+      '<input type="file" id="meImportInput" accept=".json,application/json" hidden />' +
+      '<span class="me-note">导出会生成一个 .json 文件，含进度、成就、收藏、错题、阅读时长、刷题成绩与头像昵称；导入读取同一份文件，覆盖本机记录（主题与字号保持不变）。</span>' +
       '</div>';
     return '<article class="chapter" id="art" tabindex="-1">' + h + '</article>';
   }
@@ -2892,6 +2952,11 @@ function buildCards() {
         return;
       }
       if (act === 'export') { exportRecords(); return; }
+      if (act === 'import') {
+        var fi = document.getElementById('meImportInput');
+        if (fi) { fi.value = ''; fi.click(); }
+        return;
+      }
     }
 
     var tab = e.target.closest('[data-mk]');
