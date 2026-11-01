@@ -39,12 +39,39 @@
     --accent-dark:#7FE0D6;
     --accent-mid:#2AA79E;
   }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{
-    font-family:-apple-system,"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei",Arial,sans-serif;
-    background:var(--bg);color:var(--text);line-height:1.75;
-    padding-top:64px;-webkit-font-smoothing:antialiased;
-  }
+   *{box-sizing:border-box;margin:0;padding:0;}
+   /* 全站底图：提纲复习站线框字水印，固定在视口，内容层浮在上面 */
+   html{
+     background:var(--bg) url("img/bg.jpg") center center / cover no-repeat fixed;
+   }
+   html.dark{background-image:url("img/bg-dark.jpg");}
+   @media (max-width:760px){
+     html{background-attachment:scroll;background-position:center top;}
+   }
+   /* 成就页专用背景：study / achieve 斜线字 */
+   body.achv-page::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:url("img/achv-bg.jpg") center center / cover no-repeat;}
+   html.dark body.achv-page::before{background-image:url("img/achv-bg-dark.jpg");}
+   /* 我的页面背景：user / manager 斜线字 */
+   body.user-page::before{content:"";position:fixed;inset:64px 0 0 0;z-index:-1;pointer-events:none;background:url("img/user-bg.jpg") 50% 0 / 100% auto no-repeat;}
+   html.dark body.user-page::before{background-image:url("img/user-bg-dark.jpg");}
+   body.user-page .chapter{background:rgba(255,255,255,.74);}
+   html.dark body.user-page .chapter{background:rgba(23,26,33,.72);}
+   body.user-page .side-card{background:rgba(255,255,255,.92);}
+   html.dark body.user-page .side-card{background:rgba(23,26,33,.90);}
+   /* 成就页的内容面板改为半透明，让背景的 study / achieve 斜线字透出来 */
+   body.achv-page .chapter{background:rgba(255,255,255,.74);}
+   html.dark body.achv-page .chapter{background:rgba(23,26,33,.72);}
+   body.achv-page .side-card{background:rgba(255,255,255,.78);}
+   html.dark body.achv-page .side-card{background:rgba(23,26,33,.78);}
+   @media (max-width:760px){
+     body.achv-page::before{background-position:center top;}
+     body.user-page::before{top:56px;background-position:center top;}
+   }
+   body{
+     font-family:-apple-system,"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei",Arial,sans-serif;
+     background:transparent;color:var(--text);line-height:1.75;
+     padding-top:64px;-webkit-font-smoothing:antialiased;
+   }
   a{color:inherit;text-decoration:none;}
   button{font-family:inherit;}
   .hidden{display:none !important;}
@@ -90,6 +117,83 @@
     color:var(--accent-dark);-webkit-text-stroke-width:0;text-stroke-width:0;
   }
   .nav-links a.active:hover{background:var(--accent);color:var(--on-accent);}
+  /* 首次打开：导航栏每一项（logo、菜单、搜索、主题、成就、学时、头像）从左到右依次浮现 */
+  html.nav-intro .nav-in{opacity:0;}
+  html.nav-intro.nav-go .nav-in{
+    animation:navIn .72s cubic-bezier(.22,.61,.36,1) both;
+    animation-delay:calc(var(--i,0) * 70ms);
+  }
+  @keyframes navIn{
+    from{opacity:0;transform:translateY(-9px);}
+    to{opacity:1;transform:none;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html.nav-intro .nav-in{opacity:1;}
+    html.nav-intro.nav-go .nav-in{animation:none;}
+  }
+  /* 首次打开：左侧目录从左往右滑入，逐条自上而下 */
+  html.side-intro #toc > *{opacity:0;}
+  html.side-intro.side-go #toc > *{
+    animation:sideIn .62s cubic-bezier(.22,.61,.36,1) both;
+    animation-delay:calc(var(--si,0) * 44ms);
+  }
+  @keyframes sideIn{
+    from{opacity:0;transform:translateX(-18px);}
+    to{opacity:1;transform:none;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html.side-intro #toc > *{opacity:1;}
+    html.side-intro.side-go #toc > *{animation:none;}
+  }
+  /* 首次打开：分类胶囊与章节卡片一起，从左到右逐个浮现 */
+  html.card-intro .filters .chip{opacity:0;}
+  html.card-intro.card-go .filters .chip{
+    animation:cardIn .55s cubic-bezier(.4,.16,.2,1) both;
+    animation-delay:calc(var(--cd,600ms) + var(--cf,0) * 45ms);
+  }
+  /* 首次打开：章节卡片从左到右、一行结束再下一行 */
+  html.card-intro .grid .card{opacity:0;}
+  html.card-intro.card-go .grid .card{
+    animation:cardIn .55s cubic-bezier(.4,.16,.2,1) both;
+    /* 行优先：整行走完再走下一行（列内再从左到右） */
+    /* --rs 是每行的时间步长，由 JS 按实际列数算出来，保证一行播完才轮到下一行 */
+    /* --cd 是整组卡片的起始延迟：让第一行比菜单/目录晚一点出场 */
+    animation-delay:calc(var(--cd,600ms) + var(--cr,0) * var(--rs,480ms) + var(--cc,0) * 40ms);
+  }
+  /* 只做透明→不透明的渐显，不再位移/缩放 */
+  @keyframes cardIn{
+    from{opacity:0;}
+    to{opacity:1;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html.card-intro .grid .card,
+    html.card-intro .filters .chip{opacity:1;}
+    html.card-intro.card-go .grid .card,
+    html.card-intro.card-go .filters .chip{animation:none;}
+  }
+  /* 首次打开：牌匾里的文字逐字从左到右浮现（标题、副标题、三段统计依次接上） */
+  .banner h1{--bd:300ms;--bs:30ms;}
+  .banner p{--bd:900ms;--bs:15ms;}
+  .bh-ch{display:inline-block;}
+  html.banner-intro .bh-ch{opacity:0;}
+  html.banner-intro.banner-go .bh-ch{
+    animation:bhIn .52s cubic-bezier(.22,.61,.36,1) both;
+    animation-delay:calc(var(--bd,300ms) + var(--k,0) * var(--bs,30ms));
+  }
+  html.banner-intro .banner-stats > div{opacity:0;}
+  html.banner-intro.banner-go .banner-stats > div{
+    animation:bhIn .52s cubic-bezier(.22,.61,.36,1) both;
+  }
+  html.banner-intro.banner-go .banner-stats > div:nth-child(1){animation-delay:1900ms;}
+  html.banner-intro.banner-go .banner-stats > div:nth-child(2){animation-delay:2020ms;}
+  html.banner-intro.banner-go .banner-stats > div:nth-child(3){animation-delay:2140ms;}
+  @keyframes bhIn{from{opacity:0;}to{opacity:1;}}
+  @media (prefers-reduced-motion:reduce){
+    html.banner-intro .bh-ch{opacity:1;}
+    html.banner-intro.banner-go .bh-ch{animation:none;}
+    html.banner-intro .banner-stats > div{opacity:.95;}
+    html.banner-intro.banner-go .banner-stats > div{animation:none;}
+  }
   /* 不支持描边的浏览器退回实心字，避免整块变透明 */
   @supports not (-webkit-text-stroke:1px #000){
     .nav-links a{color:var(--text-2);}
@@ -203,8 +307,11 @@
   .cover::after{content:"";position:absolute;right:-24px;top:-30px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.14);}
   .cover .no{font-size:27px;font-weight:800;line-height:1;opacity:.95;letter-spacing:1px;position:relative;z-index:1;}
   .cover .vol{font-size:11.5px;opacity:.92;position:relative;z-index:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:8px;}
-  /* 有配图的封面：图片铺满，编号与卷次改用浅色底遮盖保证可读 */
-  .cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:0;}
+   /* 封面自带标题的（原著专题五卷）：隐藏编号、卷次与压暗遮罩，避免和图上文字打架 */
+   .cover.own-title::after{display:none;}
+   .cover.own-title .no,.cover.own-title .vol{display:none;}
+   /* 有配图的封面：图片铺满，编号与卷次改用浅色底遮盖保证可读 */
+   .cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:0;}
   .cover.has-img::after{
     content:"";left:0;top:0;right:0;bottom:0;width:auto;height:auto;border-radius:0;
     background:linear-gradient(180deg,rgba(24,25,28,.10),rgba(24,25,28,0) 30%,rgba(24,25,28,0) 55%,rgba(24,25,28,.20));
@@ -427,7 +534,10 @@
   @keyframes toastIn{from{opacity:0;transform:translateY(16px) scale(.95);}to{opacity:1;transform:none;}}
   @keyframes toastOut{to{opacity:0;transform:translateY(10px);}}
 
-  footer{text-align:center;padding:26px 16px 34px;font-size:12px;color:var(--text-3);line-height:1.9;}
+  footer{text-align:center;padding:26px 16px 34px;font-size:12px;color:var(--text-3);line-height:1.9;
+    /* 页脚加一层薄底，避免背景水印的字与页脚文字叠影 */
+    background:linear-gradient(to bottom,rgba(241,242,243,0),var(--bg) 32%,var(--bg));}
+  html.dark footer{background:linear-gradient(to bottom,rgba(15,17,21,0),var(--bg) 32%,var(--bg));}
   .to-top{
     position:fixed;right:24px;bottom:28px;width:42px;height:42px;border-radius:50%;
     background:var(--card);border:1px solid var(--line);color:var(--text-2);display:none;
@@ -694,7 +804,7 @@
     transition:opacity .42s ease;
   }
   .ld.out{opacity:0;pointer-events:none;}
-  .ld-mid{text-align:center;position:relative;z-index:2;}
+
   .ld-mark{width:52px;height:52px;margin:0 auto 18px;border-radius:12px;overflow:hidden;opacity:0;animation:ldUp .6s ease .05s forwards;}
   .ld-mark img{width:100%;height:100%;object-fit:cover;display:block;}
   .ld-title{font-size:19px;letter-spacing:.22em;font-weight:600;opacity:0;animation:ldUp .6s ease .14s forwards;text-indent:.22em;}
@@ -703,14 +813,43 @@
     position:absolute;right:26px;top:50%;transform:translateY(-50%) rotate(90deg);
     font-size:10px;letter-spacing:.42em;color:#3A4147;white-space:nowrap;
   }
-  .ld-foot{
-    position:absolute;left:0;right:0;bottom:46px;width:min(340px,64%);margin:0 auto;
-    display:flex;align-items:center;gap:14px;opacity:0;animation:ldUp .6s ease .3s forwards;
-  }
-  .ld-track{flex:1;height:2px;border-radius:2px;background:#2F3740;overflow:hidden;}
-  .ld-track i{display:block;height:100%;width:0;border-radius:2px;background:#FFC53D;box-shadow:0 0 8px rgba(255,197,61,.55);transition:width .18s linear;}
-  .ld-num{font-size:11px;letter-spacing:.08em;color:#D8DEE4;font-variant-numeric:tabular-nums;}
-  .ld-num em{font-style:normal;color:#4E565D;margin-left:1px;}
+   /* 底部通栏进度条：横跨整屏、贴屏幕下沿 */
+   .ld-foot{
+     position:absolute;left:0;right:0;bottom:0;width:100%;margin:0;
+     display:block;opacity:0;animation:ldUp .6s ease .3s forwards;
+   }
+   .ld-track{height:8px;border-radius:0;background:#2A3139;overflow:hidden;}
+   .ld-track i{display:block;height:100%;width:0;border-radius:0;background:#FFC53D;box-shadow:0 0 10px rgba(255,197,61,.55);transition:width .18s linear;}
+    /* 左下角品牌行：68% → 概论复习站 → logo */
+    .ld-brand{
+      position:absolute;left:24px;bottom:26px;z-index:4;
+      display:flex;align-items:center;gap:14px;
+      opacity:0;animation:ldUp .6s ease .28s forwards;
+    }
+    .ld-num{
+      font-size:46px;font-weight:700;line-height:1;letter-spacing:-.01em;
+      color:#FFC53D;font-variant-numeric:tabular-nums;flex:none;
+      text-shadow:0 0 22px rgba(255,197,61,.32);
+    }
+    .ld-num em{
+      font-style:normal;color:#FFC53D;opacity:.8;
+      font-size:17px;font-weight:600;margin-left:3px;vertical-align:7px;
+    }
+    .ld-brand-txt{display:flex;flex-direction:column;gap:4px;min-width:0;}
+    .ld-brand .ld-title{
+      font-size:20px;letter-spacing:.14em;font-weight:600;text-indent:0;
+      color:#F3F6F8;opacity:1;animation:none;white-space:nowrap;
+    }
+    .ld-brand .ld-sub{
+      margin:0;font-size:11px;letter-spacing:.1em;line-height:1.2;
+      color:#8D959C;opacity:1;animation:none;white-space:nowrap;
+    }
+     /* 图标与站名同处一行：紧贴「站」字右侧，位于下方小字上方 */
+     .ld-brand-head{display:flex;align-items:center;gap:3px;}
+     .ld-brand-head .ld-mark{
+       width:32px;height:32px;margin:0;border-radius:9px;
+       opacity:1;animation:none;flex:none;
+     }
   .ld-wipe{
     position:absolute;inset:0;background:#2FB6AD;z-index:3;
     transform:scaleY(0);transform-origin:bottom;
@@ -718,11 +857,19 @@
   }
   .ld-wipe.on{transform:scaleY(1);}
   @keyframes ldUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
-  @media (max-width:600px){
-    .ld-vert{display:none;}
-    .ld-foot{bottom:56px;width:80%;}
-    .ld-title{font-size:17px;}
-  }
+   @media (max-width:600px){
+     .ld-vert{display:none;}
+     .ld-foot{bottom:0;width:100%;}
+     /* 手机上把品牌行抬到 Netlify 徽标上方，避免 logo 被压住 */
+     .ld-brand{left:16px;bottom:74px;gap:10px;}
+     .ld-num{font-size:34px;}
+     .ld-num em{font-size:14px;vertical-align:5px;}
+     .ld-brand-txt{gap:3px;}
+     .ld-brand .ld-title{font-size:16px;letter-spacing:.1em;}
+     .ld-brand .ld-sub{font-size:11px;letter-spacing:0;}
+     .ld-brand-head{gap:2px;}
+     .ld-brand-head .ld-mark{width:26px;height:26px;border-radius:7px;}
+   }
 
   /* ---------- 视图切换加载层（只盖住导航以下） ---------- */
   .vload{
@@ -739,28 +886,38 @@
   .vwipe{
     position:absolute;inset:0;z-index:0;background:var(--accent);
     transform:scaleY(0);transform-origin:bottom;
-    transition:transform .32s cubic-bezier(.65,.02,.28,1);
+    transition:transform .44s cubic-bezier(.65,.02,.28,1);
   }
   .vwipe.up{transform:scaleY(1);}
-  .vinner{
-    position:absolute;inset:0;z-index:1;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    opacity:0;transition:opacity .26s ease;
-  }
-  .vload.dark .vinner{opacity:1;}
-  .vload .vm{width:34px;height:34px;border-radius:9px;overflow:hidden;margin-bottom:13px;}
-  .vload .vm img{width:100%;height:100%;object-fit:cover;display:block;}
-  .vload .vt{font-size:12.5px;letter-spacing:.3em;color:#E7ECF0;text-indent:.3em;}
-  .vload .vbar{width:200px;height:2px;border-radius:2px;background:#2F3740;margin-top:20px;overflow:hidden;}
-  .vload .vbar i{display:block;height:100%;width:0;border-radius:2px;background:#FFC53D;box-shadow:0 0 8px rgba(255,197,61,.55);}
-  .vload .vp{
-    margin-top:8px;font-size:10.5px;letter-spacing:.08em;color:#D8DEE4;
-    font-variant-numeric:tabular-nums;
-  }
-  .vload .vp em{font-style:normal;color:#4E565D;margin-left:1px;}
-  @media (max-width:900px){ .vload{top:56px;} }
-  @media (max-width:600px){ .vload .vbar{width:160px;} }
-</style>
+   .vinner{
+     position:absolute;inset:0;z-index:1;
+     opacity:0;transition:opacity .26s ease;
+   }
+   .vload.dark .vinner{opacity:1;}
+   /* 切换层套用首屏那套模板：左下角 68% → 站名 → 图标，进度条通栏贴底 */
+   .vload .ld-brand{opacity:1;animation:none;}
+   .vload .ld-foot{opacity:1;animation:none;}
+    @media (max-width:900px){ .vload{top:56px;} }
+   /* ---------- 加载结束后的青蓝上滑转场（只盖导航以下的内容区） ---------- */
+   .vex{
+     position:fixed;left:0;right:0;top:64px;bottom:0;z-index:95;background:var(--accent);
+     transform:translateY(101%);visibility:hidden;pointer-events:none;
+     transition:transform .34s cubic-bezier(.65,.02,.28,1);
+     will-change:transform;
+   }
+   .vex.on{visibility:visible;}
+   /* 右上角按钮点击：青色圆从按钮位置扩散铺满整屏，再淡出露出新页面 */
+   .ripple{
+     position:fixed;z-index:130;border-radius:50%;background:var(--accent);
+     transform:scale(0);opacity:1;visibility:hidden;pointer-events:none;
+     will-change:transform,opacity;
+   }
+   .ripple.on{transition:transform .52s cubic-bezier(.5,.02,.28,1);}
+   .ripple.fade{opacity:0;transition:opacity .38s ease;}
+   .progress-pill{cursor:pointer;user-select:none;}
+   .progress-pill:hover{background:var(--accent-soft);color:var(--accent-dark);}
+   @media (max-width:600px){ .vex{top:56px;} }
+ </style>
 <script>
   /* 首屏前套用主题，避免闪白 */
   (function () {
@@ -773,30 +930,62 @@
     } catch (e) {}
   })();
 </script>
+<script>
+  /* 首次打开（本标签页第一次）：顶部菜单先隐藏，等首屏加载层退场时再从左到右浮现 */
+  (function () {
+    try {
+      if (sessionStorage.getItem('gaigai.ld.seen') === '1') return;
+      var de = document.documentElement;
+      de.classList.add('nav-intro', 'side-intro', 'card-intro', 'banner-intro');
+      /* 兜底：5 秒后无论如何都放出来，避免卡在不可见状态（正常路径会提前清掉它） */
+      window.__navGoTimer = setTimeout(function () {
+        window.__navGoTimer = 0;
+        de.classList.remove('nav-intro', 'side-intro', 'card-intro', 'banner-intro');
+        de.classList.add('nav-go', 'side-go', 'card-go', 'banner-go');
+      }, 5000);
+    } catch (e) {}
+  })();
+</script>
 </head>
 <body class="fs-m">
 
 <div class="vload" id="vload" aria-hidden="true">
   <div class="vwipe" id="vWipe"></div>
-  <div class="vinner">
-    <div class="vm"><img src="img/logo.png" alt="" /></div>
-    <div class="vt">概 论 复 习 站</div>
-    <div class="vbar"><i id="vFill"></i></div>
-    <div class="vp"><span id="vPct">00</span><em>%</em></div>
-  </div>
-</div>
+   <div class="vinner">
+     <div class="ld-brand">
+       <div class="ld-num"><span id="vPct">00</span><em>%</em></div>
+       <div class="ld-brand-txt">
+         <div class="ld-brand-head">
+           <div class="ld-title">概论复习站</div>
+           <div class="ld-mark"><img src="img/logo.png" alt="" /></div>
+         </div>
+         <div class="ld-sub">习近平新时代中国特色社会主义思想概论</div>
+       </div>
+     </div>
+     <div class="ld-foot">
+       <div class="ld-track"><i id="vFill"></i></div>
+     </div>
+   </div>
+ </div>
 
-<div class="ld" id="ld" role="presentation" aria-hidden="true">
+ <div class="vex" id="vExit" aria-hidden="true"></div>
+ <div class="ripple" id="ripple" aria-hidden="true"></div>
+
+ <div class="ld" id="ld" role="presentation" aria-hidden="true">
   <div class="ld-vert">GAIGAI · REVIEW</div>
-  <div class="ld-mid">
-    <div class="ld-mark"><img src="img/logo.png" alt="" /></div>
-    <div class="ld-title">概论复习站</div>
-    <div class="ld-sub">习近平新时代中国特色社会主义思想概论</div>
-  </div>
-  <div class="ld-foot">
-    <div class="ld-track"><i id="ldFill"></i></div>
-    <div class="ld-num"><span id="ldPct">00</span><em>%</em></div>
-  </div>
+    <div class="ld-brand">
+      <div class="ld-num"><span id="ldPct">00</span><em>%</em></div>
+          <div class="ld-brand-txt">
+            <div class="ld-brand-head">
+              <div class="ld-title">概论复习站</div>
+              <div class="ld-mark"><img src="img/logo.png" alt="" /></div>
+            </div>
+            <div class="ld-sub">习近平新时代中国特色社会主义思想概论</div>
+          </div>
+        </div>
+   <div class="ld-foot">
+     <div class="ld-track"><i id="ldFill"></i></div>
+   </div>
   <div class="ld-wipe" id="ldWipe"></div>
 </div>
 
@@ -842,8 +1031,30 @@
       wipe.classList.add('on');
       setTimeout(function () {
         ld.classList.add('out');
+        /* 加载层开始淡出时，顶部菜单从左到右依次浮现 */
+        if (window.__navGoTimer) { clearTimeout(window.__navGoTimer); window.__navGoTimer = 0; }
+        document.documentElement.classList.add('nav-go');
+        /* 左侧目录同时从上到下逐条滑入 */
+        document.documentElement.classList.add('side-go');
+        /* 章节卡片从左到右、逐行浮现 */
+        document.documentElement.classList.add('card-go');
+        /* 牌匾标题逐字从左到右浮现 */
+        document.documentElement.classList.add('banner-go');
         document.documentElement.classList.remove('is-loading');
         setTimeout(function () { if (ld.parentNode) ld.parentNode.removeChild(ld); }, 450);
+        /* 以最慢的那条入场动画为准来清理 class，避免中途抽掉动画导致跳变 */
+        var maxD = 1.6;
+        var anim = document.querySelectorAll('.nav-in, #toc > *, .grid .card, .filters .chip, .bh-ch, .banner-stats > div');
+        for (var ai = 0; ai < anim.length; ai++) {
+          var ad = parseFloat(getComputedStyle(anim[ai]).animationDelay);
+          if (!isNaN(ad) && ad > maxD) maxD = ad;
+        }
+        setTimeout(function () {
+          document.documentElement.classList.remove(
+            'nav-intro', 'nav-go', 'side-intro', 'side-go', 'card-intro', 'card-go',
+            'banner-intro', 'banner-go'
+          );
+        }, Math.round(maxD * 1000) + 800);
       }, reduce ? 120 : 430);
     });
   }
@@ -1556,7 +1767,7 @@ var DATA = [
 
 /* ---------------- 原著与报告专题（原有内容） ---------------- */
 {
-  id:'t1', no:'S1', group:'原著专题', badge:'著作选读', vol:'《习近平著作选读》第一卷',
+  id:'t1', no:'S1', group:'原著专题', img:'img/S1.jpg', own:1, badge:'著作选读', vol:'《习近平著作选读》第一卷',
   title:'专题一 习近平新时代中国特色社会主义思想（第一卷核心篇目）',
   sub:'中国梦 · 改革开放 · 国家安全',
   outline:[
@@ -1594,7 +1805,7 @@ var DATA = [
 },
 
 {
-  id:'t2', no:'S2', group:'原著专题', badge:'著作选读', vol:'《习近平著作选读》第二卷',
+  id:'t2', no:'S2', group:'原著专题', img:'img/S2.jpg', own:1, badge:'著作选读', vol:'《习近平著作选读》第二卷',
   title:'专题二 新时代新征程中国共产党的使命任务（第二卷核心篇目）',
   sub:'主要矛盾 · 高质量发展 · 大国外交',
   outline:[
@@ -1631,7 +1842,7 @@ var DATA = [
 },
 
 {
-  id:'t3', no:'S3', group:'原著专题', badge:'二十大报告', vol:'党的二十大报告',
+  id:'t3', no:'S3', group:'原著专题', img:'img/S3.jpg', own:1, badge:'二十大报告', vol:'党的二十大报告',
   title:'专题三 党的二十大报告框架与要点',
   sub:'十五个部分 · 中国式现代化 · 五个重大原则',
   outline:[
@@ -1666,7 +1877,7 @@ var DATA = [
 },
 
 {
-  id:'t4', no:'S4', group:'原著专题', badge:'共同体概论', vol:'《中华民族共同体概论》第一至二讲',
+  id:'t4', no:'S4', group:'原著专题', img:'img/S4.jpg', own:1, badge:'共同体概论', vol:'《中华民族共同体概论》第一至二讲',
   title:'专题四 中华民族共同体基础理论',
   sub:'多元一体 · 共同体意识',
   outline:[
@@ -1693,7 +1904,7 @@ var DATA = [
 },
 
 {
-  id:'t5', no:'S5', group:'原著专题', badge:'共同体概论', vol:'《中华民族共同体概论》第三至十六讲',
+  id:'t5', no:'S5', group:'原著专题', img:'img/S5.jpg', own:1, badge:'共同体概论', vol:'《中华民族共同体概论》第三至十六讲',
   title:'专题五 中华民族形成与发展历程',
   sub:'历史脉络 · 交往交流交融',
   outline:[
@@ -1858,6 +2069,37 @@ var QUIZ = [
   var toTop = document.getElementById('toTop');
   var menuBtn = document.getElementById('menuBtn');
   var navBox = document.getElementById('navLinks');
+  /* 首次入场动画：把导航栏里的每一项按 DOM 顺序编号，决定错峰延迟 */
+  (function () {
+    var bar = document.querySelector('.nav-inner');
+    if (!bar) return;
+    var items = bar.querySelectorAll(
+      '.logo, .nav-links a, .search, .theme-btn, .achv-btn, .progress-pill, .avatar'
+    );
+    for (var i = 0; i < items.length; i++) {
+      items[i].classList.add('nav-in');
+      items[i].style.setProperty('--i', i);
+    }
+  })();
+
+  /* 牌匾文字拆成单字，入场时从左到右依次浮现（标题与副标题各按自己的步长走） */
+  (function () {
+    function splitChars(el) {
+      if (!el || el.querySelector('.bh-ch')) return;
+      var txt = (el.textContent || '').replace(/^\s+|\s+$/g, '');
+      if (!txt) return;
+      var frag = '';
+      for (var i = 0; i < txt.length; i++) {
+        var ch = txt.charAt(i) === ' ' ? '\u00A0' : txt.charAt(i);
+        frag += '<span class="bh-ch" style="--k:' + i + '">' + ch + '</span>';
+      }
+      el.innerHTML = frag;
+    }
+    var banner = document.querySelector('.banner');
+    if (!banner) return;
+    splitChars(banner.querySelector('h1'));
+    splitChars(banner.querySelector('p'));
+  })();
   var state = { group: 'all', kw: '' };
   var readingNow = false;   // 当前是否停在章节正文页（用于阅读计时）
 
@@ -1887,6 +2129,9 @@ var QUIZ = [
       });
     });
     toc.innerHTML = html;
+    /* 给每条目录编号，入场时按索引自上而下错峰 */
+    var kids = toc.children;
+    for (var i = 0; i < kids.length; i++) kids[i].style.setProperty('--si', i);
   }
 
   /* ---------- 分区筛选 ---------- */
@@ -1898,6 +2143,9 @@ var QUIZ = [
       html += '<button class="chip" type="button" data-group="' + g + '">' + g + ' <span style="opacity:.65">' + n + '</span></button>';
     });
     filters.innerHTML = html;
+    /* 分类胶囊编号：入场时与章节卡片一起从左到右逐个浮现 */
+    var cs = filters.querySelectorAll('.chip');
+    for (var i = 0; i < cs.length; i++) cs[i].style.setProperty('--cf', i);
   }
 
   /* ---------- 卡片 ---------- */
@@ -1912,8 +2160,8 @@ function buildCards() {
     var html = DATA.map(function (c) {
       var isDone = !!done[c.id];
       var pic = picOf(c);
-      return '<article class="card g' + groupIndex(c.group) + (isDone ? ' done' : '') + '" data-target="' + c.id + '">' +
-        '<div class="cover' + (pic ? ' has-img' : '') + '">' +
+       return '<article class="card g' + groupIndex(c.group) + (isDone ? ' done' : '') + '" data-target="' + c.id + '">' +
+         '<div class="cover' + (pic ? ' has-img' : '') + (c.own ? ' own-title' : '') + '">' +
           (pic ? '<img src="' + pic + '" alt="' + c.title + '" loading="lazy" decoding="async" ' +
                  'onerror="this.parentNode.classList.remove(\'has-img\');this.remove();">' : '') +
           '<div class="no">' + c.no + '</div>' +
@@ -1928,7 +2176,32 @@ function buildCards() {
       '</article>';
     }).join('');
     grid.innerHTML = html;
+    indexCards();
   }
+
+  /* 按实际换行位置编号：--cr 行号、--cc 列号；--rs 行步长 = 动画时长 + 行内铺满 + 间隔 */
+  function indexCards() {
+    var cs = grid.querySelectorAll('.card');
+    if (!cs.length) return;
+    var row = -1, lastTop = null, col = 0, maxCols = 1;
+    for (var i = 0; i < cs.length; i++) {
+      var top = cs[i].offsetTop;
+      if (lastTop === null || Math.abs(top - lastTop) > 4) { row++; lastTop = top; col = 0; }
+      cs[i].style.setProperty('--cr', row);
+      cs[i].style.setProperty('--cc', col);
+      col++;
+      if (col > maxCols) maxCols = col;
+    }
+    grid.style.setProperty('--rs', (550 + 40 * (maxCols - 1) + 70) + 'ms');
+  }
+
+  /* 入场期间如果窗口宽度变了（列数改变），重新切行，避免行号用旧值 */
+  var cardResizeTimer = 0;
+  window.addEventListener('resize', function () {
+    if (!document.documentElement.classList.contains('card-intro')) return;
+    if (cardResizeTimer) clearTimeout(cardResizeTimer);
+    cardResizeTimer = setTimeout(function () { cardResizeTimer = 0; indexCards(); }, 180);
+  });
 
   function applyFilter() {
     var cards = grid.querySelectorAll('.card');
@@ -2592,10 +2865,35 @@ function buildCards() {
   var vloadEl = document.getElementById('vload');
   var vFillEl = document.getElementById('vFill');
   var vPctEl = document.getElementById('vPct');
-  var vWipeEl = document.getElementById('vWipe');
-  var vTimer = 0, vTimer2 = 0, vTick = 0, vOnDone = null;
+   var vWipeEl = document.getElementById('vWipe');
+   var vExitEl = document.getElementById('vExit');
+   var vTimer = 0, vTimer2 = 0, vTick = 0, vOnDone = null;
+   var vTimer3 = 0, vTimer4 = 0;
+   var vRest = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
-  function finishViewLoader(instant) {
+   /* 遮罩归零（可在青蓝全屏遮住时安全调用） */
+   function resetViewLoader() {
+     if (!vloadEl) return;
+     vloadEl.classList.remove('on', 'out', 'dark');
+     if (vWipeEl) vWipeEl.classList.remove('up');
+     if (vFillEl) vFillEl.style.width = '0%';
+     if (vPctEl) vPctEl.textContent = '00';
+   }
+
+   /* 青蓝色块瞬间回到屏幕下方并隐藏 */
+   function resetExit() {
+     if (vTimer3) { clearTimeout(vTimer3); vTimer3 = 0; }
+     if (vTimer4) { clearTimeout(vTimer4); vTimer4 = 0; }
+     if (!vExitEl) return;
+     vExitEl.style.transition = 'none';
+     vExitEl.style.transform = 'translateY(101%)';
+     vExitEl.classList.remove('on');
+     void vExitEl.offsetWidth;
+     vExitEl.style.transition = '';
+     vExitEl.style.transform = '';
+   }
+
+   function finishViewLoader(instant) {
     if (!vloadEl || !vloadEl.classList.contains('on')) {
       if (vOnDone) { var f0 = vOnDone; vOnDone = null; f0(); }
       return;
@@ -2605,18 +2903,36 @@ function buildCards() {
     if (vTimer) { clearTimeout(vTimer); vTimer = 0; }
     if (vTimer2) { clearTimeout(vTimer2); vTimer2 = 0; }
     if (vTick) { clearInterval(vTick); vTick = 0; }
-    vFillEl.style.width = '100%';
-    vPctEl.textContent = '100';
-    vloadEl.classList.add('out');
-    var wait = instant ? 0 : 300;
-    vTimer = setTimeout(function () {
-      vloadEl.classList.remove('on', 'out', 'dark');
-      vWipeEl.classList.remove('up');
-      vFillEl.style.width = '0%';
-      vPctEl.textContent = '00';
-      vTimer = 0;
-    }, wait);
-  }
+     vFillEl.style.width = '100%';
+     vPctEl.textContent = '100';
+
+     /* 降级路径：快速收场 / 系统减弱动效时只做淡出 */
+     if (instant || vRest || !vExitEl) {
+       vloadEl.classList.add('out');
+       var wait = instant ? 0 : 300;
+       vTimer = setTimeout(function () { vTimer = 0; resetViewLoader(); }, wait);
+       return;
+     }
+
+     /* 1) 青蓝全屏自下而上盖满（.34s） */
+     resetExit();
+     void vExitEl.offsetWidth;
+     vExitEl.style.transitionDuration = '.34s';
+     vExitEl.classList.add('on');
+     vExitEl.style.transform = 'translateY(0)';
+
+     /* 2) 盖满后色块继续向上滑出（.46s）；深色面板此时被完全遮住，直接撤掉不会看到跳变 */
+     vTimer3 = setTimeout(function () {
+       vTimer3 = 0;
+       resetViewLoader();
+       vExitEl.style.transitionDuration = '.46s';
+       vExitEl.style.transform = 'translateY(-101%)';
+       vTimer4 = setTimeout(function () {
+         vTimer4 = 0;
+         resetExit();
+       }, 520);
+     }, 350);
+   }
 
   function playViewLoader(onDone) {
     if (!vloadEl) { if (onDone) onDone(); return; }
@@ -2625,9 +2941,11 @@ function buildCards() {
     vOnDone = onDone || null;
     if (vTimer) { clearTimeout(vTimer); vTimer = 0; }
     if (vTimer2) { clearTimeout(vTimer2); vTimer2 = 0; }
-    if (vTick) { clearInterval(vTick); vTick = 0; }
+     if (vTick) { clearInterval(vTick); vTick = 0; }
+     /* 上一轮的青蓝上滑还没走完就再点：立即收掉，避免两层叠加 */
+     resetExit();
 
-    vloadEl.classList.remove('out', 'dark');
+     vloadEl.classList.remove('out', 'dark');
     vWipeEl.classList.remove('up');
     vloadEl.classList.add('on');
     vFillEl.style.width = '0%';
@@ -2642,7 +2960,7 @@ function buildCards() {
       vTimer2 = 0;
       if (!vloadEl.classList.contains('on')) return;
       vloadEl.classList.add('dark');
-      var t0 = Date.now(), DUR = 420;
+      var t0 = Date.now(), DUR = 900;
       vTick = setInterval(function () {
         var p = Math.min(1, (Date.now() - t0) / DUR);
         var v = Math.round(p * 100);
@@ -2650,10 +2968,10 @@ function buildCards() {
         vPctEl.textContent = (v < 10 ? '0' : '') + v;
         if (p >= 1) { clearInterval(vTick); vTick = 0; finishViewLoader(); }
       }, 24);
-    }, 320);
+    }, 450);
 
     /* 3) 兜底：后台标签页会被节流，也保证 1.6s 内收场 */
-    vTimer = setTimeout(function () { vTimer = 0; finishViewLoader(); }, 2600);
+    vTimer = setTimeout(function () { vTimer = 0; finishViewLoader(); }, 3600);
   }
 
   document.addEventListener('visibilitychange', function () {
@@ -2688,6 +3006,8 @@ function buildCards() {
     closeMenu();
     readingNow = !!c;
     document.body.classList.toggle('reading', !!c || isAchv || id === 'quiz');
+    document.body.classList.toggle('achv-page', isAchv);
+    document.body.classList.toggle('user-page', id === 'me');
 
     if (id === 'me') {
       home.classList.add('hidden');
@@ -2743,11 +3063,62 @@ function buildCards() {
     }
   }
 
-  function navigate(id) {
-    var next = (id && id !== 'home' && (byId[id] || id === 'achv' || id === 'quiz' || id === 'marks' || id === 'me')) ? id : '';
-    if (currentId() === next) show(next);
-    else location.hash = next;
-  }
+   function navigate(id) {
+     var next = (id && id !== 'home' && (byId[id] || id === 'achv' || id === 'quiz' || id === 'marks' || id === 'me')) ? id : '';
+     if (currentId() === next) show(next);
+     else location.hash = next;
+   }
+
+   /* ---------- 右上角按钮：青色圆从按钮处扩散，盖满后再换页 ---------- */
+   var rippleEl = document.getElementById('ripple');
+   var rippleTimer = 0, rippleFadeTimer = 0, rippleBusy = false;
+   var rippleRest = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+   function rippleNavigate(btn, target) {
+     if (!rippleEl || !btn || rippleRest) { navigate(target); return; }
+     if (rippleBusy) return;
+     rippleBusy = true;
+
+     var r = btn.getBoundingClientRect();
+     var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+     var dx = Math.max(cx, window.innerWidth - cx);
+     var dy = Math.max(cy, window.innerHeight - cy);
+     var rad = Math.ceil(Math.sqrt(dx * dx + dy * dy) + 28);
+
+     rippleEl.style.width = (rad * 2) + 'px';
+     rippleEl.style.height = (rad * 2) + 'px';
+     rippleEl.style.left = (cx - rad) + 'px';
+     rippleEl.style.top = (cy - rad) + 'px';
+     rippleEl.style.transform = 'scale(0)';
+     rippleEl.style.opacity = '1';
+     rippleEl.style.visibility = 'visible';
+     rippleEl.classList.remove('on', 'fade');
+     void rippleEl.offsetWidth;
+     rippleEl.classList.add('on');
+     rippleEl.style.transform = 'scale(1)';
+
+     if (rippleTimer) clearTimeout(rippleTimer);
+     rippleTimer = setTimeout(function () {
+       rippleTimer = 0;
+       /* 已完全遮住屏幕：先把 lastView 对齐，再改 hash，走不带切换加载层的渲染 */
+       lastView = target;
+       if (currentId() !== target) location.hash = target;
+       else safeRender(target);
+       rippleEl.classList.remove('on');
+       rippleEl.classList.add('fade');
+       /* 内联 opacity 优先级高于 .ripple.fade，必须同时改内联值才真的会淡出 */
+       rippleEl.style.opacity = '0';
+       if (rippleFadeTimer) clearTimeout(rippleFadeTimer);
+       rippleFadeTimer = setTimeout(function () {
+         rippleFadeTimer = 0;
+         rippleEl.classList.remove('fade');
+         rippleEl.style.visibility = 'hidden';
+         rippleEl.style.transform = 'scale(0)';
+         rippleEl.style.opacity = '1';
+         rippleBusy = false;
+       }, 420);
+     }, 560);
+   }
 
   /* ---------- 移动端菜单 ---------- */
   function closeMenu() {
@@ -2827,7 +3198,7 @@ function buildCards() {
 
   var userBtn = document.getElementById('userBtn');
   paintAvatar();
-  if (userBtn) userBtn.addEventListener('click', function () { navigate('me'); });
+   if (userBtn) userBtn.addEventListener('click', function () { rippleNavigate(userBtn, 'me'); });
 
   var avFile = document.getElementById('avFile');
   if (avFile) avFile.addEventListener('change', function (e) {
@@ -2853,7 +3224,17 @@ function buildCards() {
   });
 
   var achvBtn = document.getElementById('achvBtn');
-  if (achvBtn) achvBtn.addEventListener('click', function () { navigate('achv'); });
+   if (achvBtn) achvBtn.addEventListener('click', function () { rippleNavigate(achvBtn, 'achv'); });
+   var pillBtn = document.getElementById('progressPill');
+   if (pillBtn) {
+     pillBtn.setAttribute('role', 'button');
+     pillBtn.setAttribute('tabindex', '0');
+     pillBtn.title = '查看学习进度与成就';
+     pillBtn.addEventListener('click', function () { rippleNavigate(pillBtn, 'achv'); });
+     pillBtn.addEventListener('keydown', function (e) {
+       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); rippleNavigate(pillBtn, 'achv'); }
+     });
+   }
 
   /* ---------- 黑夜模式切换 ---------- */
   var THEME_KEY = 'gaigai.theme.v1';
