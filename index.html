@@ -580,9 +580,10 @@
       position:absolute;top:100%;left:8px;right:8px;display:flex;flex-direction:column;gap:2px;
       height:auto;align-items:stretch;
       background:var(--card);border-radius:10px;padding:6px;box-shadow:0 10px 28px rgba(0,0,0,.14);
-      opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .16s ease,transform .16s ease;
+      opacity:0;transform:translateY(-6px);pointer-events:none;visibility:hidden;
+      transition:opacity .16s ease,transform .16s ease,visibility 0s linear .16s;
     }
-    .nav-links.open{opacity:1;transform:none;pointer-events:auto;}
+    .nav-links.open{opacity:1;transform:none;pointer-events:auto;visibility:visible;transition:opacity .16s ease,transform .16s ease,visibility 0s;}
     .nav-links a{
       height:auto;padding:10px 12px;border-radius:8px;
       flex-direction:row;align-items:baseline;justify-content:flex-start;gap:8px;
@@ -3389,7 +3390,20 @@ function buildCards() {
   buildCards();
   updatePill();
   applyFilter();
-  show(currentId());
+
+  /* 冷启动落到首页：marks / quiz / achv / me / home 属于页内标签，不是可分享的深链；
+     手机浏览器会带着上次的 #marks 之类的地址重开，导致一进来停在题库本。
+     章节深链（#ch1、#t1、#intro…）照旧保留。 */
+  var bootId = currentId();
+  if (bootId === 'marks' || bootId === 'quiz' || bootId === 'achv' || bootId === 'me' || bootId === 'home') {
+    try {
+      history.replaceState(null, '', location.pathname + location.search);
+    } catch (e) {
+      location.hash = '';
+    }
+    bootId = '';
+  }
+  show(bootId);
   viewBooted = true;   /* 首屏交给整页加载动画，之后切换才用局部动画 */
 })();
 </script>
