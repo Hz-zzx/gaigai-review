@@ -841,6 +841,17 @@
     transition:opacity .42s ease;
   }
   .ld.out{opacity:0;pointer-events:none;}
+   /* 黑夜模式：切页加载动画换成墨绿（青绿刷屏那一层才是用户看到的底色，必须一起改）
+      首次进入的整屏加载仍用上面的炭灰 */
+   html.dark .vwipe{background:#1B3B2F;}
+   html.dark .vload.dark{background:#14261F;}
+   html.dark .vload.dark .ld-track{background:#2C3A33;}
+   /* 首次进入收尾上冲的那块全屏色板，暗色下同样用墨绿 */
+   html.dark .ld-wipe{background:#1B3B2F;}
+   /* 点右上角头像/成就时的青色扩散，暗色下同样走墨绿 */
+   html.dark .ripple{background:#1B3B2F;}
+   /* 加载结束后上滑揭幕的那块转场（.vex / #vExit），暗色下同样走墨绿 */
+   html.dark .vex{background:#1B3B2F;}
 
   .ld-mark{width:52px;height:52px;margin:0 auto 18px;border-radius:12px;overflow:hidden;opacity:0;animation:ldUp .6s ease .05s forwards;}
   .ld-mark img{width:100%;height:100%;object-fit:cover;display:block;}
