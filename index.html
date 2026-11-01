@@ -232,6 +232,8 @@
   /* ---------- 布局 ---------- */
   .wrap{max-width:1280px;margin:0 auto;padding:16px;}
   .layout{display:grid;grid-template-columns:216px minmax(0,1fr);gap:16px;align-items:start;}
+   /* 内容列允许被压缩，否则内部不换行的横向滚动条会把整页撑宽 */
+   .content{min-width:0;}
 
   .banner{
     position:relative;overflow:hidden;border-radius:var(--radius);
@@ -608,6 +610,17 @@
     .achv-btn{display:none;}
     .achv-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
     .achv-card{padding:16px 10px 13px;}
+    /* 分类胶囊：不再换行，改成单行左右滑动 */
+    .filters{
+      flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:none;-ms-overflow-style:none;
+      width:100%;max-width:100%;min-width:0;padding-right:18px;
+      -webkit-mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 18px),transparent 100%);
+      mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 18px),transparent 100%);
+    }
+    .filters::-webkit-scrollbar{display:none;width:0;height:0;}
+    .filters .chip{flex:0 0 auto;white-space:nowrap;}
   }
 
   /* ---------- 刷题 ---------- */
@@ -3218,6 +3231,16 @@ function buildCards() {
     closeMenu();
   });
 
+  /* 手机上分类胶囊是横向滚动条：选中后把它滚到中间，避免选中项跑到屏幕外 */
+  function centerChip(el) {
+    if (!el || !filters) return;
+    if (filters.scrollWidth <= filters.clientWidth + 2) return;
+    var fr = filters.getBoundingClientRect(), cr = el.getBoundingClientRect();
+    var delta = (cr.left - fr.left) - (fr.width - cr.width) / 2;
+    if (filters.scrollTo) filters.scrollTo({ left: filters.scrollLeft + delta, behavior: 'smooth' });
+    else filters.scrollLeft += delta;
+  }
+
   /* ---------- 全局点击 ---------- */
   document.addEventListener('click', function (e) {
     var t = e.target;
@@ -3237,6 +3260,7 @@ function buildCards() {
       state.group = chip.dataset.group;
       if (currentId() !== '') navigate('home');
       applyFilter();
+      centerChip(chip);
       return;
     }
 
@@ -3249,6 +3273,7 @@ function buildCards() {
       });
       navigate('home');
       applyFilter();
+      centerChip(filters.querySelector('.chip.active'));
     }
   });
 
