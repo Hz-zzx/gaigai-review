@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>概论复习站 · 习近平新时代中国特色社会主义思想概论</title>
+<title>概论研习社 · 习近平新时代中国特色社会主义思想概论</title>
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.png" />
 <link rel="shortcut icon" href="img/favicon-64.png" />
@@ -97,26 +97,23 @@
   .logo:hover .logo-mark{transform:translateY(-1px);}
   .logo-mark{transition:transform .18s ease;}
   .logo-text{font-size:17px;font-weight:600;letter-spacing:.3px;}
-  /* 顶栏菜单：hover 时整块铺满导航高度（方形色块） */
+  /* 顶栏菜单：英文大写在上，中文小字在下 */
   .nav-links{display:flex;gap:2px;flex:none;align-items:stretch;height:100%;}
   .nav-links a{
-    display:flex;align-items:center;height:100%;padding:0 14px;
-    border-radius:0;font-size:17px;font-weight:400;letter-spacing:.05em;
-    font-family:"YouYuan","幼圆","SimYou","HarmonyOS Sans SC","Microsoft YaHei",sans-serif;
-    color:transparent;                       /* 中空：不填色，只留描边 */
-    -webkit-text-stroke:1.05px var(--text-2);
-    text-stroke:1.05px var(--text-2);
-    stroke-linejoin:round;stroke-linecap:round;   /* 描边转角圆润 */
-    transition:background .15s,color .15s,-webkit-text-stroke-width .15s;
+    display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
+    height:100%;padding:0 11px;border-radius:0;text-decoration:none;
   }
-  .nav-links a:hover{
-    background:var(--accent);color:var(--on-accent);
-    -webkit-text-stroke-width:0;text-stroke-width:0;
+  .nav-links a .en{
+    font-family:-apple-system,"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei",Arial,sans-serif;
+    font-size:13.5px;font-weight:700;line-height:1.15;letter-spacing:.06em;
+    color:var(--text);transition:color .15s;
   }
-  .nav-links a.active{
-    color:var(--accent-dark);-webkit-text-stroke-width:0;text-stroke-width:0;
+  .nav-links a .cn{
+    margin-top:2px;font-size:10.5px;line-height:1.25;letter-spacing:.05em;
+    color:var(--text-2);white-space:nowrap;transition:color .15s;
   }
-  .nav-links a.active:hover{background:var(--accent);color:var(--on-accent);}
+  .nav-links a:hover .en,.nav-links a.active .en{color:var(--accent-dark);}
+  .nav-links a:hover .cn,.nav-links a.active .cn{color:var(--accent-mid);}
   /* 首次打开：导航栏每一项（logo、菜单、搜索、主题、成就、学时、头像）从左到右依次浮现 */
   html.nav-intro .nav-in{opacity:0;}
   html.nav-intro.nav-go .nav-in{
@@ -193,10 +190,6 @@
     html.banner-intro.banner-go .bh-ch{animation:none;}
     html.banner-intro .banner-stats > div{opacity:.95;}
     html.banner-intro.banner-go .banner-stats > div{animation:none;}
-  }
-  /* 不支持描边的浏览器退回实心字，避免整块变透明 */
-  @supports not (-webkit-text-stroke:1px #000){
-    .nav-links a{color:var(--text-2);}
   }
   .menu-btn{
     display:none;width:36px;height:36px;flex:none;border:none;background:transparent;
@@ -543,13 +536,38 @@
     background:var(--card);border:1px solid var(--line);color:var(--text-2);display:none;
     align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.08);z-index:90;
   }
-  .to-top:hover{color:var(--accent-dark);border-color:var(--accent-dark);}
-  .to-top.show{display:flex;}
+   .to-top:hover{color:var(--accent-dark);border-color:var(--accent-dark);}
+   .to-top.show{display:flex;}
+   /* 只看背景：右下角常驻按钮，固定在章节卡片之上（不随页面滚动/卡片移动） */
+   .peek-btn{
+     position:fixed;right:24px;bottom:82px;width:42px;height:42px;border-radius:50%;
+     background:var(--card);border:1px solid var(--line);color:var(--text-2);
+     display:flex;align-items:center;justify-content:center;cursor:pointer;
+     box-shadow:0 4px 14px rgba(0,0,0,.08);z-index:120;
+     transition:color .15s,border-color .15s,background .15s,box-shadow .15s;
+   }
+   .peek-btn:hover{color:var(--accent-dark);border-color:var(--accent-dark);}
+   .peek-btn[aria-pressed="true"]{
+     background:var(--accent);border-color:var(--accent);color:#fff;
+     box-shadow:0 4px 16px rgba(47,182,173,.42);
+   }
+   .peek-btn .ic-hide{display:none;}
+   .peek-btn[aria-pressed="true"] .ic-eye{display:none;}
+   .peek-btn[aria-pressed="true"] .ic-hide{display:block;}
+   html.dark .peek-btn{box-shadow:0 4px 14px rgba(0,0,0,.55);}
+   /* 只看背景：淡出导航、内容与页脚，只留下底图 */
+   .nav,.wrap,footer,.toast-wrap{transition:opacity .26s ease;}
+   html.peek .nav,
+   html.peek .wrap,
+   html.peek footer,
+   html.peek .toast-wrap{opacity:0;pointer-events:none;}
 
   /* 导航项变多后，中等屏幕收紧间距，避免挤压搜索框 */
   @media (max-width:1180px){
     .nav-inner{gap:10px;}
-    .nav-links a{padding:0 8px;font-size:15.5px;-webkit-text-stroke-width:.95px;text-stroke-width:.95px;}
+    .nav-links a{padding:0 7px;}
+    .nav-links a .en{font-size:12.5px;letter-spacing:.04em;}
+    .nav-links a .cn{font-size:10px;letter-spacing:.03em;}
     .progress-pill{display:none;}      /* 让位给搜索框，进度在成就页仍可查 */
     .search{min-width:150px;max-width:220px;}
     .search input{font-size:12.5px;}
@@ -565,7 +583,12 @@
       opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .16s ease,transform .16s ease;
     }
     .nav-links.open{opacity:1;transform:none;pointer-events:auto;}
-    .nav-links a{height:auto;padding:10px 12px;font-size:14px;border-radius:8px;}
+    .nav-links a{
+      height:auto;padding:10px 12px;border-radius:8px;
+      flex-direction:row;align-items:baseline;justify-content:flex-start;gap:8px;
+    }
+    .nav-links a .en{font-size:13px;}
+    .nav-links a .cn{margin-top:0;font-size:12px;}
     .progress-pill{display:none;}
   }
   @media (max-width:600px){
@@ -799,7 +822,7 @@
   /* ---------- 加载页 ---------- */
   html.is-loading,html.is-loading body{overflow:hidden;}
   .ld{
-    position:fixed;inset:0;z-index:9999;background:#08090A;color:#F3F6F8;
+     position:fixed;inset:0;z-index:9999;background:#1E2226;color:#F3F6F8;
     display:flex;flex-direction:column;justify-content:center;align-items:center;
     transition:opacity .42s ease;
   }
@@ -809,18 +832,57 @@
   .ld-mark img{width:100%;height:100%;object-fit:cover;display:block;}
   .ld-title{font-size:19px;letter-spacing:.22em;font-weight:600;opacity:0;animation:ldUp .6s ease .14s forwards;text-indent:.22em;}
   .ld-sub{margin-top:10px;font-size:11.5px;letter-spacing:.14em;color:#6E777F;opacity:0;animation:ldUp .6s ease .22s forwards;}
-  .ld-vert{
-    position:absolute;right:26px;top:50%;transform:translateY(-50%) rotate(90deg);
-    font-size:10px;letter-spacing:.42em;color:#3A4147;white-space:nowrap;
-  }
+   .ld-vert{
+     position:absolute;right:26px;top:50%;transform:translateY(-50%) rotate(90deg);
+     font-size:10px;letter-spacing:.42em;color:#59626B;white-space:nowrap;
+   }
+   /* 右下角：巨大的「习概」浅色斜纹字，呼应背景图上的线框大字母 */
+   .ld-word{
+     position:absolute;right:1vw;bottom:-6px;z-index:1;
+     font-size:clamp(150px,23vw,330px);font-weight:900;line-height:.8;letter-spacing:-.04em;
+     white-space:nowrap;pointer-events:none;user-select:none;
+     color:transparent;
+     background-image:repeating-linear-gradient(135deg,rgba(243,246,248,.20) 0 2px,rgba(243,246,248,0) 2px 9px);
+     -webkit-background-clip:text;background-clip:text;
+     opacity:1;animation:ldWord .85s ease .16s both;
+   }
+   @keyframes ldWord{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+    @supports not ((-webkit-background-clip:text) or (background-clip:text)){
+      .ld-word{background:none;color:rgba(243,246,248,.10);}
+    }
+    /* 加载页参考线：中间偏左一条竖线 + 上方 1/4 处一条横线 */
+    .ld-lines{position:absolute;inset:0;z-index:0;pointer-events:none;}
+    .ld-lines::before{
+      content:"";position:absolute;top:0;bottom:0;left:42%;width:1px;
+      background:linear-gradient(180deg,rgba(243,246,248,0) 0%,rgba(243,246,248,.20) 10%,rgba(243,246,248,.20) 90%,rgba(243,246,248,0) 100%);
+      transform:none;transform-origin:top;
+      animation:ldLineY 1s cubic-bezier(.4,.1,.2,1) .12s both;
+    }
+    .ld-lines::after{
+      content:"";position:absolute;left:0;right:0;top:25%;height:1px;
+      background:linear-gradient(90deg,rgba(243,246,248,0) 0%,rgba(243,246,248,.20) 7%,rgba(243,246,248,.20) 93%,rgba(243,246,248,0) 100%);
+      transform:none;transform-origin:left;
+      animation:ldLineX 1.1s cubic-bezier(.4,.1,.2,1) .2s both;
+    }
+    @keyframes ldLineY{from{transform:scaleY(0);}to{transform:scaleY(1);}}
+    @keyframes ldLineX{from{transform:scaleX(0);}to{transform:scaleX(1);}}
+    /* 横线上方、左端对齐竖线的小字 */
+    .ld-en{
+      position:absolute;left:calc(42% + 8px);top:calc(25% - 18px);
+      font-size:9.5px;line-height:1;letter-spacing:.26em;
+      color:rgba(243,246,248,.45);white-space:nowrap;
+      transform:none;opacity:1;
+      animation:ldEnIn .8s ease .34s both;
+    }
+    @keyframes ldEnIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:none;}}
    /* 底部通栏进度条：横跨整屏、贴屏幕下沿 */
    .ld-foot{
      position:absolute;left:0;right:0;bottom:0;width:100%;margin:0;
      display:block;opacity:0;animation:ldUp .6s ease .3s forwards;
    }
-   .ld-track{height:8px;border-radius:0;background:#2A3139;overflow:hidden;}
+   .ld-track{height:8px;border-radius:0;background:#333B43;overflow:hidden;}
    .ld-track i{display:block;height:100%;width:0;border-radius:0;background:#FFC53D;box-shadow:0 0 10px rgba(255,197,61,.55);transition:width .18s linear;}
-    /* 左下角品牌行：68% → 概论复习站 → logo */
+    /* 左下角品牌行：68% → 概论研习社 → logo */
     .ld-brand{
       position:absolute;left:24px;bottom:26px;z-index:4;
       display:flex;align-items:center;gap:14px;
@@ -868,7 +930,9 @@
      .ld-brand .ld-title{font-size:16px;letter-spacing:.1em;}
      .ld-brand .ld-sub{font-size:11px;letter-spacing:0;}
      .ld-brand-head{gap:2px;}
-     .ld-brand-head .ld-mark{width:26px;height:26px;border-radius:7px;}
+      .ld-brand-head .ld-mark{width:26px;height:26px;border-radius:7px;}
+      .ld-word{font-size:88px;right:2px;bottom:2px;letter-spacing:-.05em;}
+      .ld-en{font-size:8px;letter-spacing:.16em;top:calc(25% - 15px);}
    }
 
   /* ---------- 视图切换加载层（只盖住导航以下） ---------- */
@@ -951,20 +1015,22 @@
 
 <div class="vload" id="vload" aria-hidden="true">
   <div class="vwipe" id="vWipe"></div>
-   <div class="vinner">
-     <div class="ld-brand">
+    <div class="vinner">
+      <div class="ld-lines" aria-hidden="true"><div class="ld-en">National Youth Study Program</div></div>
+      <div class="ld-brand">
        <div class="ld-num"><span id="vPct">00</span><em>%</em></div>
        <div class="ld-brand-txt">
          <div class="ld-brand-head">
-           <div class="ld-title">概论复习站</div>
+           <div class="ld-title">概论研习社</div>
            <div class="ld-mark"><img src="img/logo.png" alt="" /></div>
          </div>
-         <div class="ld-sub">习近平新时代中国特色社会主义思想概论</div>
-       </div>
-     </div>
-     <div class="ld-foot">
-       <div class="ld-track"><i id="vFill"></i></div>
-     </div>
+          <div class="ld-sub">习近平新时代中国特色社会主义思想概论</div>
+        </div>
+      </div>
+      <div class="ld-word" aria-hidden="true">习概</div>
+      <div class="ld-foot">
+        <div class="ld-track"><i id="vFill"></i></div>
+      </div>
    </div>
  </div>
 
@@ -973,19 +1039,21 @@
 
  <div class="ld" id="ld" role="presentation" aria-hidden="true">
   <div class="ld-vert">GAIGAI · REVIEW</div>
+    <div class="ld-lines" aria-hidden="true"><div class="ld-en">National Youth Study Program</div></div>
     <div class="ld-brand">
       <div class="ld-num"><span id="ldPct">00</span><em>%</em></div>
           <div class="ld-brand-txt">
             <div class="ld-brand-head">
-              <div class="ld-title">概论复习站</div>
+              <div class="ld-title">概论研习社</div>
               <div class="ld-mark"><img src="img/logo.png" alt="" /></div>
             </div>
-            <div class="ld-sub">习近平新时代中国特色社会主义思想概论</div>
-          </div>
-        </div>
-   <div class="ld-foot">
+             <div class="ld-sub">习近平新时代中国特色社会主义思想概论</div>
+           </div>
+         </div>
+    <div class="ld-word" aria-hidden="true">习概</div>
+    <div class="ld-foot">
      <div class="ld-track"><i id="ldFill"></i></div>
-   </div>
+    </div>
   <div class="ld-wipe" id="ldWipe"></div>
 </div>
 
@@ -1078,8 +1146,8 @@
 <nav class="nav">
   <div class="nav-inner">
     <div class="logo" data-go="home">
-      <div class="logo-mark"><img src="img/logo.png" alt="概论复习站" /></div>
-      <div class="logo-text">概论复习站</div>
+      <div class="logo-mark"><img src="img/logo.png" alt="概论研习社" /></div>
+      <div class="logo-text">概论研习社</div>
     </div>
     <button class="menu-btn" id="menuBtn" type="button" aria-label="展开导航" aria-expanded="false">
       <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
@@ -1087,14 +1155,14 @@
       </svg>
     </button>
     <div class="nav-links" id="navLinks">
-      <a href="#home" data-nav="home" class="active">首页</a>
-      <a href="#home" data-filter="总论">总论</a>
-      <a href="#home" data-filter="改革发展">改革发展</a>
-      <a href="#home" data-filter="政治法治文化">政治法治文化</a>
-      <a href="#home" data-filter="原著专题">原著专题</a>
-      <a href="#quiz" data-nav="quiz">刷题</a>
-      <a href="#marks" data-nav="marks">题库本</a>
-      <a href="#achv" data-nav="achv">成就</a>
+      <a href="#home" data-nav="home" class="active"><span class="en">INDEX</span><span class="cn">首页</span></a>
+      <a href="#home" data-filter="总论"><span class="en">GENERAL</span><span class="cn">总论</span></a>
+      <a href="#home" data-filter="改革发展"><span class="en">REFORM</span><span class="cn">改革发展</span></a>
+      <a href="#home" data-filter="政治法治文化"><span class="en">POLITICS</span><span class="cn">政治法治文化</span></a>
+      <a href="#home" data-filter="原著专题"><span class="en">ORIGINAL</span><span class="cn">原著专题</span></a>
+      <a href="#quiz" data-nav="quiz"><span class="en">PRACTICE</span><span class="cn">刷题</span></a>
+      <a href="#marks" data-nav="marks"><span class="en">BANK</span><span class="cn">题库本</span></a>
+      <a href="#achv" data-nav="achv"><span class="en">AWARDS</span><span class="cn">成就</span></a>
     </div>
     <div class="search">
       <input id="q" type="search" placeholder="搜索章节、考点、概念" autocomplete="off" />
@@ -1130,7 +1198,7 @@
 
 <div class="wrap">
   <div class="banner">
-    <h1>习近平新时代中国特色社会主义思想概论 · 复习站</h1>
+    <h1>概论研习社 · 习近平新时代中国特色社会主义思想概论</h1>
     <p>导论 · 十七章 · 提纲 / 重点 / 概念 / 易混 / 复习提示</p>
     <div class="banner-stats">
       <div><strong>1+17</strong>导论与十七章</div>
@@ -1165,11 +1233,24 @@
 
 <div class="toast-wrap" id="toastWrap" aria-live="polite"></div>
 
-<button class="to-top" id="toTop" type="button" aria-label="回到顶部">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
-  </svg>
-</button>
+ <button class="to-top" id="toTop" type="button" aria-label="回到顶部">
+   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+     <path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+   </svg>
+ </button>
+
+ <button class="peek-btn" id="peekBtn" type="button" aria-pressed="false" aria-label="只看背景" title="只看背景">
+   <svg class="ic-eye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+     <path d="M2.4 12S6 5.4 12 5.4 21.6 12 21.6 12 18 18.6 12 18.6 2.4 12 2.4 12z"/>
+     <circle cx="12" cy="12" r="3"/>
+   </svg>
+   <svg class="ic-hide" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+     <path d="M3 3l18 18"/>
+     <path d="M10.6 5.6A9.9 9.9 0 0 1 12 5.4c6 0 9.6 6.6 9.6 6.6a17 17 0 0 1-3.3 4"/>
+     <path d="M6.5 7.7A16.6 16.6 0 0 0 2.4 12S6 18.6 12 18.6c1.5 0 2.9-.4 4.1-1.1"/>
+     <path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>
+   </svg>
+ </button>
 
 <script>
 /* =========================================================
@@ -2619,7 +2700,7 @@ function buildCards() {
   }
 
   function exportRecords() {
-    var dump = { app: '概论复习站', version: 1, exportedAt: new Date().toISOString(), data: {} };
+    var dump = { app: '概论研习社', version: 1, exportedAt: new Date().toISOString(), data: {} };
     for (var i = 0; i < localStorage.length; i++) {
       var k = localStorage.key(i);
       if (!k || k.indexOf('gaigai.') !== 0) continue;
@@ -2631,7 +2712,7 @@ function buildCards() {
     var stamp = '' + d.getFullYear() + ('0' + (d.getMonth() + 1)).slice(-2) + ('0' + d.getDate()).slice(-2);
     var a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = '概论复习站-记录-' + stamp + '.json';
+    a.download = '概论研习社-记录-' + stamp + '.json';
     document.body.appendChild(a);
     a.click();
     setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1200);
@@ -3184,6 +3265,7 @@ function buildCards() {
 
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
+    if (document.documentElement.classList.contains('peek')) { setPeek(false); return; }
     if (q.value) { q.value = ''; runSearch(); q.blur(); }
     else navigate('home');
   });
@@ -3194,6 +3276,26 @@ function buildCards() {
   }, { passive: true });
   toTop.addEventListener('click', function () {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  /* ---------- 只看背景 ---------- */
+  var peekBtn = document.getElementById('peekBtn');
+  function setPeek(on) {
+    document.documentElement.classList.toggle('peek', on);
+    if (!peekBtn) return;
+    peekBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    peekBtn.title = on ? '退出只看背景' : '只看背景';
+    peekBtn.setAttribute('aria-label', peekBtn.title);
+  }
+  if (peekBtn) {
+    peekBtn.addEventListener('click', function () {
+      setPeek(!document.documentElement.classList.contains('peek'));
+    });
+  }
+  /* 只看背景时，点页面空白处也能退出 */
+  document.addEventListener('click', function (e) {
+    if (!document.documentElement.classList.contains('peek')) return;
+    if (e.target === document.body || e.target === document.documentElement) setPeek(false);
   });
 
   var userBtn = document.getElementById('userBtn');
